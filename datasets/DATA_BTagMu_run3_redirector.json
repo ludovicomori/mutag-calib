@@ -411,7 +411,6 @@
             "root://xrootd-cms.infn.it///store/data/Run2023C/BTagMu/NANOAOD/22Sep2023_v1-v1/40000/f66d5fcd-2ad1-438d-b60b-55eb79b56758.root",
             "root://xrootd-cms.infn.it///store/data/Run2023C/BTagMu/NANOAOD/22Sep2023_v1-v1/50000/d96175e4-eaf6-4fac-af5e-48a5cad78da8.root",
             "root://xrootd-cms.infn.it///store/data/Run2023C/BTagMu/NANOAOD/22Sep2023_v1-v1/40000/a53062d4-1329-42a0-aa7d-ef93385bd44a.root",
-            "root://xrootd-cms.infn.it///store/data/Run2023C/BTagMu/NANOAOD/22Sep2023_v1-v1/40000/731c5b98-e155-4007-9fbb-a88e881b5bb4.root",
             "root://xrootd-cms.infn.it///store/data/Run2023C/BTagMu/NANOAOD/22Sep2023_v1-v1/50000/4ff4f4f6-2a0b-42e6-be81-a881e4aa4057.root",
             "root://xrootd-cms.infn.it///store/data/Run2023C/BTagMu/NANOAOD/22Sep2023_v1-v1/40000/df0fdfca-f17c-4cd0-ac09-d874bb8422e6.root",
             "root://xrootd-cms.infn.it///store/data/Run2023C/BTagMu/NANOAOD/22Sep2023_v1-v1/40000/449f6e37-0c55-496c-b268-42d64dc786fc.root",
@@ -568,8 +567,8 @@
             "root://xrootd-cms.infn.it///store/data/Run2023C/BTagMu/NANOAOD/22Sep2023_v4-v1/50000/c6c585dc-8f45-4fb6-80d5-f1cd04e34c2c.root",
             "root://xrootd-cms.infn.it///store/data/Run2023C/BTagMu/NANOAOD/22Sep2023_v4-v1/50000/2072ddd6-6574-4625-9dd7-95f4c887f319.root",
             "root://xrootd-cms.infn.it///store/data/Run2023C/BTagMu/NANOAOD/22Sep2023_v4-v1/50000/3ccbbd26-c47d-4525-a287-54989df858c6.root",
-            "root://xrootd-cms.infn.it///store/data/Run2023C/BTagMu/NANOAOD/22Sep2023_v4-v1/2530000/8a62f678-f953-4833-bfef-a1e86656d04d.root",
-            "root://xrootd-cms.infn.it///store/data/Run2023C/BTagMu/NANOAOD/22Sep2023_v4-v1/2530000/70df6ec1-6832-422e-affb-cfab4880ee3c.root"
+            "root://xrootd-cms.infn.it///store/data/Run2023C/BTagMu/NANOAOD/22Sep2023_v4-v1/2530000/70df6ec1-6832-422e-affb-cfab4880ee3c.root",
+            "root://xrootd-cms.infn.it///store/data/Run2023C/BTagMu/NANOAOD/22Sep2023_v4-v1/2530000/8a62f678-f953-4833-bfef-a1e86656d04d.root"
         ]
     },
     "DATA_BTagMu_2023_postBPix_EraD": {

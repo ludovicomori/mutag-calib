@@ -3,17 +3,17 @@ object_preselection:
     pt: 5.0
     eta: 2.4
     iso: 0.15  #PFIsoTight
-    id: tightId
+    id: mediumID
 
   Electron:
     pt: 15.0
     eta: 2.4
     iso: 0.06
-    id: mvaIso_WP80
+    id: mvaNoIso_WP90
 
   Jet:
     dr_lepton: 0.4
-    pt: 25.0
+    pt: 20.0
     eta: 2.5
     jetId: 2
     puId:
@@ -22,7 +22,7 @@ object_preselection:
       maxpt: 50.0
 
   FatJet:
-    pt: 300.0  #adapted for bbtautau run3 analysis
+    pt: 250.0  #adapted for bbtautau run3 analysis
     eta: 2.4
     msd: 30.0
     jetId: 2
