@@ -113,6 +113,83 @@
           "primaryDataset": "BTagMu",
           "era": "D"
         }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2024C-MINIv6NANOv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "C"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2024D-MINIv6NANOv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "D"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2024E-MINIv6NANOv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "E"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2024F-MINIv6NANOv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "F"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2024G-MINIv6NANOv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "G"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2024H-MINIv6NANOv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "H"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2024I-MINIv6NANOv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "I"
+        }
       }
     ]
   }

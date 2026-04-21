@@ -132,3 +132,13 @@ class DatacardMutag(Datacard):
                     root_file[shape] = histogram
             for shape, histogram in shape_histograms.items():
                 root_file[shape] = histogram
+
+    @property
+    def bin(self) -> str:
+        """Name of the bin in the datacard"""
+        bin_name = self.category.replace('-', '_')
+        if self.bin_prefix:
+            bin_name = f"{self.bin_prefix}_{bin_name}"
+        if self.bin_suffix:
+            bin_name = f"{bin_name}_{self.bin_suffix}"
+        return bin_name

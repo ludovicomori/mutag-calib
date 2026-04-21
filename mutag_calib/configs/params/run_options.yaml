@@ -11,10 +11,9 @@ custom-setup-commands: null
 conda-env: false
 local-virtualenv: false
 group-samples:
-  TTto4Q:
-    - "TTto4Q"
-  Vjets:
-    - "VJets"
-  SingleTop:
-    - "SingleTop"
-
+  # TTto4Q:
+  #   - "TTto4Q"
+  # Vjets:
+  #   - "VJets"
+  # SingleTop:
+  #   - "SingleTop"

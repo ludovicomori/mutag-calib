@@ -374,5 +374,175 @@
         }
       }
     ]
+  },
+  "Wto2Q-3Jets_Bin-HT-100to400": {
+    "sample": "VJets",
+    "json_output": "datasets/MC_VJets_run3.json",
+    "description": "Cross-section from XSDB (LO, 13.6 TeV)",
+    "files": [
+      {
+        "das_names": [
+          "/Wto2Q-3Jets_Bin-HT-100to400_TuneCP5_13p6TeV_madgraphMLM-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": true,
+          "xsec": 16120.0
+        }
+      }
+    ]
+  },
+  "Wto2Q-3Jets_Bin-HT-400to800": {
+    "sample": "VJets",
+    "json_output": "datasets/MC_VJets_run3.json",
+    "description": "Cross-section from XSDB (LO, 13.6 TeV)",
+    "files": [
+      {
+        "das_names": [
+          "/Wto2Q-3Jets_Bin-HT-400to800_TuneCP5_13p6TeV_madgraphMLM-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": true,
+          "xsec": 356.9
+        }
+      }
+    ]
+  },
+  "Wto2Q-3Jets_Bin-HT-800to1500": {
+    "sample": "VJets",
+    "json_output": "datasets/MC_VJets_run3.json",
+    "description": "Cross-section from XSDB (LO, 13.6 TeV)",
+    "files": [
+      {
+        "das_names": [
+          "/Wto2Q-3Jets_Bin-HT-800to1500_TuneCP5_13p6TeV_madgraphMLM-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": true,
+          "xsec": 29.52
+        }
+      }
+    ]
+  },
+  "Wto2Q-3Jets_Bin-HT-1500to2500": {
+    "sample": "VJets",
+    "json_output": "datasets/MC_VJets_run3.json",
+    "description": "Cross-section from XSDB (LO, 13.6 TeV)",
+    "files": [
+      {
+        "das_names": [
+          "/Wto2Q-3Jets_Bin-HT-1500to2500_TuneCP5_13p6TeV_madgraphMLM-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v3/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": true,
+          "xsec": 1.825
+        }
+      }
+    ]
+  },
+  "Wto2Q-3Jets_Bin-HT-2500": {
+    "sample": "VJets",
+    "json_output": "datasets/MC_VJets_run3.json",
+    "description": "Cross-section from XSDB (LO, 13.6 TeV)",
+    "files": [
+      {
+        "das_names": [
+          "/Wto2Q-3Jets_Bin-HT-2500_TuneCP5_13p6TeV_madgraphMLM-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": true,
+          "xsec": 0.1158
+        }
+      }
+    ]
+  },
+  "Zto2Q-4Jets_Bin-HT-100to400": {
+    "sample": "VJets",
+    "json_output": "datasets/MC_VJets_run3.json",
+    "description": "Cross-section from XSDB (LO, 13.6 TeV)",
+    "files": [
+      {
+        "das_names": [
+          "/Zto2Q-4Jets_Bin-HT-100to400_TuneCP5_13p6TeV_madgraphMLM-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": true,
+          "xsec": 6328.0
+        }
+      }
+    ]
+  },
+  "Zto2Q-4Jets_Bin-HT-400to800": {
+    "sample": "VJets",
+    "json_output": "datasets/MC_VJets_run3.json",
+    "description": "Cross-section from XSDB (LO, 13.6 TeV)",
+    "files": [
+      {
+        "das_names": [
+          "/Zto2Q-4Jets_Bin-HT-400to800_TuneCP5_13p6TeV_madgraphMLM-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": true,
+          "xsec": 145.1
+        }
+      }
+    ]
+  },
+  "Zto2Q-4Jets_Bin-HT-800to1500": {
+    "sample": "VJets",
+    "json_output": "datasets/MC_VJets_run3.json",
+    "description": "Cross-section from XSDB (LO, 13.6 TeV)",
+    "files": [
+      {
+        "das_names": [
+          "/Zto2Q-4Jets_Bin-HT-800to1500_TuneCP5_13p6TeV_madgraphMLM-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": true,
+          "xsec": 12.9
+        }
+      }
+    ]
+  },
+  "Zto2Q-4Jets_Bin-HT-1500to2500": {
+    "sample": "VJets",
+    "json_output": "datasets/MC_VJets_run3.json",
+    "description": "Cross-section from XSDB (LO, 13.6 TeV)",
+    "files": [
+      {
+        "das_names": [
+          "/Zto2Q-4Jets_Bin-HT-1500to2500_TuneCP5_13p6TeV_madgraphMLM-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": true,
+          "xsec": 0.8541
+        }
+      }
+    ]
+  },
+  "Zto2Q-4Jets_Bin-HT-2500": {
+    "sample": "VJets",
+    "json_output": "datasets/MC_VJets_run3.json",
+    "description": "Cross-section from XSDB (LO, 13.6 TeV)",
+    "files": [
+      {
+        "das_names": [
+          "/Zto2Q-4Jets_Bin-HT-2500_TuneCP5_13p6TeV_madgraphMLM-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v3/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": true,
+          "xsec": 0.05684
+        }
+      }
+    ]
   }
 }

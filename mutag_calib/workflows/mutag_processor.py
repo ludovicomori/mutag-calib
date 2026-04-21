@@ -64,7 +64,7 @@ class mutagAnalysisProcessor(fatjetBaseProcessor):
             }
 
     def process_extra_after_presel(self, variation):
-        if self._sample in ["QCD_MuEnriched", "QCD_HT"]:
+        if self._sample in ["QCD_MuEnriched", "QCD_Madgraph"]:
             self.ptetatau21_reweighting(variation)
             for pos, hists in self.histograms_to_reweigh["by_pos"].items():
                 for histname in hists:

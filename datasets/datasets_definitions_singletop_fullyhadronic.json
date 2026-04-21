@@ -129,6 +129,14 @@
           "isMC": true,
           "xsec": 123.8
         }
+      },
+      {
+        "das_names": ["/TBbarQto2Q-t-channel-4FS_TuneCP5_13p6TeV_powheg-madspin-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"],
+        "metadata": {
+          "year":"2024",
+          "isMC": true,
+          "xsec": 123.8
+        }
       }
     ]
   },
@@ -165,6 +173,14 @@
         "das_names": ["/TbarBQ_t-channel_4FS_TuneCP5_13p6TeV_powheg-madspin-pythia8/Run3Summer23BPixNanoAODv12-130X_mcRun3_2023_realistic_postBPix_v6-v2/NANOAODSIM"],
         "metadata": {
           "year":"2023_postBPix",
+          "isMC": true,
+          "xsec": 75.47
+        }
+      },
+      {
+        "das_names": ["/TbarBQto2Q-t-channel-4FS_TuneCP5_13p6TeV_powheg-madspin-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"],
+        "metadata": {
+          "year":"2024",
           "isMC": true,
           "xsec": 75.47
         }

@@ -1,7 +1,7 @@
 {
   "QCD-4Jets_HT-1000to1200": {
-    "sample": "QCD",
-    "json_output": "datasets/background_QCD.json",
+    "sample": "QCD_Madgraph",
+    "json_output": "datasets/MC_QCD_Madgraph_run3.json",
     "description": "Cross-section taken from AN2024-081_v8 and cross-checked with Grasp",
     "files": [
       {
@@ -62,8 +62,8 @@
     ]
   },
   "QCD-4Jets_HT-1200to1500": {
-    "sample": "QCD",
-    "json_output": "datasets/background_QCD.json",
+    "sample": "QCD_Madgraph",
+    "json_output": "datasets/MC_QCD_Madgraph_run3.json",
     "description": "Cross-section taken from AN2024-081_v8 and cross-checked with Grasp",
     "files": [
       {
@@ -124,8 +124,8 @@
     ]
   },
   "QCD-4Jets_HT-1500to2000": {
-    "sample": "QCD",
-    "json_output": "datasets/background_QCD.json",
+    "sample": "QCD_Madgraph",
+    "json_output": "datasets/MC_QCD_Madgraph_run3.json",
     "description": "Cross-section taken from AN2024-081_v8 and cross-checked with Grasp",
     "files": [
       {
@@ -186,8 +186,8 @@
     ]
   },
   "QCD-4Jets_HT-2000": {
-    "sample": "QCD",
-    "json_output": "datasets/background_QCD.json",
+    "sample": "QCD_Madgraph",
+    "json_output": "datasets/MC_QCD_Madgraph_run3.json",
     "description": "Cross-section taken from AN2024-081_v8 and cross-checked with Grasp",
     "files": [
       {
@@ -248,8 +248,8 @@
     ]
   },
   "QCD-4Jets_HT-200to400": {
-    "sample": "QCD",
-    "json_output": "datasets/background_QCD.json",
+    "sample": "QCD_Madgraph",
+    "json_output": "datasets/MC_QCD_Madgraph_run3.json",
     "description": "Cross-section taken from AN2024-081_v8 and cross-checked with Grasp",
     "files": [
       {
@@ -310,8 +310,8 @@
     ]
   },
   "QCD-4Jets_HT-400to600": {
-    "sample": "QCD",
-    "json_output": "datasets/background_QCD.json",
+    "sample": "QCD_Madgraph",
+    "json_output": "datasets/MC_QCD_Madgraph_run3.json",
     "description": "Cross-section taken from AN2024-081_v8 and cross-checked with Grasp",
     "files": [
       {
@@ -372,8 +372,8 @@
     ]
   },
   "QCD-4Jets_HT-600to800": {
-    "sample": "QCD",
-    "json_output": "datasets/background_QCD.json",
+    "sample": "QCD_Madgraph",
+    "json_output": "datasets/MC_QCD_Madgraph_run3.json",
     "description": "Cross-section taken from AN2024-081_v8 and cross-checked with Grasp",
     "files": [
       {
@@ -434,8 +434,8 @@
     ]
   },
   "QCD-4Jets_HT-800to1000": {
-    "sample": "QCD",
-    "json_output": "datasets/background_QCD.json",
+    "sample": "QCD_Madgraph",
+    "json_output": "datasets/MC_QCD_Madgraph_run3.json",
     "description": "Cross-section taken from AN2024-081_v8 and cross-checked with Grasp",
     "files": [
       {

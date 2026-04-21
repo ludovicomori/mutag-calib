@@ -27,8 +27,9 @@ plotting_style:
       - SingleTop__SingleTop_bb
       - VJets__VJets_bb
 
+  exclude_samples: ["QCD_Madgraph__QCD_Madgraph_c", "QCD_Madgraph__QCD_Madgraph_cc", "QCD_Madgraph__QCD_Madgraph_b", "QCD_Madgraph__QCD_Madgraph_bb", "QCD_Madgraph__QCD_Madgraph_l"]
+
   colors_mc:
     l: CMS_red
     c: CMS_orange
     b: CMS_blue
-

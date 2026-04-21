@@ -1,7 +1,7 @@
 {     
     "TWminustoLNu2Q": {
         "sample": "SingleTop",
-        "json_output": "datasets/MC_singletop.json",
+        "json_output": "datasets/MC_singletop_run3.json",
         "description": "Cross-section taken from AN2024-081_v8",
         "files": [
             { 
@@ -32,6 +32,14 @@
 				"das_names": ["/TWminustoLNu2Q_TuneCP5_13p6TeV_powheg-pythia8/Run3Summer23BPixNanoAODv12-130X_mcRun3_2023_realistic_postBPix_v2-v3/NANOAODSIM"],
                 "metadata": {
                     "year":"2023_postBPix",
+                    "isMC": true,
+                    "xsec": 19.303
+                }
+            },
+            { 
+                "das_names": ["/TWminustoLNu2Q_TuneCP5_13p6TeV_powheg-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"],
+                "metadata": {
+                    "year":"2024",
                     "isMC": true,
                     "xsec": 19.303
                 }
@@ -74,6 +82,14 @@
                     "isMC": true,
                     "xsec": 19.303
                 }
+            },
+            { 
+                "das_names": ["/TbarWplustoLNu2Q_TuneCP5_13p6TeV_powheg-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"],
+                "metadata": {
+                    "year":"2024",
+                    "isMC": true,
+                    "xsec": 19.303
+                }
             }
         ]
     },
@@ -82,46 +98,46 @@
         "json_output": "datasets/MC_singletop_run3.json",
         "description": "Cross-section taken from AN2024-081_v8",
         "files": [
-        {
-            "das_names": [
-            "/TBbartoLplusNuBbar-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"
-            ],
-            "metadata": {
-            "year": "2022_postEE",
-            "isMC": true,
-            "xsec": 2.278
+            {
+                "das_names": ["/TBbartoLplusNuBbar-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 2.278
+                }
+            },
+            {
+                "das_names": ["/TBbartoLplusNuBbar-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/Run3Summer22NanoAODv12-130X_mcRun3_2022_realistic_v5-v2/NANOAODSIM"],
+                "metadata": {
+                    "year": "2022_preEE",
+                    "isMC": true,
+                    "xsec": 2.278
+                }
+            },
+            {
+                "das_names": ["/TBbartoLplusNuBbar-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/Run3Summer23BPixNanoAODv12-130X_mcRun3_2023_realistic_postBPix_v6-v2/NANOAODSIM"],
+                "metadata": {
+                    "year": "2023_postBPix",
+                    "isMC": true,
+                    "xsec": 2.278
+                }
+            },
+            {
+                "das_names": ["/TBbartoLplusNuBbar-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/Run3Summer23NanoAODv12-130X_mcRun3_2023_realistic_v15-v2/NANOAODSIM"],
+                "metadata": {
+                    "year": "2023_preBPix",
+                    "isMC": true,
+                    "xsec": 2.278
+                }
+            },
+            {
+                "das_names": ["/TBbartoLplusNuBbar-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"],
+                "metadata": {
+                    "year": "2024",
+                    "isMC": true,
+                    "xsec": 2.278
+                }
             }
-        },
-        {
-            "das_names": [
-            "/TBbartoLplusNuBbar-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/Run3Summer22NanoAODv12-130X_mcRun3_2022_realistic_v5-v2/NANOAODSIM"
-            ],
-            "metadata": {
-            "year": "2022_preEE",
-            "isMC": true,
-            "xsec": 2.278
-            }
-        },
-        {
-            "das_names": [
-            "/TBbartoLplusNuBbar-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/Run3Summer23BPixNanoAODv12-130X_mcRun3_2023_realistic_postBPix_v6-v2/NANOAODSIM"
-            ],
-            "metadata": {
-            "year": "2023_postBPix",
-            "isMC": true,
-            "xsec": 2.278
-            }
-        },
-        {
-            "das_names": [
-            "/TBbartoLplusNuBbar-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/Run3Summer23NanoAODv12-130X_mcRun3_2023_realistic_v15-v2/NANOAODSIM"
-            ],
-            "metadata": {
-            "year": "2023_preBPix",
-            "isMC": true,
-            "xsec": 2.278
-            }
-        }
         ]
     },
     "TbarBtoLminusNuB": {
@@ -129,46 +145,46 @@
         "json_output": "datasets/MC_singletop_run3.json",
         "description": "Cross-section taken from AN2024-081_v8",
         "files": [
-        {
-            "das_names": [
-            "/TbarBtoLminusNuB-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"
-            ],
-            "metadata": {
-            "year": "2022_postEE",
-            "isMC": true,
-            "xsec": 1.43
+            {
+                "das_names": ["/TbarBtoLminusNuB-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM"],
+                "metadata": {
+                    "year": "2022_postEE",
+                    "isMC": true,
+                    "xsec": 1.43
+                }
+            },
+            {
+                "das_names": ["/TbarBtoLminusNuB-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/Run3Summer22NanoAODv12-130X_mcRun3_2022_realistic_v5-v2/NANOAODSIM"],
+                "metadata": {
+                    "year": "2022_preEE",
+                    "isMC": true,
+                    "xsec": 1.43
+                }
+            },
+            {
+                "das_names": ["/TbarBtoLminusNuB-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/Run3Summer23BPixNanoAODv12-130X_mcRun3_2023_realistic_postBPix_v6-v2/NANOAODSIM"],
+                "metadata": {
+                    "year": "2023_postBPix",
+                    "isMC": true,
+                    "xsec": 1.43
+                }
+            },
+            {
+                "das_names": ["/TbarBtoLminusNuB-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/Run3Summer23NanoAODv12-130X_mcRun3_2023_realistic_v15-v2/NANOAODSIM"],
+                "metadata": {
+                    "year": "2023_preBPix",
+                    "isMC": true,
+                    "xsec": 1.43
+                }
+            },
+            {
+                "das_names": ["/TbarBtoLminusNuB-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"],
+                "metadata": {
+                    "year": "2024",
+                    "isMC": true,
+                    "xsec": 1.43
+                }
             }
-        },
-        {
-            "das_names": [
-            "/TbarBtoLminusNuB-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/Run3Summer22NanoAODv12-130X_mcRun3_2022_realistic_v5-v2/NANOAODSIM"
-            ],
-            "metadata": {
-            "year": "2022_preEE",
-            "isMC": true,
-            "xsec": 1.43
-            }
-        },
-        {
-            "das_names": [
-            "/TbarBtoLminusNuB-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/Run3Summer23BPixNanoAODv12-130X_mcRun3_2023_realistic_postBPix_v6-v2/NANOAODSIM"
-            ],
-            "metadata": {
-            "year": "2023_postBPix",
-            "isMC": true,
-            "xsec": 1.43
-            }
-        },
-        {
-            "das_names": [
-            "/TbarBtoLminusNuB-s-channel-4FS_TuneCP5_13p6TeV_amcatnlo-pythia8/Run3Summer23NanoAODv12-130X_mcRun3_2023_realistic_v15-v2/NANOAODSIM"
-            ],
-            "metadata": {
-            "year": "2023_preBPix",
-            "isMC": true,
-            "xsec": 1.43
-            }
-        }
         ]
     }
 }

@@ -181,7 +181,7 @@ def save_detailed_results(results, df, output_dir):
 
 def main():
     parser = argparse.ArgumentParser(description="Analyze trigger prescale factors")
-    parser.add_argument("--config", default="mutag_calib/configs/params/triggers_prescales_run3.yaml",
+    parser.add_argument("--config", default="mutag_calib/configs/params/triggers_prescales_2024.yaml",
                        help="Path to triggers prescales YAML config file")
     parser.add_argument("--output-dir", "-o", default="prescale_analysis",
                        help="Output directory for detailed results")

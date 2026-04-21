@@ -270,3 +270,26 @@ combine -M FitDiagnostics -d workspace.root --saveWorkspace \
 
 Note that the `--redefineSignalPOIs=r,SF_c,SF_light` is added to the combine command in order to perform a fit with 3 POIs to measure the b, c and light SFs simultaneously. For the calibration of bb taggers such as `ParticleNetXbbVsQCD`, it is sometimes necessary to freeze the light SF by adding `--setParameters SF_light=1 --freezeParameters SF_light`, since in the pass region of this tagger the light jets are negligible and the light SF cannot be measured.
 
+#### Systematic uncertainties
+
+The script create_datacards.py defines the following systematic uncertainties in the datacards:
+
+| Systematic uncertainty       | Description                                                                                       |
+|-----------------------------|---------------------------------------------------------------------------------------------------|
+| lumi                        | Integrated luminosity uncertainty (lnN) applied to all MC processes, year-dependent value.       |
+| pileup                      | Shape uncertainty associated to pileup reweighting of MC.                                         |
+| QCD_MuEnriched_ratio        | Shape uncertainty accounting for the difference between QCD simulation in Pythia / Madgraph. |
+| sf_partonshower_isr         | Shape uncertainty from initial-state radiation (ISR) parton-shower variations.                          |
+| sf_partonshower_fsr         | Shape uncertainty from final-state radiation (FSR) parton-shower variations.                            |
+| AK8PFPuppi_JER              | Shape uncertainty from AK8 PFPuppi jet energy resolution (JER) variations.                              |
+| AK8PFPuppi_JES_Total        | Shape uncertainty from AK8 PFPuppi total jet energy scale (JES) variations.                             |
+| light_norm                  | 20% normalization (lnN) uncertainty on the light-flavour QCD component.                           |
+| c_norm                      | 20% normalization (lnN) uncertainty on the charm-flavour QCD component.                           |
+
+In addition, the following "external" systematic uncertainties are summed in quadrature to the SF obtained from the Combine fit:
+
+| External systematic uncertainty       | Description                                                                                       |
+|-----------------------------|---------------------------------------------------------------------------------------------------|
+| tau21                        | Maximum difference between the nominal SF (tau21 < 0.3) and any of the alternative SF (tau21 < 0.2, 0.25, 0.35, 0.4), to account for the dependence on the tau21 cut.        |
+| Data / MC reweighting                        | Difference between the nominal SF (tau21 < 0.3) and the SF obtained by reweighting the fit variable in the inclusive pass+fail region, to account for the residual mismodelling in the fit variable.        |
+

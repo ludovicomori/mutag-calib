@@ -83,7 +83,7 @@ def pt_reweighting(accumulator, histname, output, test=False, overwrite=False):
     samples = h.keys()
     samples_data = list(filter(lambda d: 'DATA' in d, samples))
     samples_mc = list(filter(lambda d: 'DATA' not in d, samples))
-    samples_qcd = list(filter(lambda d: 'QCD' in d, samples_mc))
+    samples_qcd = list(filter(lambda d: 'QCD_MuEnriched' in d, samples_mc))
     samples_vjets_top = list(filter(lambda d: (('VJets' in d) | ('SingleTop' in d) | ('TTto4Q' in d)), samples_mc))
 
     # Compute a 3D correction for each year and save it in a separate json file

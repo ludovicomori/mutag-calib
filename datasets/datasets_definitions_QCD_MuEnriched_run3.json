@@ -46,6 +46,17 @@
           "xsec": 1.323,
           "part": "Pt-1000"
         }
+      },
+      {
+        "das_names": [
+          "/QCD_Bin-PT-1000_Fil-MuEnriched_TuneCP5_13p6TeV_pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": true,
+          "xsec": 1.323,
+          "part": "Pt-1000"
+        }
       }
     ]
   },
@@ -92,6 +103,17 @@
         ],
         "metadata": {
           "year": "2023_preBPix",
+          "isMC": true,
+          "xsec": 22980.0,
+          "part": "Pt-120to170"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Bin-PT-120to170_Fil-MuEnriched_TuneCP5_13p6TeV_pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2024",
           "isMC": true,
           "xsec": 22980.0,
           "part": "Pt-120to170"
@@ -146,6 +168,17 @@
           "xsec": 7763.0,
           "part": "Pt-170to300"
         }
+      },
+      {
+        "das_names": [
+          "/QCD_Bin-PT-170to300_Fil-MuEnriched_TuneCP5_13p6TeV_pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": true,
+          "xsec": 7763.0,
+          "part": "Pt-170to300"
+        }
       }
     ]
   },
@@ -192,6 +225,17 @@
         ],
         "metadata": {
           "year": "2023_preBPix",
+          "isMC": true,
+          "xsec": 699.1,
+          "part": "Pt-300to470"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Bin-PT-300to470_Fil-MuEnriched_TuneCP5_13p6TeV_pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2024",
           "isMC": true,
           "xsec": 699.1,
           "part": "Pt-300to470"
@@ -246,6 +290,17 @@
           "xsec": 68.24,
           "part": "Pt-470to600"
         }
+      },
+      {
+        "das_names": [
+          "/QCD_Bin-PT-470to600_Fil-MuEnriched_TuneCP5_13p6TeV_pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": true,
+          "xsec": 68.24,
+          "part": "Pt-470to600"
+        }
       }
     ]
   },
@@ -296,6 +351,17 @@
           "xsec": 21.37,
           "part": "Pt-600to800"
         }
+      },
+      {
+        "das_names": [
+          "/QCD_Bin-PT-600to800_Fil-MuEnriched_TuneCP5_13p6TeV_pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2024",
+          "isMC": true,
+          "xsec": 21.37,
+          "part": "Pt-600to800"
+        }
       }
     ]
   },
@@ -342,6 +408,17 @@
         ],
         "metadata": {
           "year": "2023_preBPix",
+          "isMC": true,
+          "xsec": 3.913,
+          "part": "Pt-800to1000"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Bin-PT-800to1000_Fil-MuEnriched_TuneCP5_13p6TeV_pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2024",
           "isMC": true,
           "xsec": 3.913,
           "part": "Pt-800to1000"

@@ -1,13 +1,16 @@
 ptetatau21_reweighting:
   2022_preEE:
-    file: ${config_dir:}/ptetatau21_reweighting/FatJetGood_pt_eta_tau21_2022_preEE_reweighting.json
+    file: ${config_dir:}/ptetatau21_reweighting/HHbbgg/FatJetGood_pt_eta_tau21_2022_preEE_reweighting.json
     category: pt300msd30to210
   2022_postEE:
-    file: ${config_dir:}/ptetatau21_reweighting/FatJetGood_pt_eta_tau21_2022_postEE_reweighting.json
+    file: ${config_dir:}/ptetatau21_reweighting/HHbbgg/FatJetGood_pt_eta_tau21_2022_postEE_reweighting.json
     category: pt300msd30to210
   2023_preBPix:
-    file: ${config_dir:}/ptetatau21_reweighting/FatJetGood_pt_eta_tau21_2023_preBPix_reweighting.json
+    file: ${config_dir:}/ptetatau21_reweighting/HHbbgg/FatJetGood_pt_eta_tau21_2023_preBPix_reweighting.json
     category: pt300msd30to210
   2023_postBPix:
-    file: ${config_dir:}/ptetatau21_reweighting/FatJetGood_pt_eta_tau21_2023_postBPix_reweighting.json
+    file: ${config_dir:}/ptetatau21_reweighting/HHbbgg/FatJetGood_pt_eta_tau21_2023_postBPix_reweighting.json
+    category: pt300msd30to210
+  "2024":
+    file: ${config_dir:}/ptetatau21_reweighting/HHbbgg/FatJetGood_pt_eta_tau21_2024_reweighting.json
     category: pt300msd30to210

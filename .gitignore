@@ -5,9 +5,11 @@ mutag_calib/__pycache__
 mutag_calib/configs/__pycache__
 mutag_calib/configs/fatjet_base/custom/__pycache__
 mutag_calib/configs/pt_reweighting/__pycache__
+mutag_calib/configs/fit_templates/__pycache__/
 mutag_calib/workflows/__pycache__
 mutag_calib/lib/__pycache__
-pt_reweighting_Run3
-pt_3d_reweighting_Run3
-fit_templates_HHbbtt
-fit_templates_HHbbtt/plot_test
+mutag_calib/utils/stat/__pycache__/
+pt_reweighting_run3
+pt_reweighting_run3_2024
+fit_templates_HHbbtt_run3
+CMSSW_14_1_0_pre4
