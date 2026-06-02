@@ -46,12 +46,7 @@ jets_calibration:
       2023_preBPix: "${default_jets_calibration.factory_config_clib.AK8PFPuppi.2023_preBPix}"
       2023_postBPix: "${default_jets_calibration.factory_config_clib.AK8PFPuppi.2023_postBPix}"
       "2024": "${default_jets_calibration.factory_config_clib.AK8PFPuppi.2024}"
-      "2025":
-        json_path: /cvmfs/cms-griddata.cern.ch/cat/metadata/JME/Run3-25Prompt-Winter25-NanoAODv15/latest/fatJet_jerc.json.gz
-        jec_mc: Winter25Prompt25_V3_MC
-        jec_data: Winter25Prompt25_V3_DATA
-        jer: Summer23BPixPrompt23_RunD_JRV1_MC
-        level: L1L2L3Res
+      "2025": "${default_jets_calibration.factory_config_clib.AK8PFPuppi.2025}"
 
   collection:
     "2018":
