@@ -5,15 +5,9 @@ import argparse
 import re
 
 ALLOWED_CATEGORIES = {
-    "msd-80to170_Pt-300to350_particleNet_XbbVsQCD-HHbbtt",
-    "msd-80to170_Pt-350to425_particleNet_XbbVsQCD-HHbbtt",
-    "msd-80to170_Pt-425toInf_particleNet_XbbVsQCD-HHbbtt",
-    "msd-30toInf_Pt-300to350_particleNet_XbbVsQCD-HHbbgg",
-    "msd-30toInf_Pt-350to425_particleNet_XbbVsQCD-HHbbgg",
-    "msd-30toInf_Pt-425toInf_particleNet_XbbVsQCD-HHbbgg",
-    "msd-30toInf_Pt-300to350_globalParT3_XbbVsQCD-HHbbgg",
-    "msd-30toInf_Pt-350to425_globalParT3_XbbVsQCD-HHbbgg",
-    "msd-30toInf_Pt-425toInf_globalParT3_XbbVsQCD-HHbbgg",
+    "msd-80to170_Pt-250toInf_globalParT_XbbVsQCDTop-HHbbtt_0p70",
+    # "msd-80to170_Pt-250toInf_globalParT_XbbVsQCDTop-HHbbtt_0p75",
+    # "msd-80to170_Pt-250toInf_globalParT_XbbVsQCDTop-HHbbtt_0p80",
 }
 
 FIT_RE = re.compile(r"fitDiagnostics\.(.+)\.root")
@@ -68,6 +62,8 @@ def main():
 
                 outdir_base = args.output_dir
                 outdir = os.path.join(outdir_base, year, category, tau21)
+
+                print(f"\n Saving plots in {outdir}")
 
                 cmd = [
                     "python3", MAKE_PLOTS,
