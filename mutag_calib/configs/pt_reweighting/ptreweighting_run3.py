@@ -55,7 +55,7 @@ collections = ["FatJetGood"]
 for coll in collections:
     variables.update(**fatjet_hists(coll=coll))
     variables[f"{coll}_pt"] = HistConf([Axis(name=f"{coll}_pt", coll=coll, field="pt",
-                                                    label=r"FatJet $p_{T}$ [GeV]", bins=list(range(300, 1010, 10)))]
+                                                    label=r"FatJet $p_{T}$ [GeV]", bins=list(range(250, 1010, 10)))]
     )
     variables[f"{coll}_msoftdrop"] = HistConf([Axis(name=f"{coll}_msoftdrop", coll=coll, field="msoftdrop",
                                                            label=r"FatJet $m_{SD}$ [GeV]", bins=list(range(0, 410, 10)))]
@@ -70,14 +70,14 @@ for coll in collections:
     variables[f"{coll}_pt_eta"] = HistConf(
         [ Axis(name=f"{coll}_pos", coll=coll, field="pos", type="int", label=r"FatJet position", bins=2, start=0, stop=2),
           Axis(name=f"{coll}_pt", coll=coll, field="pt", type="variable", label=r"FatJet $p_{T}$ [GeV]",
-               bins=[300., 320., 340., 360., 380., 400., 450., 500., 550., 600., 700., 800., 900., 2500.]),
+               bins=[250., 275, 300., 320., 340., 360., 380., 400., 450., 500., 550., 600., 700., 800., 900., 2500.]),
           Axis(name=f"{coll}_eta", coll=coll, field="eta", type="variable", label=r"FatJet $\eta$",
                bins=[-5, -2, -1.75, -1.5, -1.25, -1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 5]) ]
     )
     variables[f"{coll}_pt_eta_tau21"] = HistConf(
         [ Axis(name=f"{coll}_pos", coll=coll, field="pos", type="int", label=r"FatJet position", bins=2, start=0, stop=2),
           Axis(name=f"{coll}_pt", coll=coll, field="pt", type="variable", label=r"FatJet $p_{T}$ [GeV]",
-               bins=[300., 320., 340., 360., 380., 400., 450., 500., 550., 600., 700., 800., 900., 2500.]),
+               bins=[250., 275, 300., 320., 340., 360., 380., 400., 450., 500., 550., 600., 700., 800., 900., 2500.]),
           Axis(name=f"{coll}_eta", coll=coll, field="eta", type="variable", label=r"FatJet $\eta$",
                bins=[-5, -2, -1.75, -1.5, -1.25, -1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 5]),
           Axis(name=f"{coll}_tau21", coll=coll, field="tau21", type="variable", label=r"FatJet $\tau_{21}$",
@@ -86,7 +86,7 @@ for coll in collections:
     variables[f"{coll}_pt_eta_tau21_bintau05"] = HistConf(
         [ Axis(name=f"{coll}_pos", coll=coll, field="pos", type="int", label=r"FatJet position", bins=2, start=0, stop=2),
           Axis(name=f"{coll}_pt", coll=coll, field="pt", type="variable", label=r"FatJet $p_{T}$ [GeV]",
-               bins=[300., 320., 340., 360., 380., 400., 450., 500., 550., 600., 700., 800., 900., 2500.]),
+               bins=[250., 275, 300., 320., 340., 360., 380., 400., 450., 500., 550., 600., 700., 800., 900., 2500.]),
           Axis(name=f"{coll}_eta", coll=coll, field="eta", type="variable", label=r"FatJet $\eta$",
                bins=[-5, -2, -1.75, -1.5, -1.25, -1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 5]),
           Axis(name=f"{coll}_tau21", coll=coll, field="tau21", type="variable", label=r"FatJet $\tau_{21}$",
@@ -96,20 +96,20 @@ for coll in collections:
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-         "jsons": ["datasets/MC_VJets_run3_redirector.json",
-                   "datasets/MC_TTto4Q_run3_redirector.json",
-                   "datasets/MC_singletop_run3_redirector.json",
-                   "datasets/DATA_BTagMu_run3_redirector.json",
-                   "datasets/MC_QCD_MuEnriched_run3_redirector.json"
+         "jsons": ["datasets/MC_VJets_run3.json",
+                   "datasets/MC_TTto4Q_run3.json",
+                   "datasets/MC_singletop_run3.json",
+                   "datasets/DATA_BTagMu_run3.json",
+                   "datasets/MC_QCD_MuEnriched_run3.json"
                    ],
         "filter" : {
             "samples": samples,
             "samples_exclude" : [],
             "year": [
-                '2022_preEE',
-                '2022_postEE',
-                '2023_preBPix',
-                '2023_postBPix',
+                # '2022_preEE',
+                # '2022_postEE',
+                # '2023_preBPix',
+                # '2023_postBPix',
                 '2024'
             ]
         },
@@ -129,6 +129,7 @@ cfg = Configurator(
 
     preselections = [get_nObj_min(1, parameters.object_preselection["FatJet"]["pt"], "FatJetGood")],
     categories = {
+        "inclusive" : [passthrough],
         "pt300msd30" : [get_ptmsd(300., 30.)],
         "pt300msd80" : [get_ptmsd(300., 80.)],
         "pt300msd30to210" : [get_ptmsd_window(300., 30., 210.)],
