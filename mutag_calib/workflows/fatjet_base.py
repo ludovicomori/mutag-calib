@@ -59,6 +59,13 @@ class fatjetBaseProcessor(BaseProcessorABC):
                     "nCHadrons"
                 )
 
+        # HACK: NanoAODv15 moved fixedGridRhoFastjetAll under Rho collection,
+        # but PocketCoffea's calibrators (JEC, softdrop mass) use a year-based conditional
+        # that accesses the old top-level field for Run 2 years. Inject it as an alias.
+        if self._year in ['2016_PreVFP', '2016_PostVFP', '2017', '2018']:
+            if hasattr(self.events, 'Rho') and 'fixedGridRhoFastjetAll' in self.events.Rho.fields:
+                self.events["fixedGridRhoFastjetAll"] = self.events.Rho.fixedGridRhoFastjetAll
+
     def apply_object_preselection(self, variation):
         '''
         The ttHbb processor cleans
@@ -81,9 +88,36 @@ class fatjetBaseProcessor(BaseProcessorABC):
             self.events, "Muon", self.params
         )
 
-        self.events["FatJetGood"], self.fatjetGoodMask = jet_selection(
-            self.events, "FatJet", self.params, self._year
-        )
+        # HACK: Bypass PocketCoffea's jet_selection for Run 2 to avoid NanoAODv15 bugs:
+        # get_nano_version() auto-detects v15 from filename → compute_jetId tries to load
+        # correction JSONs that don't exist for Run 2 years. Recompute tight jet ID from raw
+        # components per JME TWiki: https://twiki.cern.ch/twiki/bin/view/CMS/JetID13TeVUL#NanoAODv15
+        # "For AK8 jets, the corresponding AK4 PUPPI jet ID should be used."
+        # For |eta| < 2.4, the tight ID criteria are the same across all Run 2 years.
+        if self._year in ['2016_PreVFP', '2016_PostVFP', '2017', '2018']:
+            import numpy as np
+            jets = self.events.FatJet
+            cuts = self.params.object_preselection.FatJet
+            # Tight jet ID for AK4 PUPPI, |eta| <= 2.4 (all Run 2 years)
+            passJetIdTight = (
+                (jets.neHEF < 0.9)
+                & (jets.neEmEF < 0.9)
+                & ((jets.chMultiplicity + jets.neMultiplicity) > 1)
+                & (jets.chHEF > 0.0)
+                & (jets.chMultiplicity > 0)
+            )
+            mask = (
+                (jets.pt > cuts["pt"])
+                & (np.abs(jets.eta) < cuts["eta"])
+                & passJetIdTight
+                & (jets.msoftdrop > cuts["msd"])
+            )
+            self.events["FatJetGood"] = jets[mask]
+            self.fatjetGoodMask = mask
+        else:
+            self.events["FatJetGood"], self.fatjetGoodMask = jet_selection(
+                self.events, "FatJet", self.params, self._year
+            )
 
         # Select here events with at least one FatJetGood
         # WARNING: Here we are applying a per-event selection asking for at least one AK8 jet in the event

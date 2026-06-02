@@ -1,0 +1,27 @@
+# Run 2 UL BTagMu trigger prescale values
+# Generated via: dump_prescale.py → per-run JSONs → generate_prescale_yaml.py (lumi-range-weighted averages)
+# Per-run JSON files are in mutag_calib/configs/params/prescales/run2/
+#
+# Summary:
+#   2016: All triggers unprescaled (prescale=1 for all runs). AK4Jet300_Mu5 does NOT exist.
+#   2017: Both AK8 and AK4 are prescaled in some runs (AK8: {1,2,3}, AK4: {1,2}).
+#   2018: All triggers unprescaled (prescale=1 for all runs), including _noalgo variants.
+HLT_triggers_prescales:
+    "2016_PreVFP":
+        BTagMu:
+          BTagMu_AK8Jet300_Mu5: 1
+          BTagMu_Jet300_Mu5: 1
+    "2016_PostVFP":
+        BTagMu:
+          BTagMu_AK8Jet300_Mu5: 1
+          BTagMu_Jet300_Mu5: 1
+    "2017":
+        BTagMu:
+          BTagMu_AK8Jet300_Mu5: 1.2
+          BTagMu_AK4Jet300_Mu5: 1.1
+    "2018":
+        BTagMu:
+          BTagMu_AK8Jet300_Mu5: 1
+          BTagMu_AK4Jet300_Mu5: 1
+          BTagMu_AK8Jet300_Mu5_noalgo: 1
+          BTagMu_AK4Jet300_Mu5_noalgo: 1

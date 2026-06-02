@@ -6,9 +6,38 @@ This directory contains scripts for analyzing trigger prescale factors from the 
 
 The trigger prescale system in CMS reduces the rate of certain triggers by only accepting a fraction of events. The prescale factor indicates how many events are skipped - for example, a prescale of 2 means only every 2nd event is accepted, while a prescale of 0 means the trigger is completely disabled.
 
-## Scripts
+## Generating prescale files
 
-### 1. `analyze_prescales.py` - Comprehensive Analysis
+### 1. `dump_prescale.py` - Compute prescales from brilcalc
+
+Queries brilcalc for each run in a golden JSON to produce per-run correctionlib JSON files. Must be run **on lxplus outside any container** (uses the brilws Singularity container on CVMFS).
+
+```bash
+# Golden JSONs are provided by PocketCoffea's defaults (pocket_coffea/parameters/datacert/)
+# Find the path with: python3 -c "import pocket_coffea, os; print(os.path.join(os.path.dirname(pocket_coffea.__file__), 'parameters', 'datacert'))"
+
+python3 mutag_calib/scripts/dump_prescale.py \
+  --lumimask "$(python3 -c "import pocket_coffea, os; print(os.path.join(os.path.dirname(pocket_coffea.__file__), 'parameters', 'datacert', 'Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt'))")" \
+  --HLT "BTagMu_AK8Jet300_Mu5,BTagMu_AK4Jet300_Mu5" \
+  --output-dir mutag_calib/configs/params/prescales/run2/ \
+  --force
+```
+
+### 2. `generate_prescale_yaml.py` - Generate average prescale YAML
+
+Reads the per-run JSON files and computes lumi-range-weighted average prescales, outputting a YAML file compatible with `scale_factors.py`.
+
+```bash
+python3 mutag_calib/scripts/generate_prescale_yaml.py \
+  --config mutag_calib/configs/params/triggers_prescales_2024.yaml \
+  -o average_prescales.yaml
+```
+
+The input config must use the JSON-path format (e.g. `triggers_prescales_2024.yaml`), where values point to per-run JSON files rather than scalar numbers.
+
+## Analyzing prescale files
+
+### 3. `analyze_prescales.py`
 
 This is the main analysis script that processes all prescale JSON files and calculates various statistics.
 
@@ -42,7 +71,7 @@ python mutag_calib/scripts/analyze_prescales.py --output-dir my_analysis
 ./run_prescale_analysis.sh 2022_preEE BTagMu
 ```
 
-### 2. `interactive_prescale_analysis.py` - Detailed Analysis
+### 4. `interactive_prescale_analysis.py` - Detailed Analysis
 
 This script provides more detailed analysis capabilities and can generate plots.
 

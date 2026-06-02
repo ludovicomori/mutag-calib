@@ -1,0 +1,359 @@
+{
+  "QCD_Pt-120To170_MuEnrichedPt5": {
+    "sample": "QCD_MuEnriched",
+    "json_output": "datasets/MC_QCD_MuEnriched_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec = 21070.0 pb from XSDB (13 TeV, LO auto-computed). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/QCD_Pt-120To170_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 21070.0,
+          "part": "Pt-120to170"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-120To170_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 21070.0,
+          "part": "Pt-120to170"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-120To170_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 21070.0,
+          "part": "Pt-120to170"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-120To170_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 21070.0,
+          "part": "Pt-120to170"
+        }
+      }
+    ]
+  },
+  "QCD_Pt-170To300_MuEnrichedPt5": {
+    "sample": "QCD_MuEnriched",
+    "json_output": "datasets/MC_QCD_MuEnriched_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec from old analysis (13 TeV). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/QCD_Pt-170To300_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 7055.0,
+          "part": "Pt-170to300"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-170To300_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 7055.0,
+          "part": "Pt-170to300"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-170To300_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 7055.0,
+          "part": "Pt-170to300"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-170To300_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 7055.0,
+          "part": "Pt-170to300"
+        }
+      }
+    ]
+  },
+  "QCD_Pt-300To470_MuEnrichedPt5": {
+    "sample": "QCD_MuEnriched",
+    "json_output": "datasets/MC_QCD_MuEnriched_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec from old analysis (13 TeV). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/QCD_Pt-300To470_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 619.3,
+          "part": "Pt-300to470"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-300To470_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 619.3,
+          "part": "Pt-300to470"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-300To470_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 619.3,
+          "part": "Pt-300to470"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-300To470_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 619.3,
+          "part": "Pt-300to470"
+        }
+      }
+    ]
+  },
+  "QCD_Pt-470To600_MuEnrichedPt5": {
+    "sample": "QCD_MuEnriched",
+    "json_output": "datasets/MC_QCD_MuEnriched_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec from old analysis (13 TeV). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/QCD_Pt-470To600_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 59.24,
+          "part": "Pt-470to600"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-470To600_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 59.24,
+          "part": "Pt-470to600"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-470To600_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 59.24,
+          "part": "Pt-470to600"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-470To600_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 59.24,
+          "part": "Pt-470to600"
+        }
+      }
+    ]
+  },
+  "QCD_Pt-600To800_MuEnrichedPt5": {
+    "sample": "QCD_MuEnriched",
+    "json_output": "datasets/MC_QCD_MuEnriched_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec from old analysis (13 TeV). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/QCD_Pt-600To800_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 18.21,
+          "part": "Pt-600to800"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-600To800_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 18.21,
+          "part": "Pt-600to800"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-600To800_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 18.21,
+          "part": "Pt-600to800"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-600To800_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 18.21,
+          "part": "Pt-600to800"
+        }
+      }
+    ]
+  },
+  "QCD_Pt-800To1000_MuEnrichedPt5": {
+    "sample": "QCD_MuEnriched",
+    "json_output": "datasets/MC_QCD_MuEnriched_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec from old analysis (13 TeV). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/QCD_Pt-800To1000_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 3.275,
+          "part": "Pt-800to1000"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-800To1000_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 3.275,
+          "part": "Pt-800to1000"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-800To1000_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 3.275,
+          "part": "Pt-800to1000"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-800To1000_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 3.275,
+          "part": "Pt-800to1000"
+        }
+      }
+    ]
+  },
+  "QCD_Pt-1000_MuEnrichedPt5": {
+    "sample": "QCD_MuEnriched",
+    "json_output": "datasets/MC_QCD_MuEnriched_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec from old analysis (13 TeV). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/QCD_Pt-1000_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 1.078,
+          "part": "Pt-1000"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-1000_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 1.078,
+          "part": "Pt-1000"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-1000_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 1.078,
+          "part": "Pt-1000"
+        }
+      },
+      {
+        "das_names": [
+          "/QCD_Pt-1000_MuEnrichedPt5_TuneCP5_13TeV-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 1.078,
+          "part": "Pt-1000"
+        }
+      }
+    ]
+  }
+}

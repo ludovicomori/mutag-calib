@@ -29,3 +29,9 @@ HLT_triggers:
         - BTagMu_AK8Jet170_DoubleMu5
         - BTagMu_AK8Jet300_Mu5
         - BTagMu_AK4Jet300_Mu5
+    "2025":
+        BTagMu:
+        - BTagMu_AK8DiJet170_Mu5
+        - BTagMu_AK8Jet170_DoubleMu5
+        - BTagMu_AK8Jet300_Mu5
+        - BTagMu_AK4Jet300_Mu5

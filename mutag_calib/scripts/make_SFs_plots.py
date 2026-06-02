@@ -16,6 +16,9 @@ ALLOWED_CATEGORIES = [
     "msd-30toInf_Pt-300to350_globalParT3_XbbVsQCD-HHbbgg",
     "msd-30toInf_Pt-350to425_globalParT3_XbbVsQCD-HHbbgg",
     "msd-30toInf_Pt-425toInf_globalParT3_XbbVsQCD-HHbbgg",
+    "msd-30toInf_Pt-300to400_globalParT3_XbbVsQCD-HHbbgg",
+    "msd-30toInf_Pt-400to450_globalParT3_XbbVsQCD-HHbbgg",
+    "msd-30toInf_Pt-450toInf_globalParT3_XbbVsQCD-HHbbgg",
 ]
 
 TAU21_VALUES = [0.20, 0.25, 0.30, 0.35, 0.40]
