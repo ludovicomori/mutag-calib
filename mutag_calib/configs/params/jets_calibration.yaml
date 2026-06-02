@@ -1,5 +1,67 @@
 jets_calibration:
+  # Override PocketCoffea v9 defaults with preliminary v15 PUPPI JECs for Run 2
+  # Source: /afs/cern.ch/user/i/izisopou/public/jme/json_files_ULRun2_PUPPI/
+  jet_types:
+    AK8PFPuppi:
+      "2018":
+        json_path: /afs/cern.ch/user/i/izisopou/public/jme/json_files_ULRun2_PUPPI/Run2Summer20UL18/fatJet_jerc.json.gz
+        jec_mc: Summer20UL18_V1_MC
+        jec_data:
+          A: Summer20UL18_RunA_V1_DATA
+          B: Summer20UL18_RunB_V1_DATA
+          C: Summer20UL18_RunC_V1_DATA
+          D: Summer20UL18_RunD_V1_DATA
+        jer: Summer19UL18_JRV2_MC
+        level: L1L2L3Res
+      "2017":
+        json_path: /afs/cern.ch/user/i/izisopou/public/jme/json_files_ULRun2_PUPPI/Run2Summer20UL17/fatJet_jerc.json.gz
+        jec_mc: Summer20UL17_V1_MC
+        jec_data:
+          B: Summer20UL17_RunB_V1_DATA
+          C: Summer20UL17_RunC_V1_DATA
+          D: Summer20UL17_RunD_V1_DATA
+          E: Summer20UL17_RunE_V1_DATA
+          F: Summer20UL17_RunF_V1_DATA
+        jer: Summer19UL17_JRV3_MC
+        level: L1L2L3Res
+      2016_PostVFP:
+        json_path: /afs/cern.ch/user/i/izisopou/public/jme/json_files_ULRun2_PUPPI/Run2Summer20UL16/fatJet_jerc.json.gz
+        jec_mc: Summer20UL16_V1_MC
+        jec_data: Summer20UL16_RunFGH_V1_DATA
+        jer: Summer20UL16_JRV3_MC
+        level: L1L2L3Res
+      2016_PreVFP:
+        json_path: /afs/cern.ch/user/i/izisopou/public/jme/json_files_ULRun2_PUPPI/Run2Summer20UL16APV/fatJet_jerc.json.gz
+        jec_mc: Summer20UL16APV_V1_MC
+        jec_data:
+          B: Summer20UL16APV_RunBCD_V1_DATA
+          C: Summer20UL16APV_RunBCD_V1_DATA
+          D: Summer20UL16APV_RunBCD_V1_DATA
+          E: Summer20UL16APV_RunEF_V1_DATA
+          F: Summer20UL16APV_RunEF_V1_DATA
+        jer: Summer20UL16APV_JRV3_MC
+        level: L1L2L3Res
+      2022_preEE: "${default_jets_calibration.factory_config_clib.AK8PFPuppi.2022_preEE}"
+      2022_postEE: "${default_jets_calibration.factory_config_clib.AK8PFPuppi.2022_postEE}"
+      2023_preBPix: "${default_jets_calibration.factory_config_clib.AK8PFPuppi.2023_preBPix}"
+      2023_postBPix: "${default_jets_calibration.factory_config_clib.AK8PFPuppi.2023_postBPix}"
+      "2024": "${default_jets_calibration.factory_config_clib.AK8PFPuppi.2024}"
+      "2025":
+        json_path: /cvmfs/cms-griddata.cern.ch/cat/metadata/JME/Run3-25Prompt-Winter25-NanoAODv15/latest/fatJet_jerc.json.gz
+        jec_mc: Winter25Prompt25_V3_MC
+        jec_data: Winter25Prompt25_V3_DATA
+        jer: Summer23BPixPrompt23_RunD_JRV1_MC
+        level: L1L2L3Res
+
   collection:
+    "2018":
+      AK8PFPuppi: "FatJet"
+    "2017":
+      AK8PFPuppi: "FatJet"
+    2016_PostVFP:
+      AK8PFPuppi: "FatJet"
+    2016_PreVFP:
+      AK8PFPuppi: "FatJet"
     2022_preEE:
       AK8PFPuppi: "FatJet"
     2022_postEE:
@@ -9,6 +71,8 @@ jets_calibration:
     2023_postBPix:
       AK8PFPuppi: "FatJet"
     "2024":
+      AK8PFPuppi: "FatJet"
+    "2025":
       AK8PFPuppi: "FatJet"
 
   variations:
@@ -37,84 +101,163 @@ jets_calibration:
       2023_postBPix: 
       - JES_Total
       - JER
-      "2024": 
+      "2024":
+      - JES_Total
+      - JER
+      "2025":
       - JES_Total
       - JER
 
   apply_jec_MC:  # this is needed to know which collection is corrected with which jet factory
-    2022_preEE: 
+    "2018":
       AK8PFPuppi: True
-    2022_postEE: 
+    "2017":
       AK8PFPuppi: True
-    2023_preBPix: 
+    2016_PostVFP:
       AK8PFPuppi: True
-    2023_postBPix: 
+    2016_PreVFP:
       AK8PFPuppi: True
-    "2024": 
+    2022_preEE:
       AK8PFPuppi: True
-  
+    2022_postEE:
+      AK8PFPuppi: True
+    2023_preBPix:
+      AK8PFPuppi: True
+    2023_postBPix:
+      AK8PFPuppi: True
+    "2024":
+      AK8PFPuppi: True
+    "2025":
+      AK8PFPuppi: True
+
   apply_jec_Data:  # this is needed to know which collection is corrected with which jet factory
-    2022_preEE: 
+    "2018":
       AK8PFPuppi: True
-    2022_postEE: 
+    "2017":
       AK8PFPuppi: True
-    2023_preBPix: 
+    2016_PostVFP:
       AK8PFPuppi: True
-    2023_postBPix: 
+    2016_PreVFP:
       AK8PFPuppi: True
-    "2024": 
+    2022_preEE:
+      AK8PFPuppi: True
+    2022_postEE:
+      AK8PFPuppi: True
+    2023_preBPix:
+      AK8PFPuppi: True
+    2023_postBPix:
+      AK8PFPuppi: True
+    "2024":
+      AK8PFPuppi: True
+    "2025":
       AK8PFPuppi: True
 
   apply_pt_regr_MC:
-    2022_preEE: 
+    "2018":
       AK8PFPuppi: False
-    2022_postEE: 
+    "2017":
       AK8PFPuppi: False
-    2023_preBPix: 
+    2016_PostVFP:
       AK8PFPuppi: False
-    2023_postBPix: 
+    2016_PreVFP:
       AK8PFPuppi: False
-    "2024": 
+    2022_preEE:
+      AK8PFPuppi: False
+    2022_postEE:
+      AK8PFPuppi: False
+    2023_preBPix:
+      AK8PFPuppi: False
+    2023_postBPix:
+      AK8PFPuppi: False
+    "2024":
+      AK8PFPuppi: False
+    "2025":
       AK8PFPuppi: False
 
   apply_pt_regr_Data:
-    2022_preEE: 
+    "2018":
       AK8PFPuppi: False
-    2022_postEE: 
+    "2017":
       AK8PFPuppi: False
-    2023_preBPix: 
+    2016_PostVFP:
       AK8PFPuppi: False
-    2023_postBPix: 
+    2016_PreVFP:
       AK8PFPuppi: False
-    "2024": 
+    2022_preEE:
+      AK8PFPuppi: False
+    2022_postEE:
+      AK8PFPuppi: False
+    2023_preBPix:
+      AK8PFPuppi: False
+    2023_postBPix:
+      AK8PFPuppi: False
+    "2024":
+      AK8PFPuppi: False
+    "2025":
       AK8PFPuppi: False
 
   apply_jec_msoftdrop_MC:
+    "2018":
+      AK8PFPuppi: True
+    "2017":
+      AK8PFPuppi: True
+    2016_PostVFP:
+      AK8PFPuppi: True
+    2016_PreVFP:
+      AK8PFPuppi: True
     2022_preEE:
       AK8PFPuppi: True
-    2022_postEE: 
+    2022_postEE:
       AK8PFPuppi: True
-    2023_preBPix: 
+    2023_preBPix:
       AK8PFPuppi: True
-    2023_postBPix: 
+    2023_postBPix:
       AK8PFPuppi: True
-    "2024": 
+    "2024":
+      AK8PFPuppi: True
+    "2025":
       AK8PFPuppi: True
 
   apply_jec_msoftdrop_Data:
+    "2018":
+      AK8PFPuppi: True
+    "2017":
+      AK8PFPuppi: True
+    2016_PostVFP:
+      AK8PFPuppi: True
+    2016_PreVFP:
+      AK8PFPuppi: True
     2022_preEE:
       AK8PFPuppi: True
-    2022_postEE: 
+    2022_postEE:
       AK8PFPuppi: True
-    2023_preBPix: 
+    2023_preBPix:
       AK8PFPuppi: True
-    2023_postBPix: 
+    2023_postBPix:
       AK8PFPuppi: True
-    "2024": 
+    "2024":
+      AK8PFPuppi: True
+    "2025":
       AK8PFPuppi: True
 
   rescale_MET_config:
-    2022_preEE:   
+    "2018":
+      apply: False
+      MET_collection: "PuppiMET"
+      Jet_collection: "Jet"
+    "2017":
+      apply: False
+      MET_collection: "PuppiMET"
+      Jet_collection: "Jet"
+    2016_PostVFP:
+      apply: False
+      MET_collection: "PuppiMET"
+      Jet_collection: "Jet"
+    2016_PreVFP:
+      apply: False
+      MET_collection: "PuppiMET"
+      Jet_collection: "Jet"
+    2022_preEE:
       apply: False
       MET_collection: "PuppiMET"
       Jet_collection: "Jet"
@@ -131,6 +274,10 @@ jets_calibration:
       MET_collection: "PuppiMET"
       Jet_collection: "Jet"
     "2024":
+      apply: False
+      MET_collection: "PuppiMET"
+      Jet_collection: "Jet"
+    "2025":
       apply: False
       MET_collection: "PuppiMET"
       Jet_collection: "Jet"

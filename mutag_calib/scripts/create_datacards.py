@@ -494,17 +494,24 @@ def get_1d_histogram(h2d_dict, tau21_cut):
     return h1d_dict
 
 
-def get_1d_histogram_reweighed(h2d_dict, tau21_cut, samples, year, parent_category):
+def get_1d_histogram_reweighed(h2d_dict, tau21_cut, samples, years, parent_category):
     """Return 1D histograms with MC (b+c+light) reweighted to data.
 
     The input 2D histograms are first integrated over the tau21 axis as in
     get_1d_histogram, using the cut ``tau21 < tau21_cut``. Then, for the
-    specified year and a given parent category, a bin-by-bin weight is
+    specified year(s) and a given parent category, a bin-by-bin weight is
     computed such that, in the *inclusive pass+fail region* for that parent
     category, the sum of all MC histograms (b + c + light) equals the data
     histogram. Those weights are applied to the MC templates in both the
     corresponding pass and fail categories, leaving data unchanged.
+
+    ``years`` may be a single string or a list of strings: a dataset is
+    included if any of the given year tags appears in its name. This
+    supports --combined-years mode (e.g. 2025 data + 2024 MC) where the
+    MC year tag differs from the primary label year.
     """
+    if isinstance(years, str):
+        years = [years]
 
     # Start from the standard 1D histograms
     h1d_dict = get_1d_histogram(h2d_dict, tau21_cut)
@@ -556,11 +563,11 @@ def get_1d_histogram_reweighed(h2d_dict, tau21_cut, samples, year, parent_catego
     mc_sum = np.zeros(n_fit_bins, dtype=float)
     data_sum = np.zeros(n_fit_bins, dtype=float)
 
-    # Build inclusive (pass+fail) distributions for the requested year and parent category
+    # Build inclusive (pass+fail) distributions for the requested year(s) and parent category
     for proc_name, ds_dict in h1d_dict.items():
         for ds, h in ds_dict.items():
-            # Restrict to the datasets of the current year
-            if year not in ds:
+            # Restrict to the datasets whose name matches any of the requested years
+            if not any(y in ds for y in years):
                 continue
 
             # For weight-storage histograms, ``h.view`` returns a structured
@@ -599,7 +606,7 @@ def get_1d_histogram_reweighed(h2d_dict, tau21_cut, samples, year, parent_catego
         if proc_name not in mc_sample_names:
             continue
         for ds, h in ds_dict.items():
-            if year not in ds:
+            if not any(y in ds for y in years):
                 continue
             view = h.view(flow=False)
 
@@ -646,8 +653,10 @@ def main():
     parser.add_argument("input_file", help="Path to the pocketcoffea output .coffea file")
     parser.add_argument("--output-dir", "-o", default=None, help="Output directory for datacards")
     parser.add_argument("--variable", default="FatJetGood_logsumcorrSVmass_tau21", help="Variable to use for the fit")
-    parser.add_argument("--years", nargs="+", default=["2022_preEE", "2022_postEE", "2023_preBPix", "2023_postBPix"], 
+    parser.add_argument("--years", nargs="+", default=["2022_preEE", "2022_postEE", "2023_preBPix", "2023_postBPix"],
                        help="Years to include in the analysis")
+    parser.add_argument("--combined-years", action="store_true", default=False,
+                       help="Treat all years as a single combined measurement (e.g. 2025 data + 2024 MC)")
     parser.add_argument("--verbose", "-v", action="store_true", default=False, help="Enable verbose output")
     args = parser.parse_args()
     
@@ -671,9 +680,16 @@ def main():
     successful_categories = []
     failed_categories = []
 
-    for year in args.years:
+    # In combined mode, treat all years as one measurement (e.g. 2025 data + 2024 MC)
+    if args.combined_years:
+        year_groups = [args.years]  # single group with all years
+    else:
+        year_groups = [[year] for year in args.years]  # one group per year
+
+    for years_group in year_groups:
+        year = years_group[0]  # primary year label for output naming
         # Define processes and systematics
-        mc_processes, data_processes = define_processes(samples, [year])
+        mc_processes, data_processes = define_processes(samples, years_group)
         print(f"MC processes: {mc_processes.items()}")
         print(f"DATA processes: {data_processes.items()}\n")
         
@@ -687,7 +703,7 @@ def main():
         # Add the variation QCD_Madgraph/QCD_MuEnriched to the Hist
         # add_Madgraph_systematic(histograms[args.variable])
         
-        systematics = define_systematics([year], [p_name for p_name, p in mc_processes.items()])
+        systematics = define_systematics(years_group, [p_name for p_name, p in mc_processes.items()])
         print(f"systematics: {systematics}\n")
         
         # Create output directory
@@ -718,11 +734,12 @@ def main():
                     histograms=histo_1d,
                     datasets_metadata=datasets_metadata,
                     cutflow=cutflow,
-                    years=[year],
+                    years=years_group,
                     mc_processes=mc_processes,
                     data_processes=data_processes,
                     systematics=systematics,
                     category=cat,  # Category string matching the multicuts structure
+                    bin_suffix=year,
                     verbose=args.verbose
                 )
                 
@@ -737,7 +754,7 @@ def main():
                     print(f"\n\nCreating datacard: Year: {year}\tCategory: {cat}\ttau21 < {tau21} reweighed")
                     parent_category = "-".join(cat.split("-")[:-1])
                     histo_1d_rew = get_1d_histogram_reweighed(
-                        histograms[args.variable], tau21, samples, year, parent_category
+                        histograms[args.variable], tau21, samples, years_group, parent_category
                     )
                     # Add the variation QCD_Madgraph/QCD_MuEnriched to the Hist
                     add_Madgraph_systematic_1d(histo_1d_rew, cat)
@@ -746,11 +763,12 @@ def main():
                         histograms=histo_1d_rew,
                         datasets_metadata=datasets_metadata,
                         cutflow=cutflow,
-                        years=[year],
+                        years=years_group,
                         mc_processes=mc_processes,
                         data_processes=data_processes,
                         systematics=systematics,
                         category=cat,
+                        bin_suffix=year,
                         verbose=args.verbose,
                     )
                     all_datacards_reweight[cat][tau21] = datacard_rew
