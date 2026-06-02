@@ -3,17 +3,17 @@ object_preselection:
     pt: 5.0
     eta: 2.4
     iso: 0.15  #PFIsoTight
-    id: mediumID
+    id: tightId
 
   Electron:
     pt: 15.0
     eta: 2.4
     iso: 0.06
-    id: mvaNoIso_WP90
+    id: mvaIso_WP80
 
   Jet:
     dr_lepton: 0.4
-    pt: 20.0
+    pt: 25.0
     eta: 2.5
     jetId: 2
     puId:
