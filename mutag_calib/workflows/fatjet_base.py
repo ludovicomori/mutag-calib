@@ -115,9 +115,21 @@ class fatjetBaseProcessor(BaseProcessorABC):
         if "globalParT3_Xbb" in self.events.FatJetGood.fields:
             Xbb = self.events.FatJetGood.globalParT3_Xbb
             QCD = self.events.FatJetGood.globalParT3_QCD
-            fatjet_fields["globalParT3_XbbVsQCD"] = ak.where(
+            Top = (
+                self.events.FatJetGood.globalParT3_TopbWev + 
+                self.events.FatJetGood.globalParT3_TopbWmv + 
+                self.events.FatJetGood.globalParT3_TopbWq + 
+                self.events.FatJetGood.globalParT3_TopbWqq + 
+                self.events.FatJetGood.globalParT3_TopbWtauhv
+            )
+            fatjet_fields["globalParT_XbbVsQCD"] = ak.where(
                 (Xbb + QCD) > 0,
                 Xbb / (Xbb + QCD),
+                -999.0,
+            )
+            fatjet_fields["globalParT_XbbVsQCDTop"] = ak.where(
+                (Xbb + QCD + Top) > 0,
+                Xbb / (Xbb + QCD + Top),
                 -999.0,
             )
         for field, value in fatjet_fields.items():
