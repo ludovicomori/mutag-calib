@@ -11,6 +11,7 @@ defined in the fit templates configuration.
 import os
 import argparse
 import yaml
+import gc
 from pathlib import Path
 from collections import defaultdict
 import uproot
@@ -203,6 +204,27 @@ def get_passfail_ratio(datacards):
                 passfail_ratio[parent_cat][tau21][flavor] = float(sumw_pass[flavor] / sumw_fail[flavor])
 
     return dict(passfail_ratio)
+
+
+def get_passfail_ratio_for_pair(pass_datacard, fail_datacard):
+    """Compute pass/fail ratio for a single pass/fail datacard pair."""
+    pass_hists = pass_datacard.create_shape_histogram_dict(is_data=False)
+    fail_hists = fail_datacard.create_shape_histogram_dict(is_data=False)
+
+    sumw_pass = {
+        process_name.split("_nominal")[0]: hist.values().sum()
+        for process_name, hist in pass_hists.items()
+    }
+    sumw_fail = {
+        process_name.split("_nominal")[0]: hist.values().sum()
+        for process_name, hist in fail_hists.items()
+    }
+
+    ratio = {}
+    for flavor in sumw_pass.keys():
+        denom = sumw_fail.get(flavor, 0.0)
+        ratio[flavor] = float(sumw_pass[flavor] / denom) if denom != 0 else 1.0
+    return ratio
 
 def add_Madgraph_systematic(histogram_logsumSVmass_tau21):
     """Function to add the Madgraph systematic uncertainty to the histogram."""
@@ -696,18 +718,20 @@ def main():
         output_dir = Path(args.output_dir)
         output_dir.mkdir(exist_ok=True)
         
-        # Dictionary to store all datacards for combination
-        all_datacards = defaultdict(dict)
-        # Additional datacards using MC reweighted to data for tau21 < 0.30
-        all_datacards_reweight = defaultdict(dict)
-        
-        # Create datacards for each combination
-        for cat in categories:
-            print(f"\ncategory: {cat}")
+        parent_categories = set('-'.join(cat.split("-")[:-1]) for cat in categories)
 
-            for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
+        # Process one tau21 slice at a time to keep memory bounded.
+        for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
+            print(f"\n\n=== Processing tau21 < {tau21} for year {year} ===")
+
+            # Dictionary to store datacards only for this tau21
+            all_datacards_tau = defaultdict(dict)
+            all_datacards_reweight_tau = defaultdict(dict)
+
+            for cat in categories:
+                print(f"\ncategory: {cat}")
                 print(f"\n\nCreating datacard: Year: {year}\tCategory: {cat}\ttau21 < {tau21}")
-                
+
                 # Get the 1D histogram by integrating over tau21 axis with a specific cut: tau21 < tau21_cut
                 histo_1d = get_1d_histogram(histograms[args.variable], tau21)
                 # Add the variation QCD_Madgraph/QCD_MuEnriched to the Hist
@@ -725,14 +749,8 @@ def main():
                     category=cat,  # Category string matching the multicuts structure
                     verbose=args.verbose
                 )
-                
-                # Store for combination between pass and fail regions
-                all_datacards[cat][tau21] = datacard
+                all_datacards_tau[cat][tau21] = datacard
 
-                # For tau21 < 0.30, also create a datacard where MC
-                # templates are reweighted to data in the inclusive
-                # (pass+fail) region for the corresponding parent
-                # category, to define an external systematic.
                 if abs(tau21 - 0.3) < 1e-6:
                     print(f"\n\nCreating datacard: Year: {year}\tCategory: {cat}\ttau21 < {tau21} reweighed")
                     parent_category = "-".join(cat.split("-")[:-1])
@@ -753,30 +771,29 @@ def main():
                         category=cat,
                         verbose=args.verbose,
                     )
-                    all_datacards_reweight[cat][tau21] = datacard_rew
-                
-        passfail_ratio = get_passfail_ratio(all_datacards)
+                    all_datacards_reweight_tau[cat][tau21] = datacard_rew
+                    del histo_1d_rew
 
-        # Loop over categories again to dump datacards modified with pass/fail ratios
-        parent_categories = set()
-        for cat in categories:
-            for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
-                # Extract parent category (without pass/fail)
+                del histo_1d, datacard
+                if abs(tau21 - 0.3) < 1e-6 and "datacard_rew" in locals():
+                    del datacard_rew
+                gc.collect()
+
+            passfail_ratio_tau = get_passfail_ratio(all_datacards_tau)
+
+            for cat in categories:
                 parent_category = '-'.join(cat.split("-")[:-1])
-                parent_categories.add(parent_category)
                 region = cat.split("-")[-1]
-                # Create directory for this category
                 tau21_str = get_tau21_str(tau21)
                 category_dir = output_dir / year / parent_category / tau21_str / region
                 category_dir.mkdir(parents=True, exist_ok=True)
-                datacard = all_datacards[cat][tau21]
+                datacard = all_datacards_tau[cat][tau21]
 
-                # Modify action of rateParam for fail regions by passing the passfail_ratio argument
                 if cat.endswith("-pass"):
-                    kwargs = {"directory" : str(category_dir)}
+                    kwargs = {"directory": str(category_dir)}
                 elif cat.endswith("-fail"):
-                    parent_cat = '-'.join(cat.split("-")[:-1])
-                    kwargs = {"directory" : str(category_dir), "passfail_ratio" : passfail_ratio[parent_cat][tau21]}
+                    kwargs = {"directory": str(category_dir), "passfail_ratio": passfail_ratio_tau[parent_category][tau21]}
+
                 try:
                     datacard.dump(**kwargs)
                     successful_categories.append({"year": year, "category": cat, "folder": str(category_dir)})
@@ -785,18 +802,16 @@ def main():
                     print(str(e))
                     failed_categories.append({"year": year, "category": cat, "error": str(e)})
 
-                # For tau21 < 0.30, also dump the reweighted datacards
-                if abs(tau21 - 0.3) < 1e-6 and cat in all_datacards_reweight and tau21 in all_datacards_reweight[cat]:
+                if abs(tau21 - 0.3) < 1e-6 and cat in all_datacards_reweight_tau and tau21 in all_datacards_reweight_tau[cat]:
                     reweight_tau21_str = f"{tau21_str}_reweight"
                     reweight_category_dir = output_dir / year / parent_category / reweight_tau21_str / region
                     reweight_category_dir.mkdir(parents=True, exist_ok=True)
-                    datacard_rew = all_datacards_reweight[cat][tau21]
+                    datacard_rew = all_datacards_reweight_tau[cat][tau21]
 
                     if cat.endswith("-pass"):
                         kwargs_rew = {"directory": str(reweight_category_dir)}
                     elif cat.endswith("-fail"):
-                        parent_cat = '-'.join(cat.split("-")[:-1])
-                        kwargs_rew = {"directory": str(reweight_category_dir), "passfail_ratio": passfail_ratio[parent_cat][tau21]}
+                        kwargs_rew = {"directory": str(reweight_category_dir), "passfail_ratio": passfail_ratio_tau[parent_category][tau21]}
                     else:
                         kwargs_rew = {"directory": str(reweight_category_dir)}
 
@@ -812,34 +827,34 @@ def main():
         for parent_cat in parent_categories:
             for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
                 print(f"\nCreating combined datacard for category: {parent_cat} with tau21 < {tau21} (pass + fail)")
-                tau21_str = get_tau21_str(tau21)
                 directory = output_dir / year / parent_cat / tau21_str
                 combine_datacards(
-                    datacards={f"{region}/datacard.txt": all_datacards[f"{parent_cat}-{region}"][tau21] for region in ["pass", "fail"]},
+                    datacards={f"{region}/datacard.txt": all_datacards_tau[f"{parent_cat}-{region}"][tau21] for region in ["pass", "fail"]},
                     directory=directory
                 )
-                # Save pass/fail ratio to a YAML file
                 filename = directory / "passfail_ratio.yaml"
                 print(f"Saving pass/fail ratio to {filename}")
                 with open(filename, "w") as f:
-                    yaml.dump({"passfail_ratio" : passfail_ratio[parent_cat][tau21]}, f, indent=4)
-
+                    yaml.dump({"passfail_ratio": passfail_ratio_tau[parent_cat][tau21]}, f, indent=4)
                 print(f"Combined datacard saved in {directory}")
 
-                # For tau21 < 0.30, also create the combined reweighted datacard
                 if abs(tau21 - 0.3) < 1e-6:
                     reweight_tau21_str = f"{tau21_str}_reweight"
                     directory_rew = output_dir / year / parent_cat / reweight_tau21_str
                     print(f"\nCreating combined reweighted datacard for category: {parent_cat} with tau21 < {tau21} (pass + fail)")
                     combine_datacards(
-                        datacards={f"{region}/datacard.txt": all_datacards_reweight[f"{parent_cat}-{region}"][tau21] for region in ["pass", "fail"]},
+                        datacards={f"{region}/datacard.txt": all_datacards_reweight_tau[f"{parent_cat}-{region}"][tau21] for region in ["pass", "fail"]},
                         directory=directory_rew,
                     )
                     filename_rew = directory_rew / "passfail_ratio.yaml"
                     print(f"Saving pass/fail ratio to {filename_rew}")
                     with open(filename_rew, "w") as f:
-                        yaml.dump({"passfail_ratio": passfail_ratio[parent_cat][tau21]}, f, indent=4)
+                        yaml.dump({"passfail_ratio": passfail_ratio_tau[parent_cat][tau21]}, f, indent=4)
                     print(f"Combined reweighted datacard saved in {directory_rew}")
+
+            all_datacards_tau.clear()
+            all_datacards_reweight_tau.clear()
+            gc.collect()
 
     # Print summary report
     print_report(successful_categories, failed_categories)
