@@ -1,0 +1,14 @@
+# Run 2 UL pT-eta-tau21 reweighting maps for HHbbgg
+ptetatau21_reweighting:
+  "2018":
+    file: ${config_dir:}/ptetatau21_reweighting/HHbbgg/FatJetGood_pt_eta_tau21_2018_reweighting.json
+    category: pt300msd30to210
+  "2017":
+    file: ${config_dir:}/ptetatau21_reweighting/HHbbgg/FatJetGood_pt_eta_tau21_2017_reweighting.json
+    category: pt300msd30to210
+  "2016_PostVFP":
+    file: ${config_dir:}/ptetatau21_reweighting/HHbbgg/FatJetGood_pt_eta_tau21_2016_PostVFP_reweighting.json
+    category: pt300msd30to210
+  "2016_PreVFP":
+    file: ${config_dir:}/ptetatau21_reweighting/HHbbgg/FatJetGood_pt_eta_tau21_2016_PreVFP_reweighting.json
+    category: pt300msd30to210

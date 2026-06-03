@@ -33,3 +33,9 @@ plotting_style:
     l: CMS_red
     c: CMS_orange
     b: CMS_blue
+
+  # 2025 not yet in PocketCoffea defaults — provide explicit literal (110.19 fb^-1)
+  # Format matches PocketCoffea defaults: lumi value as a number (fb^-1)
+  plot_upper_label:
+    by_year:
+      "2025": 110.19
