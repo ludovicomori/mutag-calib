@@ -17,6 +17,7 @@ class FixedJetsSoftdropMassCalibrator(JetsSoftdropMassCalibrator):
     """JetsSoftdropMassCalibrator with fixed 2016 year labels and field-level replacement."""
 
     def initialize(self, events):
+        nano_aod_version = get_nano_version(events,self.params,self._year)
         # Load the calibration of each jet type requested by the parameters
         for jet_type, jet_coll_name in self.jet_calib_param.collection[self.year].items():
             # Calibrate only AK8 jets
@@ -51,8 +52,9 @@ class FixedJetsSoftdropMassCalibrator(JetsSoftdropMassCalibrator):
                     "year": self._year,
                     "isMC": self.metadata["isMC"],
                     "era": self.metadata["era"] if "era" in self.metadata else None,
-                    "nano_version": get_nano_version(events, self.params, self._year),
+                    "nano_version": nano_aod_version,
                 },
+                nano_version=nano_aod_version,
                 jec_syst=self.do_variations
             )
             self.jets_calibrated_types.append(jet_type)
