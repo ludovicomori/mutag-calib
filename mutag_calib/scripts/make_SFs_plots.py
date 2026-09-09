@@ -19,12 +19,12 @@ TAU21_VALUES = [0.20, 0.25, 0.30, 0.35, 0.40]
 TAU21_CENTRAL = 0.30
 
 
-# read r from fitResults.json
+# read the scale factor from fitResults.json
 def read_r(path, sf_type="b"):
     with open(path) as f:
         d = json.load(f)
     if sf_type == "b":
-        return d["r"], d["r_errUp"], d["r_errDown"]
+        return d["SF_b"], d["SF_b_errUp"], d["SF_b_errDown"]
     elif sf_type == "c":
         return d["SF_c"], d["SF_c_errUp"], d["SF_c_errDown"]
 
@@ -294,7 +294,7 @@ def plot_r_vs_category_ROOT(year, cats, r, err_fit_up, err_fit_dn, tau21_err, rw
 
     latex = ROOT.TLatex()
     latex.SetTextAlign(22)
-    latex.SetTextSize(0.04)
+    latex.SetTextSize(0.03)
 
     # vertical placement: first line just below the axis, second line one step lower
     y_line1 = y_margin - (0.01 if sf_type == "b" else 0.05)
@@ -341,9 +341,9 @@ def save_latex_table(data, output_dir, ALLOWED_CATEGORIES, sf_type="b", cat_coll
     with open(filename, "w") as f:
         f.write("\\begin{table}[htbp]\n")
         f.write("\\centering\n")
-        f.write("\\begin{tabular}{|c|c|c|c|c|c|c|}\n")
+        f.write("\\begin{tabular}{|c|c|c|c|c|c|c|c|}\n")
         f.write("\\hline\n")
-        f.write("year & category $p_\\mathrm{T}$ [GeV] & $\\mathrm{SF_{nominal}}$ & $\\mathrm{err_{fit}}$ & $\\tau_{21}^\\mathrm{{cut}}$ & $\\tau_{21}^\\mathrm{reweight}$ & $\\sigma_\\mathrm{tot}$ \\\\\n")
+        f.write("year & $\\mathrm{m_{SD}}$ [GeV] & category $p_\\mathrm{T}$ [GeV] & $\\mathrm{SF_{nominal}}$ & $\\mathrm{err_{fit}}$ & $\\tau_{21}^\\mathrm{{cut}}$ & $\\tau_{21}^\\mathrm{reweight}$ & $\\sigma_\\mathrm{tot}$ \\\\\n")
         f.write("\\hline\n")
 
         for year in data.keys():
@@ -359,6 +359,14 @@ def save_latex_table(data, output_dir, ALLOWED_CATEGORIES, sf_type="b", cat_coll
 
                 # scrittura riga tabella
                 year_label = year.replace("_", " ")
+
+                m_msd = re.search(r"msd-(\d+)to(\d+|Inf)", cat)
+                if m_msd:
+                    msd_lo, msd_hi = m_msd.group(1), m_msd.group(2)
+                    msd_label = f"[{msd_lo}, $\\infty$]" if msd_hi == "Inf" else f"[{msd_lo}, {msd_hi}]"
+                else:
+                    msd_label = cat
+
                 m = re.search(r"Pt-(\d+)to(\d+|Inf)", cat)
                 if m:
                     lo, hi = m.group(1), m.group(2)
@@ -368,15 +376,15 @@ def save_latex_table(data, output_dir, ALLOWED_CATEGORIES, sf_type="b", cat_coll
                         cat_label = f"[{lo}, {hi}]"
                 else:
                     cat_label = cat
-                f.write(f"{year_label} & {cat_label} & {r0:.3f} & {max(err_up, err_dn):.3f} & {tau21_unc:.3f} & {reweight_unc:.3f} & {total_unc:.3f} \\\\\n")
+                f.write(f"{year_label} & {msd_label} & {cat_label} & {r0:.3f} & {max(err_up, err_dn):.3f} & {tau21_unc:.3f} & {reweight_unc:.3f} & {total_unc:.3f} \\\\\n")
                 f.write("\\hline\n")
 
         f.write("\\end{tabular}\n")
         f.write(f"""
-        \\caption{{Scale factors $\\mathrm{{SF}}_\\mathrm{{{sf_type}}}$ for $\\mathrm{{m}}_\\mathrm{{SD}}$ $\\in$ [80, 170] GeV for ParticleNet XbbVsQCD tagger WP = 0.75.
+        \\caption{{Scale factors $\\mathrm{{SF}}_\\mathrm{{{sf_type}}}$ for ParticleNet XbbVsQCD tagger WP = 0.75.
         $\\mathrm{{err_{{fit}}}}$ is the error coming from Combine fit, so statistics and systematics (pileup, lumi, isr, fsr, JER, JES, syst on light and c jets, Madgraph/Pythia QCD),
-        $\\tau_{{21}}^\\mathrm{{cut}}$ is the systematic uncertainty related to the choice of the $\\tau_{{21}}$ cut used in the event selection (max difference between nominal 
-        $\\tau_{{21}}$ cut at 0.30 and variations at 0.20, 0.25, 0.35, 0.40), $\\tau_{{21}}^\\mathrm{{reweight}}$ is the systematic uncertainty related to the SF obtained after reweight 
+        $\\tau_{{21}}^\\mathrm{{cut}}$ is the systematic uncertainty related to the choice of the $\\tau_{{21}}$ cut used in the event selection (max difference between nominal
+        $\\tau_{{21}}$ cut at 0.30 and variations at 0.20, 0.25, 0.35, 0.40), $\\tau_{{21}}^\\mathrm{{reweight}}$ is the systematic uncertainty related to the SF obtained after reweight
         of MC to data (difference between the SF at nominal $\\tau_{{21}}$ cut at 0.30 with and without the reweight).}}\n
         """)
         f.write("\\end{table}\n")

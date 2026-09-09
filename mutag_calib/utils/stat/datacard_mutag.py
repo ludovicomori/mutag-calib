@@ -1,4 +1,6 @@
+import math
 import os
+import numpy as np
 import uproot
 from pocket_coffea.utils.stat import MCProcess, Datacard
 
@@ -45,18 +47,27 @@ class DatacardMutag(Datacard):
         for process in self.mc_processes.values():
             for year in process.years:
                 if process.has_rateParam:
-                    if process.is_signal:
-                        rate_param_name = "r"
-                    else:
-                        rate_param_name = f"SF_{process.name}"
+                    # SF_<process> for every process: naming it "r" collides with
+                    # combine's own POI and scales b twice.
+                    rate_param_name = f"SF_{process.name}"
                     line = rate_param_name.ljust(self.adjust_syst_colum)
                     line += "rateParam".ljust(self.adjust_columns)
-                    if passfail_ratio is None:
+                    # Zero-yield fail region gives ratio = inf, an invalid formula
+                    # syntax: fall back to a plain parameter.
+                    ratio = (
+                        None if passfail_ratio is None
+                        else passfail_ratio.get(f"{process.name}_{year}")
+                    )
+                    use_formula = ratio is not None and math.isfinite(ratio)
+                    if not use_formula:
                         line += f"* {process.name}_{year} 1 [0,5]".ljust(
                             self.adjust_columns
                         )
                     else:
+                        formula_name = f"rp_{process.name}"
                         formula = self.get_passfail_formula(process, year, passfail_ratio)
+                        line = formula_name.ljust(self.adjust_syst_colum)
+                        line += "rateParam".ljust(self.adjust_columns)
                         line += f"* {process.name}_{year} {formula} {rate_param_name}".ljust(
                             self.adjust_columns
                         )
@@ -126,12 +137,38 @@ class DatacardMutag(Datacard):
         shape_histograms = self.create_shape_histogram_dict(is_data=False)
         if self.has_data:
             shape_histograms_data = self.create_shape_histogram_dict(is_data=True)
+        self._neutralise_empty_variations(shape_histograms)
         with uproot.recreate(shapes_file) as root_file:
             if self.has_data:
                 for shape, histogram in shape_histograms_data.items():
                     root_file[shape] = histogram
             for shape, histogram in shape_histograms.items():
                 root_file[shape] = histogram
+
+    @staticmethod
+    def _neutralise_empty_variations(shapes: dict) -> None:
+        """Replace a systematic variation that integrates to zero with the nominal.
+
+        text2workspace.py aborts with "Bogus norm 0.0" when a variation wipes out
+        an already near-empty process. Such a variation carries no information, so
+        the systematic is made a no-op for that (channel, process) only. Warns, so
+        it is never silent if it fires on a populated process.
+        """
+        nominal = {k[: -len("_nominal")]: v for k, v in shapes.items()
+                   if k.endswith("_nominal")}
+        for key, hist in list(shapes.items()):
+            if key.endswith("_nominal"):
+                continue
+            process = next((p for p in nominal if key.startswith(p + "_")), None)
+            if process is None:
+                continue
+            nom = nominal[process]
+            if float(np.sum(hist.values())) > 0 or float(np.sum(nom.values())) <= 0:
+                continue
+            print(f"[WARN] {process}: variation '{key[len(process) + 1:]}' integrates "
+                  f"to 0 (nominal {float(np.sum(nom.values())):.4g}); "
+                  "using the nominal instead so text2workspace does not abort")
+            shapes[key] = nom
 
     @property
     def bin(self) -> str:
