@@ -5,10 +5,17 @@ import matplotlib.pyplot as plt
 import ROOT
 import argparse
 import re
+import correctionlib.schemav2 as cs
+import gzip
+import rich
 
 from allowed_categories import ALLOWED_CATEGORIES_SF_PLOT
 
+# TAU21_VALUES = [0.15, 0.20, 0.25, 0.30, 0.35, 0.40]
 TAU21_VALUES = [0.20, 0.25, 0.30, 0.35, 0.40]
+# TAU21_VALUES = [0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.0]
+# TAU21_VALUES = [0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.0]
+# TAU21_VALUES = [0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.0]
 TAU21_CENTRAL = 0.30
 
 
@@ -149,7 +156,7 @@ def plot_r_vs_tau21_ROOT(year, category, tau, r, err_up, err_dn, outname, sf_typ
     g.GetYaxis().SetTitle(f"SF_{{{sf_type}}}")
     g.GetYaxis().SetTitleSize(0.05)
     g.GetYaxis().SetTitleOffset(0.9)
-    y_margin = set_dynamic_y_range(g, r, err_up, err_dn, n_sigma=1.5, fixed_range=(0.9, 1.1))
+    y_margin = set_dynamic_y_range(g, r, err_up, err_dn, n_sigma=1.5)  # , fixed_range=(0.9, 1.1))
     g.GetYaxis().SetNdivisions(120, 0, 0)
 
     c.SetGrid()
@@ -254,7 +261,7 @@ def plot_r_vs_category_ROOT(year, cats, r, err_fit_up, err_fit_dn, tau21_err, rw
     g_tot.GetYaxis().SetTitle(f"SF_{{{sf_type}}}")
     g_tot.GetYaxis().SetTitleSize(0.05)
     g_tot.GetYaxis().SetTitleOffset(0.9)
-    y_margin = set_dynamic_y_range(g_tot, r, err_up_tot, err_dn_tot, n_sigma=1.5, fixed_range=(0.8, 1.2))
+    y_margin = set_dynamic_y_range(g_tot, r, err_up_tot, err_dn_tot, n_sigma=1.5)  # , fixed_range=(0.8, 1.2))
     g_tot.GetYaxis().SetNdivisions(120, 0, 0)
 
     c.SetGrid()
@@ -376,13 +383,124 @@ def save_latex_table(data, output_dir, ALLOWED_CATEGORIES, sf_type="b", cat_coll
 
     print(f"[OK] LaTeX table saved to {filename}")
 
+def save_correctionlib_json(data, output_dir, ALLOWED_CATEGORIES, sf_type="b", cat_coll="normal_category"):
+    correct_dict = {key: {} for key in ["central", "up", "down", "up_rew", "down_rew", "up_tau21", "down_tau21", "up_internalised", "down_internalised"]}
+    if sf_type =="b":
+        flow = {key: 0.915 for key in ["down", "down_rew", "down_tau21", "down_internalised"]}
+        flow |= {key: 1.085 for key in ["up", "up_rew", "up_tau21", "up_internalised"]}
+    else:
+        flow = {key: 0.6 for key in ["down", "down_rew", "down_tau21", "down_internalised"]}
+        flow |= {key: 1.4 for key in ["up", "up_rew", "up_tau21", "up_internalised"]}
+    flow["central"] = 1.0
+
+    for year in data.keys():
+        for cat in ALLOWED_CATEGORIES:
+            purity = cat.split("_")[-1]
+            m = re.search(r"Pt-(\d+)to(\d+|Inf)", cat)
+            pt = m.group(1)  # I am taking lower bound, as upper bound should always be covered by next bin
+            res = data[year][cat]
+            r0, err_up, err_dn = res[TAU21_CENTRAL]
+            tau21_unc = compute_tau21_unc(res)
+            reweight_unc = compute_reweight_unc(res)
+            total_up = math.sqrt(err_up**2 + tau21_unc**2 + reweight_unc**2)
+            total_down = math.sqrt(err_dn**2 + tau21_unc**2 + reweight_unc**2)
+            if purity not in correct_dict["central"]:
+                for val in correct_dict.values():
+                    val[purity] = {}
+            correct_dict["central"][purity][pt] = r0
+            correct_dict["up"][purity][pt] = r0 + total_up
+            correct_dict["down"][purity][pt] = r0 - total_down
+            correct_dict["up_rew"][purity][pt] = r0 + reweight_unc
+            correct_dict["down_rew"][purity][pt] = r0 - reweight_unc
+            correct_dict["up_tau21"][purity][pt] = r0 + tau21_unc
+            correct_dict["down_tau21"][purity][pt] = r0 - tau21_unc
+            correct_dict["up_internalised"][purity][pt] = r0 + tau21_unc
+            correct_dict["down_internalised"][purity][pt] = r0 - tau21_unc
+
+    corr_wp = cs.Correction(
+            name=f"globalParT3_XbbVsQCD_{sf_type}_wp_values",
+            description="Extract working point values (lower limits) for the bb-jet discrimination for globalParT3_XbbVsQCD in 2024. The MP, HP and VHP working points correspond to windows between 0.95, 0.975 and 0.99 score. CURRENTLY WORK IN PROGRESS",
+            inputs=[cs.Variable(name="working_point", type="string", description="Working points or purity regions used for discrimination")],
+            output=cs.Variable(name="value", type="real", description="Lower edge of the score window for the given working point."),
+            version=1,
+            data=cs.Category(
+                nodetype="category",
+                input="working_point",
+                content=[
+                    cs.CategoryItem(
+                        key=wp,
+                        value=val,
+                        )
+                    for wp, val in zip(["MP", "HP", "VHP"],[0.95,0.975,0.99])
+                    ],
+                default=0.0
+                )
+            )
+    corr_full = cs.Correction(
+            name=f"globalParT3_XbbVsQCD_{sf_type}_{cat_coll}",
+            version=1,
+            inputs=[
+                cs.Variable(name="systematic", type="string", description="'central' for nominal SF. 'up/down' for total SF variation. Other 'up/down_X' for additional uncertainty breakdown."),
+                cs.Variable(name="working_point", type="string", description="MP/HP/VHP"),
+                cs.Variable(name="pt", type="real", description="FatJet pT"),
+                ],
+            output=cs.Variable(name="weight", type="real"),
+            data=cs.Category(
+                nodetype="category",
+                input="systematic",
+                content=[
+                    cs.CategoryItem(
+                        key=var,
+                        value=cs.Category(
+                            nodetype="category",
+                            input="working_point",
+                            content=[
+                                cs.CategoryItem(
+                                    key=purity,
+                                    value=cs.Binning(
+                                        nodetype="binning",
+                                        input="pt",
+                                        edges=list(correct_dict[var][purity].keys()) + [9999.0],
+                                        content=list(correct_dict[var][purity].values()),
+                                        flow=flow[var]
+                                        )
+                                    )
+                                for purity in correct_dict[var].keys()
+                                ],
+                            default=flow[var]
+                            )
+                        )
+                    for var in correct_dict.keys()
+                    ]
+                )
+            )
+    rich.print(corr_wp)
+    rich.print(corr_full)
+    cset = cs.CorrectionSet(
+            schema_version=2,
+            description="AK8 bbtag scale factors for globalParT3_XbbVsQCD",
+            corrections=[
+                corr_wp,
+                corr_full
+                ],
+            )
+    os.makedirs(output_dir, exist_ok=True)
+    filename = os.path.join(output_dir, f"bbtag_AK8_scale_factors_for_globalParT3_XbbVsQCD_{cat_coll}.json")
+    with open(filename, "w") as fout:
+        fout.write(cset.model_dump_json(exclude_unset=True, indent=4))
+    with gzip.open(f"{filename}.gzip", "wt") as fout:
+        fout.write(cset.model_dump_json(exclude_unset=True, indent=4))
+    return [corr_wp, corr_full]
+
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("base_dir", help="Base directory containing fit results")
     parser.add_argument("--output-dir", "-o", required=True, help="Output directory for SFs_plots")
     parser.add_argument("--SF-type", "-sf", default="b", help="Type of scale factor: b for SF_b, c for SF_c (default: b)")
+    parser.add_argument("--tau21", "-t21", default="normal", help="tau21 collection scheme. options ['normal', 'all'] (default: 'normal')")
     args = parser.parse_args()
+
 
     base_dir = args.base_dir
     sf_type = args.SF_type
@@ -407,6 +525,7 @@ def main():
             print(f"[OK] Saved tau21 uncertainties for {year}")
 
         save_latex_table(data, args.output_dir, ALLOWED_CATEGORIES, sf_type=sf_type, cat_coll=category_collection)
+        save_correctionlib_json(data, args.output_dir, ALLOWED_CATEGORIES, sf_type=sf_type, cat_coll=category_collection)
 
 
 if __name__ == "__main__":
