@@ -466,7 +466,10 @@ def plot_tau21_mu_vs_mg(histogram_tau21, cat="pt300msd80to170"):
 
 def plot_mu_vs_mg(mu_total, mg_total, flavour, tau21_cut=0.3):
     ax_tau21 = mu_total.axes["FatJetGood.tau21"]
-    bin_stop = next(i for i, edge in enumerate(ax_tau21.edges[1:]) if edge > tau21_cut)
+    if tau21_cut >= ax_tau21.edges[-1]:
+        bin_stop = len(ax_tau21.edges) - 2
+    else:
+        bin_stop = next(i for i, edge in enumerate(ax_tau21.edges[1:]) if edge > tau21_cut)
     mu_1d = mu_total.integrate(ax_tau21.name, 0, bin_stop)
     mg_1d = mg_total.integrate(ax_tau21.name, 0, bin_stop)
     mu_1d = mu_1d.project("FatJetGood.logsumcorrSVmass")
@@ -491,7 +494,10 @@ def plot_mu_vs_mg(mu_total, mg_total, flavour, tau21_cut=0.3):
 
 def plot_nom_vs_up_vs_down(nom_total, up_total, down_total, flavour, tau21_cut=0.3):
     ax_tau21 = nom_total.axes["FatJetGood.tau21"]
-    bin_stop = next(i for i, edge in enumerate(ax_tau21.edges[1:]) if edge > tau21_cut)
+    if tau21_cut >= ax_tau21.edges[-1]:
+        bin_stop = len(ax_tau21.edges) - 2
+    else:
+        bin_stop = next(i for i, edge in enumerate(ax_tau21.edges[1:]) if edge > tau21_cut)
     nom_1d = nom_total.integrate(ax_tau21.name, 0, bin_stop)
     up_1d = up_total.integrate(ax_tau21.name, 0, bin_stop)
     down_1d = down_total.integrate(ax_tau21.name, 0, bin_stop)
@@ -538,7 +544,10 @@ def get_1d_histogram(h2d_dict, tau21_cut):
         for ds, histo2d in ds_dict.items():
             # print(f"histo2d.axes = {histo2d.axes}\n")
             ax_tau21 = histo2d.axes["FatJetGood.tau21"]
-            bin_stop = next(i for i, edge in enumerate(ax_tau21.edges[1:]) if edge > tau21_cut)
+            if tau21_cut >= ax_tau21.edges[-1]:
+                bin_stop = len(ax_tau21.edges) - 2
+            else:
+                bin_stop = next(i for i, edge in enumerate(ax_tau21.edges[1:]) if edge > tau21_cut)
             histo_cut = histo2d.integrate(ax_tau21.name, 0, bin_stop)
             h1d_dict[proc][ds] = histo_cut
     # print(f"{h1d_dict.keys()}\n")
@@ -796,7 +805,9 @@ def main():
         for cat in categories:
             print(f"\ncategory: {cat}")
 
-            for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
+            # for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
+            for tau21 in [0.60]:
+            # for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
                 print(f"\n\nCreating datacard: Year: {year}\tCategory: {cat}\ttau21 < {tau21}")
                 
                 mc_sample_names = set(samples["light"] + samples["c"] + samples["b"])
@@ -853,7 +864,9 @@ def main():
         # Loop over categories again to dump datacards modified with pass/fail ratios
         parent_categories = set()
         for cat in categories:
-            for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
+            # for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
+            for tau21 in [0.60]:
+            # for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
                 # Extract parent category (without pass/fail)
                 parent_category = '-'.join(cat.split("-")[:-1])
                 parent_categories.add(parent_category)
@@ -903,7 +916,9 @@ def main():
 
         # Create combined datacard for pass+fail regions, for each parent category
         for parent_cat in parent_categories:
-            for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
+            # for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
+            for tau21 in [0.60]:
+            # for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
                 print(f"\nCreating combined datacard for category: {parent_cat} with tau21 < {tau21} (pass + fail)")
                 tau21_str = get_tau21_str(tau21)
                 directory = output_dir / year / parent_cat / tau21_str

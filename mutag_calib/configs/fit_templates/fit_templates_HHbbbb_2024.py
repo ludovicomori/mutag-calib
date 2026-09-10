@@ -69,15 +69,15 @@ for coll in collections:
                                                            label=r"FatJet $m_{SD}$ [GeV]", bins=list(range(0, 410, 10)))]
     )
     variables[f"{coll}_tau21"] = HistConf([Axis(name=f"{coll}_tau21", coll=coll, field="tau21",
-                                                           label=r"FatJet $\tau_{21}$", bins=[0, 0.20, 0.25, 0.30, 0.35, 
-                                                           0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 1])]
+                                                           label=r"FatJet $\tau_{21}$", bins=[0, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 
+                                                           0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 0.85, 0.9, 0.95, 1])]
     )
     variables[f"{coll}_logsumcorrSVmass"] = HistConf(
         [ Axis(coll="FatJetGood", field="logsumcorrSVmass", label=r"log($\sum({m^{corr}_{SV}})$)", bins=42, start=-2.4, stop=6) ]
     )
     variables[f"{coll}_logsumcorrSVmass_tau21"] = HistConf(
         [ Axis(coll="FatJetGood", field="logsumcorrSVmass", label=r"log($\sum({m^{corr}_{SV}})$)", bins=42, start=-2.4, stop=6),
-          Axis(coll="FatJetGood", field="tau21", label=r"$\tau_{21}$", type="variable", bins=[0, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 1]) ]
+          Axis(coll="FatJetGood", field="tau21", label=r"$\tau_{21}$", type="variable", bins=[0, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]) ]
     )
     variables[f"{coll}_globalParT3_XbbVsQCD"] = HistConf([Axis(name=f"{coll}_globalParT3_XbbVsQCD", coll=coll, field="globalParT3_XbbVsQCD",
                                                     label=r"FatJet globalParT3_XbbVsQCD score", bins=np.linspace(0,1,101).tolist())]
@@ -104,6 +104,10 @@ taggers = parameters["mutag_calibration"]["taggers"]
 pt_binning = parameters["mutag_calibration"]["pt_binning"]["2024"]
 msd_binning = parameters["mutag_calibration"]["msd_binning"]["2024"]
 wp_dict = parameters["mutag_calibration"]["wp"]["2024"]
+if "wp_fail_mode" in parameters["mutag_calibration"].keys():
+    fail_mode = parameters["mutag_calibration"]["wp_fail_mode"]
+else:
+    fail_mode = "lower-upper"
 
 common_cats = {
     "inclusive" : [passthrough],
@@ -138,7 +142,7 @@ for tagger in taggers:
         for region in ["pass", "fail"]:
             if "-" in str(wp_value):
                 wp_low, wp_high = wp_value.split("-")
-                cuts_tagger.append(get_inclusive_wp(tagger, (float(wp_low), float(wp_high)), region))
+                cuts_tagger.append(get_inclusive_wp(tagger, (float(wp_low), float(wp_high)), fail_mode, region))
             else:
                 cuts_tagger.append(get_inclusive_wp(tagger, float(wp_value), region))
             cuts_names_tagger.append(f"{tagger}-{wp}-{region}")

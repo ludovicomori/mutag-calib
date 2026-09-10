@@ -26,6 +26,27 @@ plotting_style:
       - TTto4Q__TTto4Q_bb
       - SingleTop__SingleTop_bb
       - VJets__VJets_bb
+    "MC proxy (tau21 < 0.1)":
+      - QCD_MuEnriched__QCD_MuEnriched_0_1
+    "MC proxy (tau21 < 0.2)":
+      - QCD_MuEnriched__QCD_MuEnriched_0_2
+    "MC proxy (tau21 < 0.3)":
+      - QCD_MuEnriched__QCD_MuEnriched_0_3
+    "MC proxy (tau21 < 0.4)":
+      - QCD_MuEnriched__QCD_MuEnriched_0_4
+    "MC proxy (tau21 < 0.5)":
+      - QCD_MuEnriched__QCD_MuEnriched_0_5
+    "MC proxy (tau21 < 0.6)":
+      - QCD_MuEnriched__QCD_MuEnriched_0_6
+    "MC proxy (tau21 < 0.7)":
+      - QCD_MuEnriched__QCD_MuEnriched_0_7
+    "MC proxy (tau21 < 0.8)":
+      - QCD_MuEnriched__QCD_MuEnriched_0_8
+    "MC proxy (tau21 < 0.9)":
+      - QCD_MuEnriched__QCD_MuEnriched_0_9
+    "MC proxy (tau21 < 1.0)":
+      - QCD_MuEnriched__QCD_MuEnriched_1_0
+
 
   exclude_samples: ["QCD_Madgraph__QCD_Madgraph_c", "QCD_Madgraph__QCD_Madgraph_cc", "QCD_Madgraph__QCD_Madgraph_b", "QCD_Madgraph__QCD_Madgraph_bb", "QCD_Madgraph__QCD_Madgraph_l"]
 

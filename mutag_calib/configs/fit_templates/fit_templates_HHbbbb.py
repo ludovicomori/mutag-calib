@@ -76,7 +76,7 @@ for coll in collections:
     )
     variables[f"{coll}_logsumcorrSVmass_tau21"] = HistConf(
         [ Axis(coll="FatJetGood", field="logsumcorrSVmass", label=r"log($\sum({m^{corr}_{SV}})$)", bins=42, start=-2.4, stop=6),
-          Axis(coll="FatJetGood", field="tau21", label=r"$\tau_{21}$", type="variable", bins=[0, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 1]) ]
+          Axis(coll="FatJetGood", field="tau21", label=r"$\tau_{21}$", type="variable", bins=[0, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 1]) ]
     )
     variables[f"{coll}_globalParT3_Xbb"] = HistConf([Axis(name=f"{coll}_globalParT3_Xbb", coll=coll, field="globalParT3_Xbb",
                                                     label=r"FatJet globalParT3_Xbb score", bins=np.linspace(0,1,101).tolist())]
