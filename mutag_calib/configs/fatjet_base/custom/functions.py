@@ -2,6 +2,7 @@ import numpy as np
 import awkward as ak
 from pocket_coffea.lib.cut_definition import Cut
 from copy import copy
+from mutag_calib.lib.muon_matching import muon_matched_to_subjet
 
 def tagger_mask(events, params, **kwargs):
     mask = np.zeros(len(events), dtype='bool')
@@ -53,7 +54,15 @@ def tagger_mask_inclusive_wp(events, params, **kwargs):
 
     assert (params["category"] in ["pass", "fail"]), "The allowed categories for the tagger selection are 'pass' and 'fail'"
     if params["category"] == "fail":
-        mask = ~mask & (events.FatJetGood[params["tagger"]] >= 0) & (events.FatJetGood[params["tagger"]] <= 1)
+        if params["fail_mode"] == "lower-upper":
+            mask = ~mask & (events.FatJetGood[params["tagger"]] >= 0) & (events.FatJetGood[params["tagger"]] <= 1)
+        elif params["fail_mode"] == "lower":
+            mask = (events.FatJetGood[params["tagger"]] < cut_low) & (events.FatJetGood[params["tagger"]] >= 0)
+        elif params["fail_mode"] == "upper":
+            mask = (events.FatJetGood[params["tagger"]] > cut_high) & (events.FatJetGood[params["tagger"]] <= 1)
+        else:
+            raise AssertionError(f"Unknown keyword for fail_mode: {params['fail_mode']}")
+
 
     assert not ak.any(ak.is_none(mask)), f"None in tagger_mask_inclusive_wp, \n{events.nJetGood[ak.is_none(mask)]}"
 
@@ -87,10 +96,10 @@ def get_exclusive_wp(tagger, wp, category):
         function=tagger_mask_exclusive_wp
     )
 
-def get_inclusive_wp(tagger, wp, category, wp_upper=1.0):
+def get_inclusive_wp(tagger, wp, category, fail_mode="lower-upper"):
     return Cut(
         name=f"{tagger}_{category}",
-        params={"tagger": tagger, "wp" : wp, "category": category, "wp_upper": wp_upper},
+        params={"tagger": tagger, "wp" : wp, "category": category, "fail_mode": fail_mode},
         function=tagger_mask_inclusive_wp,
         collection="FatJetGood"
     )
@@ -117,6 +126,24 @@ def get_inclusive_wp(tagger, wp, category, wp_upper=1.0):
 #     assert not ak.any(ak.is_none(fatjet_mutag)), f"None in mutag\n{fatjet_mutag}"
 # 
 #     return fatjet_mutag
+def mutag_fatjet_matched(events, params, **kwargs):
+    # Select jets with a minimum number of matched muons
+    mask_good_jets = (events.FatJetGood.nMuonGoodMatchedToFatJetGood >= params["nmu"])
+    match_leading = muon_matched_to_subjet(events, 0, unique=params["unique"])
+    match_subleading = muon_matched_to_subjet(events, 1, unique=params["unique"])
+    leading_matched = ~ak.is_none(match_leading, axis=2)[:, :, 0]
+    subleading_matched = ~ak.is_none(match_subleading, axis=2)[:, :, 0]
+    if params["nmu"] < 2:
+        mask_good_jets = leading_matched | subleading_matched
+    else:
+        mask_good_jets = leading_matched & subleading_matched
+    mask_nmu = (events.FatJetGood.nMuonGoodMatchedToFatJetGood >= params["nmu"])
+
+    assert not ak.any(ak.is_none(mask_good_jets, axis=1)), f"None in mutag_fatjet"
+    #mask_good_jets = mask_good_jets[~ak.is_none(mask, axis=1)]
+    mask_good_jets = mask_good_jets & mask_nmu
+
+    return mask_good_jets
 
 def mutag_fatjet(events, params, **kwargs):
     # Select jets with a minimum number of matched muons
@@ -333,3 +360,11 @@ def flavor_mask(events, params, **kwargs):
         return mask[params["flavor"]] & ~mask["bb"] & ~mask["cc"] & ~mask["b"] & ~mask["c"]
     else:
         raise NotImplementedError
+
+def tau21_mask(events, params, **kwargs):
+    # Mask to select events with a fatjet with maximum tau21
+    mask = (events.FatJetGood.tau21 < params["tau21"])
+
+    assert not ak.any(ak.is_none(mask, axis=1)), f"None in tau21\n{events.FatJetGood.pt[ak.is_none(mask, axis=1)]}"
+
+    return ak.where(~ak.is_none(mask, axis=1), mask, False)
