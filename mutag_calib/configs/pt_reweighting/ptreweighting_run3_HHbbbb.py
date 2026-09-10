@@ -31,6 +31,7 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                 update=True)
 
 samples = [
+    # "GluGluHHto4B_Par-c2-0p00-kl-1p00-kt-1p00_TuneCP5_13p6TeV_powheg-pythia8",
     "QCD_MuEnriched",
     "VJets",
     "TTto4Q",
@@ -92,6 +93,12 @@ for coll in collections:
           Axis(name=f"{coll}_tau21", coll=coll, field="tau21", type="variable", label=r"FatJet $\tau_{21}$",
                bins=[0, 0.1, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80, 1]) ]
     )
+    variables[f"{coll}_globalParT3_XbbVsQCD"] = HistConf([Axis(name=f"{coll}_globalParT3_XbbVsQCD", coll=coll, field="globalParT3_XbbVsQCD",
+                                                    label=r"FatJet globalParT3_XbbVsQCD score", bins=np.linspace(0,1,101).tolist())]
+    )
+    variables[f"{coll}_particleNet_XbbVsQCD"] = HistConf([Axis(name=f"{coll}_particleNet_XbbVsQCD", coll=coll, field="particleNet_XbbVsQCD",
+                                                    label=r"FatJet particleNet_XbbVsQCD score", bins=np.linspace(0,1,101).tolist())]
+    )
 
 cfg = Configurator(
     parameters = parameters,
@@ -103,7 +110,8 @@ cfg = Configurator(
                    # "datasets/MC_QCD_MuEnriched_run3.json"
                    "datasets/skimmed_dataset_definition.json",
                    "datasets/skimmed_dataset_definition_VJets2024.json",
-                   "datasets/skimmed_dataset_definition_2024.json"
+                   "datasets/skimmed_dataset_definition_2024.json",
+                   "datasets/signal_GluGluHHto4B_Par_boosted_skimmed_2024.json"
                    ],
         "filter" : {
             "samples": samples,
