@@ -1,1 +1,7 @@
 #pocket_coffea>=0.9.9
+
+# Optional: only needed for the boosted-BDT evaluation path in
+# check_gloparT_2024.py (mutag_calib.workflows.mutag_bdt_processor).
+# Pinned <3.1: the trained_bdt.model is in the legacy binary format that
+# xgboost removed support for in 3.1 (matches the pocket-coffea-bossted env).
+xgboost<3.1
