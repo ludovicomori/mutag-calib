@@ -144,6 +144,14 @@ class fatjetBaseProcessor(BaseProcessorABC):
                 Xbb / (Xbb + QCD),
                 -999.0,
             )
+        if "particleNetLegacy_Xbb" in self.events.FatJetGood.fields:
+            Xbb = self.events.FatJetGood.particleNetLegacy_Xbb
+            QCD = self.events.FatJetGood.particleNetLegacy_QCD
+            fatjet_fields["particleNetLegacy_XbbVsQCD"] = ak.where(
+                (Xbb + QCD) > 0,
+                Xbb / (Xbb + QCD),
+                -999.0,
+            )
         for field, value in fatjet_fields.items():
             self.events["FatJetGood"] = ak.with_field(self.events.FatJetGood, value, field)
 
