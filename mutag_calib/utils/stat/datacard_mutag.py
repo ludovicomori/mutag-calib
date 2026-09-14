@@ -64,7 +64,7 @@ class DatacardMutag(Datacard):
                             self.adjust_columns
                         )
                     else:
-                        formula_name = f"rp_{process.name}"
+                        formula_name = f"rp_{process.name}_{year}"
                         formula = self.get_passfail_formula(process, year, passfail_ratio)
                         line = formula_name.ljust(self.adjust_syst_colum)
                         line += "rateParam".ljust(self.adjust_columns)
