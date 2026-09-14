@@ -9,13 +9,13 @@ mutag_calibration:
   msd_binning:
     "2024":
       - [100, 150]
-      - [50, 200]
+      # - [50, 200]
   wp:
     "2024":
       globalParT3_XbbVsQCD:
-        HHbbbb_WP_LP: 0.03
-        HHbbbb_WP_MP: 0.95
-        HHbbbb_WP_HP: 0.975
+        # HHbbbb_WP_LP: 0.03
+        # HHbbbb_WP_MP: 0.95
+        # HHbbbb_WP_HP: 0.975
         HHbbbb_WP_VHP: 0.99
         HHbbbb_LP: "0.3-0.95"
         HHbbbb_MP: "0.95-0.975"

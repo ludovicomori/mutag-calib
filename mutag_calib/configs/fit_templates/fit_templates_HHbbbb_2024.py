@@ -142,7 +142,7 @@ for tagger in taggers:
         for region in ["pass", "fail"]:
             if "-" in str(wp_value):
                 wp_low, wp_high = wp_value.split("-")
-                cuts_tagger.append(get_inclusive_wp(tagger, (float(wp_low), float(wp_high)), fail_mode, region))
+                cuts_tagger.append(get_inclusive_wp(tagger, (float(wp_low), float(wp_high)), region, fail_mode))
             else:
                 cuts_tagger.append(get_inclusive_wp(tagger, float(wp_value), region))
             cuts_names_tagger.append(f"{tagger}-{wp}-{region}")
