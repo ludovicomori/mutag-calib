@@ -20,4 +20,4 @@ mutag_calibration:
         HHbbbb_LP: "0.3-0.95"
         HHbbbb_MP: "0.95-0.975"
         HHbbbb_HP: "0.975-0.99"
-  wp_fail_mode: "lower"
+  wp_fail_mode: "lower-upper"

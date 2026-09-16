@@ -22,6 +22,7 @@ import matplotlib.pyplot as plt
 
 from pocket_coffea.utils.stat import MCProcess, DataProcess, SystematicUncertainty, MCProcesses, DataProcesses, Systematics
 from pocket_coffea.utils.stat.combine import combine_datacards
+from pocket_coffea.utils.histogram import rebin_hist
 
 # Import the configuration to get the same parameters
 import mutag_calib
@@ -79,6 +80,7 @@ def categorize_samples(cutflow):
     c_samples = set()
     b_samples = set()
     data_samples = set()
+    signal_samples = set()
 
     baseline_category = "inclusive"
 
@@ -94,12 +96,15 @@ def categorize_samples(cutflow):
                 c_samples.add(sample_name)
             elif sample_name.endswith(("_b", "_bb")):
                 b_samples.add(sample_name)
-    
+            elif "GluGlu" in sample_name:  # HH signal sample(s), not split into flavor subsamples
+                signal_samples.add(sample_name)
+
     return {
         "light": sorted(list(light_samples)),
         "c": sorted(list(c_samples)),
         "b": sorted(list(b_samples)),
-        "data_obs": sorted(list(data_samples))
+        "data_obs": sorted(list(data_samples)),
+        "signal": sorted(list(signal_samples)),
     }
 
 
@@ -684,6 +689,285 @@ def get_1d_histogram_reweighed(h2d_dict, tau21_cut, samples, year, parent_catego
 
     return h1d_dict
 
+
+def _merge_low_stat_bin_groups(arr_a, arr_b, min_yield):
+    """Group contiguous bin indices [0, len(arr_a)) so that, within every
+    group, both ``arr_a`` and ``arr_b`` sum to at least ``min_yield``.
+
+    Bins are accumulated left to right; a group is closed as soon as both
+    running sums reach the threshold. Any leftover low-statistics tail (not
+    enough to form its own group) is merged into the last group instead of
+    being left under-threshold.
+
+    Returns a list of (start, stop) tuples (stop exclusive) covering the
+    full range.
+    """
+    n_bins = len(arr_a)
+    groups = []
+    start = 0
+    running_a = 0.0
+    running_b = 0.0
+    for i in range(n_bins):
+        running_a += arr_a[i]
+        running_b += arr_b[i]
+        if running_a >= min_yield and running_b >= min_yield:
+            groups.append((start, i + 1))
+            start = i + 1
+            running_a = 0.0
+            running_b = 0.0
+    if start < n_bins:
+        if groups:
+            groups[-1] = (groups[-1][0], n_bins)
+        else:
+            groups.append((start, n_bins))
+    return groups
+
+
+def get_1d_histogram_reweighted_to_signal(
+    h2d_dict, tau21_cut, samples, year, parent_category, min_bin_yield=50.0
+):
+    """Return 1D histograms with the b-flavor MC (the b-tag-calibration proxy)
+    shape-corrected, bin-by-bin, to match the shape of the HH signal
+    sample(s) (``samples["signal"]``), plus a dict of diagnostic info for
+    plotting and saving.
+
+    This mirrors ``get_1d_histogram_reweighed``, but is a *shape-only*
+    correction: weights are derived once in the *inclusive pass+fail
+    region* of ``parent_category`` for the given ``year``, from the ratio
+    of the signal and b-proxy histograms after normalizing both to the
+    same total, and applied to every "b" MC template (all variations) in
+    the corresponding pass and fail categories. This preserves the
+    b-proxy's overall normalization (its total yield is unchanged) and
+    only reshapes it to match the signal; a plain bin-by-bin ratio would
+    instead force the b-proxy to become numerically equal to the signal
+    (a far more drastic, normalization-changing correction). Bins are
+    first merged (using the original fine binning) so that both the
+    b-proxy and the signal histogram have at least ``min_bin_yield``
+    summed weight in every merged bin - keeping the statistical
+    uncertainty on the derived weights under control. The merged binning
+    is applied to *all* processes so every template in the returned
+    histograms shares the same axis.
+
+    Returns:
+        (h1d_dict, info) where h1d_dict is the rebinned/reweighted 1D
+        histogram dict (same nested structure as get_1d_histogram), and
+        info is None if there was nothing to reweight (parent category not
+        present, or no signal/b-proxy statistics), otherwise a dict with:
+            "bin_edges": merged bin edges (list of float, length n+1)
+            "weights": per-bin shape-correction factor (list of float, length n)
+            "weights_stat_unc": statistical uncertainty on each weight
+            "b_proxy_yield_pre": merged b-proxy yield before reweighting
+            "signal_yield": merged signal yield (raw, not normalized to the
+                b-proxy total - use together with "weights" to see the shape)
+    """
+
+    h1d_dict = get_1d_histogram(h2d_dict, tau21_cut)
+    # The signal shape is always taken fully inclusive in tau21 (cut = 1.0,
+    # i.e. no tau21 selection): tau21 is a proxy-purification knob and must
+    # never be applied to the actual signal when deriving the target shape.
+    h1d_dict_signal = get_1d_histogram(h2d_dict, 1.0)
+
+    example_hist = None
+    for ds_dict in h1d_dict.values():
+        for h in ds_dict.values():
+            if "variation" in [ax.name for ax in h.axes]:
+                example_hist = h
+                break
+        if example_hist is not None:
+            break
+
+    if example_hist is None:
+        return h1d_dict, None
+
+    cat_axis = example_hist.axes["cat"]
+    fit_axes = [ax for ax in example_hist.axes if ax.name not in ("cat", "variation")]
+    if len(fit_axes) != 1:
+        raise RuntimeError("Expected exactly one fit variable axis after tau21 integration")
+    fit_axis = fit_axes[0]
+    original_edges = np.asarray(fit_axis.edges, dtype=float)
+
+    pass_cat_label = f"{parent_category}-pass"
+    fail_cat_label = f"{parent_category}-fail"
+    cat_indices = []
+    for label in (pass_cat_label, fail_cat_label):
+        try:
+            cat_indices.append(cat_axis.index(label))
+        except KeyError:
+            continue
+
+    if not cat_indices:
+        return h1d_dict, None
+
+    n_fit_bins = len(original_edges) - 1
+
+    b_sample_names = set(samples["b"])
+    signal_sample_names = set(samples["signal"])
+
+    if not signal_sample_names:
+        print("No signal samples found (samples['signal'] is empty); skipping reweight-to-signal.")
+        return h1d_dict, None
+
+    b_sum = np.zeros(n_fit_bins, dtype=float)
+    b_var = np.zeros(n_fit_bins, dtype=float)
+    signal_sum = np.zeros(n_fit_bins, dtype=float)
+    signal_var = np.zeros(n_fit_bins, dtype=float)
+
+    def _accumulate(source_dict, wanted_names, sum_arr, var_arr):
+        for proc_name, ds_dict in source_dict.items():
+            if proc_name not in wanted_names:
+                continue
+            for ds, h in ds_dict.items():
+                if year not in ds:
+                    continue
+                view = h.view(flow=False)
+                values_view = view["value"]
+                variances_view = view["variance"]
+
+                if values_view.ndim == 3:
+                    var_axis = h.axes["variation"]
+                    nom_index = var_axis.index("nominal")
+                    proj_val = values_view[cat_indices, nom_index, :].sum(axis=0)
+                    proj_var = variances_view[cat_indices, nom_index, :].sum(axis=0)
+                elif values_view.ndim == 2:
+                    proj_val = values_view[cat_indices, :].sum(axis=0)
+                    proj_var = variances_view[cat_indices, :].sum(axis=0)
+                else:
+                    raise RuntimeError(
+                        f"Unsupported histogram dimensionality {values_view.ndim} in reweighting (expected 2 or 3)"
+                    )
+
+                sum_arr += proj_val
+                var_arr += proj_var
+
+    # b-proxy: at the requested tau21 cut (the selection being purified)
+    _accumulate(h1d_dict, b_sample_names, b_sum, b_var)
+    # signal: always fully inclusive in tau21
+    _accumulate(h1d_dict_signal, signal_sample_names, signal_sum, signal_var)
+
+    if signal_sum.sum() <= 0:
+        print(f"Signal histogram is empty for year {year}, parent category {parent_category}; skipping reweight-to-signal.")
+        return h1d_dict, None
+
+    # Merge low-statistics bins so both the b-proxy and the signal have at
+    # least `min_bin_yield` summed weight in every merged bin.
+    groups = _merge_low_stat_bin_groups(signal_sum, b_sum, min_bin_yield)
+    merged_edges = [original_edges[groups[0][0]]] + [original_edges[stop] for _, stop in groups]
+
+    def _merge(arr):
+        return np.array([arr[start:stop].sum() for start, stop in groups])
+
+    b_sum_m = _merge(b_sum)
+    b_var_m = _merge(b_var)
+    signal_sum_m = _merge(signal_sum)
+    signal_var_m = _merge(signal_var)
+
+    total_b = b_sum_m.sum()
+    total_signal = signal_sum_m.sum()
+    if total_b <= 0:
+        print(f"b-proxy histogram is empty for year {year}, parent category {parent_category}; skipping reweight-to-signal.")
+        return h1d_dict, None
+    # Shape-only correction: normalize both histograms to the same total
+    # before taking the bin ratio, so the b-proxy keeps its own overall
+    # normalization and only its *shape* is corrected to match the signal.
+    # A plain bin-by-bin ratio (signal/b-proxy) would instead force the
+    # b-proxy to become numerically equal to the (much smaller) signal
+    # yield, which is a far more drastic change than intended here.
+    norm_factor = total_b / total_signal
+
+    with np.errstate(divide="ignore", invalid="ignore"):
+        raw_ratio = np.where(b_sum_m > 0.0, signal_sum_m / b_sum_m, 1.0)
+        raw_ratio = np.nan_to_num(raw_ratio, nan=1.0, posinf=1.0, neginf=1.0)
+        weights = raw_ratio * norm_factor
+
+        # Relative uncertainty is scale-invariant, so the per-bin relative
+        # uncertainty of the shape-corrected weight is the same as that of
+        # the raw ratio (the shared normalization factor is treated as
+        # exact, i.e. dominated by the much larger inclusive statistics).
+        rel_unc_signal = np.where(signal_sum_m > 0, np.sqrt(signal_var_m) / signal_sum_m, 0.0)
+        rel_unc_b = np.where(b_sum_m > 0, np.sqrt(b_var_m) / b_sum_m, 0.0)
+        weights_stat_unc = weights * np.sqrt(rel_unc_signal ** 2 + rel_unc_b ** 2)
+        weights_stat_unc = np.nan_to_num(weights_stat_unc, nan=0.0, posinf=0.0, neginf=0.0)
+
+    info = {
+        "bin_edges": [float(x) for x in merged_edges],
+        "weights": [float(x) for x in weights],
+        "weights_stat_unc": [float(x) for x in weights_stat_unc],
+        "b_proxy_yield_pre": [float(x) for x in b_sum_m],
+        "signal_yield": [float(x) for x in signal_sum_m],
+    }
+
+    # Apply the merged binning to every process/dataset so all templates in
+    # the returned histograms share the same (coarser) axis.
+    h1d_dict = rebin_hist(bins_edges=merged_edges, histograms=h1d_dict)
+
+    # Apply weights to the "b" MC templates (all variations) in the pass+fail
+    # categories of this parent.
+    for proc_name, ds_dict in h1d_dict.items():
+        if proc_name not in b_sample_names:
+            continue
+        for ds, h in ds_dict.items():
+            if year not in ds:
+                continue
+            view = h.view(flow=False)
+            values_view = view["value"]
+
+            if values_view.ndim == 3:
+                scale = weights[np.newaxis, np.newaxis, :]
+                view["value"][cat_indices, :, :] *= scale
+                view["variance"][cat_indices, :, :] *= scale ** 2
+            elif values_view.ndim == 2:
+                scale = weights[np.newaxis, :]
+                view["value"][cat_indices, :] *= scale
+                view["variance"][cat_indices, :] *= scale ** 2
+            else:
+                raise RuntimeError(
+                    f"Unsupported histogram dimensionality {values_view.ndim} in reweighting (expected 2 or 3)"
+                )
+
+    return h1d_dict, info
+
+
+def plot_reweight_to_signal(info, year, parent_category, tau21_cut, outdir):
+    """Plot b-proxy pre-/post-reweighting compared with the signal shape,
+    plus the per-bin reweighting factors with their statistical
+    uncertainty, and save the figure to ``outdir``.
+    """
+    edges = np.array(info["bin_edges"])
+    b_pre = np.array(info["b_proxy_yield_pre"])
+    signal = np.array(info["signal_yield"])
+    weights = np.array(info["weights"])
+    weights_unc = np.array(info["weights_stat_unc"])
+    b_post = b_pre * weights
+    centers = 0.5 * (edges[1:] + edges[:-1])
+
+    fig, (ax1, ax2) = plt.subplots(
+        2, 1, figsize=(7, 8), sharex=True, gridspec_kw={"height_ratios": [3, 1]}
+    )
+    ax1.stairs(b_pre, edges, label="b-proxy (pre-reweight)", color="tab:blue")
+    ax1.stairs(b_post, edges, label="b-proxy (post-reweight)", color="tab:orange")
+    ax1.stairs(signal, edges, label="Signal (HH4b)", color="black")
+    ax1.set_yscale("log")
+    ax1.set_ylabel("Events")
+    ax1.set_title(f"{parent_category}, {year}, b-proxy tau21 < {tau21_cut:.2f} (inclusive pass+fail)")
+    ax1.legend()
+
+    ax2.errorbar(centers, weights, yerr=weights_unc, fmt="o", color="tab:red", label="signal / b-proxy")
+    ax2.axhline(1.0, color="black", linestyle="--", linewidth=1)
+    ax2.set_yscale("log")
+    ax2.set_ylabel("Weight")
+    ax2.set_xlabel(r"log($\sum({m^{corr}_{SV}})$)")
+    ax2.legend()
+
+    plt.tight_layout()
+    outdir = Path(outdir)
+    outdir.mkdir(parents=True, exist_ok=True)
+    outfile = outdir / f"reweight_to_signal_{parent_category}_{year}.png"
+    plt.savefig(outfile)
+    plt.close(fig)
+    print(f"Saved reweight-to-signal comparison plot: {outfile}")
+    return outfile
+
+
 def sanitize_shape_variations(histo_1d, mc_sample_names, epsilon=1e-9):
     """Enforce nominal/variation consistency and remove nan/inf.
 
@@ -743,6 +1027,9 @@ def main():
     parser.add_argument("--years", nargs="+", default=["2022_preEE", "2022_postEE", "2023_preBPix", "2023_postBPix"], 
                        help="Years to include in the analysis")
     parser.add_argument("-f","--filter-category", default="", help="Substring that must be contained in category to produce datacard.")
+    parser.add_argument("--min-reweight-signal-yield", type=float, default=50.0,
+                       help="Minimum summed yield (in both the b-proxy and the signal histogram) required to keep a bin "
+                            "un-merged when deriving the b-proxy-to-signal reweighting.")
     parser.add_argument("--verbose", "-v", action="store_true", default=False, help="Enable verbose output")
     args = parser.parse_args()
     
@@ -800,13 +1087,15 @@ def main():
         all_datacards = defaultdict(dict)
         # Additional datacards using MC reweighted to data for tau21 < 0.30
         all_datacards_reweight = defaultdict(dict)
+        # Additional datacards using the "b" proxy reweighted to the HH4b signal shape for tau21 < 0.30
+        all_datacards_reweight_signal = defaultdict(dict)
         
         # Create datacards for each combination
         for cat in categories:
             print(f"\ncategory: {cat}")
 
-            # for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
-            for tau21 in [0.60]:
+            for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
+            # for tau21 in [0.60]:
             # for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
                 print(f"\n\nCreating datacard: Year: {year}\tCategory: {cat}\ttau21 < {tau21}")
                 
@@ -858,14 +1147,50 @@ def main():
                         verbose=args.verbose,
                     )
                     all_datacards_reweight[cat][tau21] = datacard_rew
-                
+
+                    # Also reweight the "b" proxy templates (bin-by-bin) to
+                    # the HH4b signal shape, merging low-statistics bins
+                    # first, and produce a comparison plot + saved
+                    # reweighting values.
+                    print(f"\n\nCreating datacard: Year: {year}\tCategory: {cat}\ttau21 < {tau21} reweighed to signal")
+                    histo_1d_rew_sig, reweight_sig_info = get_1d_histogram_reweighted_to_signal(
+                        histograms[args.variable], tau21, samples, year, parent_category,
+                        min_bin_yield=args.min_reweight_signal_yield,
+                    )
+                    if reweight_sig_info is not None:
+                        add_Madgraph_systematic_1d(histo_1d_rew_sig, cat)
+                        print("\n")
+                        datacard_rew_sig = DatacardMutag(
+                            histograms=histo_1d_rew_sig,
+                            datasets_metadata=datasets_metadata,
+                            cutflow=cutflow,
+                            years=[year],
+                            mc_processes=mc_processes,
+                            data_processes=data_processes,
+                            systematics=systematics,
+                            category=cat,
+                            verbose=args.verbose,
+                        )
+                        all_datacards_reweight_signal[cat][tau21] = datacard_rew_sig
+
+                        # Only produce the diagnostic plot/YAML once per
+                        # (year, parent_category), not once per pass/fail.
+                        if cat.endswith("-pass"):
+                            reweight_sig_dir = output_dir / year / parent_category / f"{get_tau21_str(tau21)}_reweight_signal"
+                            reweight_sig_dir.mkdir(parents=True, exist_ok=True)
+                            plot_reweight_to_signal(reweight_sig_info, year, parent_category, tau21, reweight_sig_dir)
+                            info_file = reweight_sig_dir / "reweight_to_signal.yaml"
+                            print(f"Saving reweight-to-signal values to {info_file}")
+                            with open(info_file, "w") as f:
+                                yaml.dump(reweight_sig_info, f, indent=4)
+
         passfail_ratio = get_passfail_ratio(all_datacards)
 
         # Loop over categories again to dump datacards modified with pass/fail ratios
         parent_categories = set()
         for cat in categories:
-            # for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
-            for tau21 in [0.60]:
+            for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
+            # for tau21 in [0.60]:
             # for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
                 # Extract parent category (without pass/fail)
                 parent_category = '-'.join(cat.split("-")[:-1])
@@ -914,10 +1239,33 @@ def main():
                         print(str(e))
                         failed_categories.append({"year": year, "category": f"{cat}_reweight", "error": str(e)})
 
+                # For tau21 < 0.30, also dump the signal-reweighted datacards (if any were produced)
+                if abs(tau21 - 0.3) < 1e-6 and cat in all_datacards_reweight_signal and tau21 in all_datacards_reweight_signal[cat]:
+                    reweight_sig_tau21_str = f"{tau21_str}_reweight_signal"
+                    reweight_sig_category_dir = output_dir / year / parent_category / reweight_sig_tau21_str / region
+                    reweight_sig_category_dir.mkdir(parents=True, exist_ok=True)
+                    datacard_rew_sig = all_datacards_reweight_signal[cat][tau21]
+
+                    if cat.endswith("-pass"):
+                        kwargs_rew_sig = {"directory": str(reweight_sig_category_dir)}
+                    elif cat.endswith("-fail"):
+                        parent_cat = '-'.join(cat.split("-")[:-1])
+                        kwargs_rew_sig = {"directory": str(reweight_sig_category_dir), "passfail_ratio": passfail_ratio[parent_cat][tau21]}
+                    else:
+                        kwargs_rew_sig = {"directory": str(reweight_sig_category_dir)}
+
+                    try:
+                        datacard_rew_sig.dump(**kwargs_rew_sig)
+                        successful_categories.append({"year": year, "category": f"{cat}_reweight_signal", "folder": str(reweight_sig_category_dir)})
+                    except Exception as e:
+                        print(f"Failed to create signal-reweighted datacard for Year: {year}, Category: {cat}")
+                        print(str(e))
+                        failed_categories.append({"year": year, "category": f"{cat}_reweight_signal", "error": str(e)})
+
         # Create combined datacard for pass+fail regions, for each parent category
         for parent_cat in parent_categories:
-            # for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
-            for tau21 in [0.60]:
+            for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
+            # for tau21 in [0.60]:
             # for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
                 print(f"\nCreating combined datacard for category: {parent_cat} with tau21 < {tau21} (pass + fail)")
                 tau21_str = get_tau21_str(tau21)
@@ -948,6 +1296,25 @@ def main():
                     with open(filename_rew, "w") as f:
                         yaml.dump({"passfail_ratio": passfail_ratio[parent_cat][tau21]}, f, indent=4)
                     print(f"Combined reweighted datacard saved in {directory_rew}")
+
+                # For tau21 < 0.30, also create the combined signal-reweighted datacard (if both regions were produced)
+                if abs(tau21 - 0.3) < 1e-6 and all(
+                    f"{parent_cat}-{region}" in all_datacards_reweight_signal
+                    and tau21 in all_datacards_reweight_signal[f"{parent_cat}-{region}"]
+                    for region in ["pass", "fail"]
+                ):
+                    reweight_sig_tau21_str = f"{tau21_str}_reweight_signal"
+                    directory_rew_sig = output_dir / year / parent_cat / reweight_sig_tau21_str
+                    print(f"\nCreating combined signal-reweighted datacard for category: {parent_cat} with tau21 < {tau21} (pass + fail)")
+                    combine_datacards(
+                        datacards={f"{region}/datacard.txt": all_datacards_reweight_signal[f"{parent_cat}-{region}"][tau21] for region in ["pass", "fail"]},
+                        directory=directory_rew_sig,
+                    )
+                    filename_rew_sig = directory_rew_sig / "passfail_ratio.yaml"
+                    print(f"Saving pass/fail ratio to {filename_rew_sig}")
+                    with open(filename_rew_sig, "w") as f:
+                        yaml.dump({"passfail_ratio": passfail_ratio[parent_cat][tau21]}, f, indent=4)
+                    print(f"Combined signal-reweighted datacard saved in {directory_rew_sig}")
 
     # Print summary report
     print_report(successful_categories, failed_categories)
