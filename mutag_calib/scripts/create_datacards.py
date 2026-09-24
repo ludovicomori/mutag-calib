@@ -401,7 +401,7 @@ def add_Madgraph_systematic(histogram_logsumSVmass_tau21):
         down_int = down_vals.sum()
         print(f"nom_int: {nom_int}\nup_int: {up_int}\ndown_int: {down_int}")
 
-def add_Madgraph_systematic_1d(histo_1d, cat, integral_eps=1e-6):
+def add_Madgraph_systematic_1d(histo_1d, cat, integral_eps=1e-6, ratio_source=None):
     """Function to add the Madgraph systematic uncertainty to the histogram.
 
     integral_eps: below this integral (summed events in a given cat/dataset),
@@ -410,6 +410,9 @@ def add_Madgraph_systematic_1d(histo_1d, cat, integral_eps=1e-6):
     is what produces `nan`/`inf` when the process is (almost) empty in a
     given category.
     """
+    if ratio_source is None:
+        ratio_source = histo_1d
+
     qcd_samples = [s for s in histo_1d.keys() if s.startswith("QCD_")]
     print(f"QCD samples: {qcd_samples}\n")
     flavors = {s.split("__")[1].split("_")[-1] for s in qcd_samples if "__" in s and len(s.split("__")[1].split("_")) >= 2}
@@ -422,13 +425,14 @@ def add_Madgraph_systematic_1d(histo_1d, cat, integral_eps=1e-6):
             print(f"Skipping {flav}: {mu_name} or {mg_name} not found in histo_1d")
             continue
         mu_datasets = histo_1d[mu_name]
-        mg_datasets = histo_1d[mg_name]
+        mu_ratio_src = ratio_source[mu_name]
+        mg_ratio_src = ratio_source[mg_name]
         mu_total = None
         mg_total = None
-        for h in mu_datasets.values():
+        for h in mu_ratio_src.values():
             h_nom = h[cat, "nominal", :]
             mu_total = h_nom if mu_total is None else mu_total + h_nom
-        for h in mg_datasets.values():
+        for h in mg_ratio_src.values():
             h_nom = h[cat, "nominal", :]
             mg_total = h_nom if mg_total is None else mg_total + h_nom
         mu_vals = mu_total.values(flow=True)
@@ -1255,17 +1259,18 @@ def main():
                 if abs(tau21 - 0.3) < 1e-6:
                     print(f"\n\nCreating datacard: Year: {year}\tCategory: {cat}\ttau21 < {tau21} reweighed")
                     parent_category = "-".join(cat.split("-")[:-1])
+                    histo_1d_raw = get_1d_histogram(histograms[args.variable], tau21)
                     histo_1d_rew, rew_weights = get_1d_histogram_reweighed(
                         histograms[args.variable], tau21, samples, year, parent_category, return_weights=True,
                     )
                     # Add the variation QCD_Madgraph/QCD_MuEnriched to the Hist
-                    add_Madgraph_systematic_1d(histo_1d_rew, cat)
+                    add_Madgraph_systematic_1d(histo_1d_rew, cat, ratio_source=histo_1d_raw)
                     if rew_weights is not None:
                         histo_down_rew = get_1d_histogram_reweighed(histograms[args.variable], TAU21_VAR_DOWN, samples, year, parent_category, fixed_weights=rew_weights)
                         histo_up_rew = get_1d_histogram_reweighed(histograms[args.variable], TAU21_VAR_UP, samples, year, parent_category, fixed_weights=rew_weights)
                     else:
-                        histo_down_rew = get_1d_histogram(histograms[args.variable], TAU21_VAR_DOWN, samples, year, parent_category)
-                        histo_up_rew = get_1d_histogram(histograms[args.variable], TAU21_VAR_UP, samples, year, parent_category)
+                        histo_down_rew = get_1d_histogram(histograms[args.variable], TAU21_VAR_DOWN)
+                        histo_up_rew = get_1d_histogram(histograms[args.variable], TAU21_VAR_UP)
 
                     add_tau21_variation_1d(
                         histo_1d_rew,
@@ -1299,7 +1304,7 @@ def main():
                         min_bin_yield=args.min_reweight_signal_yield,
                     )
                     if reweight_sig_info is not None:
-                        add_Madgraph_systematic_1d(histo_1d_rew_sig, cat)
+                        add_Madgraph_systematic_1d(histo_1d_rew_sig, cat, ratio_source=histo_1d_raw)
                         print("\n")
                         datacard_rew_sig = DatacardMutag(
                             histograms=histo_1d_rew_sig,
