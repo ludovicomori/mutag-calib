@@ -22,7 +22,6 @@ import matplotlib.pyplot as plt
 
 from pocket_coffea.utils.stat import MCProcess, DataProcess, SystematicUncertainty, MCProcesses, DataProcesses, Systematics
 from pocket_coffea.utils.stat.combine import combine_datacards
-from pocket_coffea.utils.histogram import rebin_hist
 
 # Import the configuration to get the same parameters
 import mutag_calib
@@ -744,13 +743,17 @@ def get_1d_histogram_reweighted_to_signal(
     first merged (using the original fine binning) so that both the
     b-proxy and the signal histogram have at least ``min_bin_yield``
     summed weight in every merged bin - keeping the statistical
-    uncertainty on the derived weights under control. The merged binning
-    is applied to *all* processes so every template in the returned
-    histograms shares the same axis.
+    uncertainty on the derived weights under control. This merged binning
+    is used *only* to derive the per-group weights: each original
+    (fine-binned) bin then inherits the weight of the merged group it
+    belongs to (a step function over the merged groups), so the returned
+    histograms keep the original binning instead of the coarser one used
+    to derive the weights.
 
     Returns:
-        (h1d_dict, info) where h1d_dict is the rebinned/reweighted 1D
-        histogram dict (same nested structure as get_1d_histogram), and
+        (h1d_dict, info) where h1d_dict is the reweighted 1D histogram
+        dict on the *original* binning (same nested structure as
+        get_1d_histogram), and
         info is None if there was nothing to reweight (parent category not
         present, or no signal/b-proxy statistics), otherwise a dict with:
             "bin_edges": merged bin edges (list of float, length n+1)
@@ -896,9 +899,14 @@ def get_1d_histogram_reweighted_to_signal(
         "signal_yield": [float(x) for x in signal_sum_m],
     }
 
-    # Apply the merged binning to every process/dataset so all templates in
-    # the returned histograms share the same (coarser) axis.
-    h1d_dict = rebin_hist(bins_edges=merged_edges, histograms=h1d_dict)
+    # Broadcast the coarse, low-noise per-group weights back onto the
+    # original fine binning (each fine bin inherits its group's weight, i.e.
+    # a step function over the merged groups) so the returned histograms
+    # keep the original binning instead of the merged one used only to
+    # derive stable weights.
+    fine_weights = np.empty(n_fit_bins, dtype=float)
+    for weight, (start, stop) in zip(weights, groups):
+        fine_weights[start:stop] = weight
 
     # Apply weights to the "b" MC templates (all variations) in the pass+fail
     # categories of this parent.
@@ -912,11 +920,11 @@ def get_1d_histogram_reweighted_to_signal(
             values_view = view["value"]
 
             if values_view.ndim == 3:
-                scale = weights[np.newaxis, np.newaxis, :]
+                scale = fine_weights[np.newaxis, np.newaxis, :]
                 view["value"][cat_indices, :, :] *= scale
                 view["variance"][cat_indices, :, :] *= scale ** 2
             elif values_view.ndim == 2:
-                scale = weights[np.newaxis, :]
+                scale = fine_weights[np.newaxis, :]
                 view["value"][cat_indices, :] *= scale
                 view["variance"][cat_indices, :] *= scale ** 2
             else:
@@ -931,6 +939,7 @@ def plot_reweight_to_signal(info, year, parent_category, tau21_cut, outdir):
     """Plot b-proxy pre-/post-reweighting compared with the signal shape,
     plus the per-bin reweighting factors with their statistical
     uncertainty, and save the figure to ``outdir``.
+    Printing normalised histogram to see only shape differences.
     """
     edges = np.array(info["bin_edges"])
     b_pre = np.array(info["b_proxy_yield_pre"])
@@ -939,6 +948,10 @@ def plot_reweight_to_signal(info, year, parent_category, tau21_cut, outdir):
     weights_unc = np.array(info["weights_stat_unc"])
     b_post = b_pre * weights
     centers = 0.5 * (edges[1:] + edges[:-1])
+
+    b_pre = b_pre/np.sum(b_pre)
+    signal = signal/np.sum(signal)
+    b_post = b_post/np.sum(b_post)
 
     fig, (ax1, ax2) = plt.subplots(
         2, 1, figsize=(7, 8), sharex=True, gridspec_kw={"height_ratios": [3, 1]}

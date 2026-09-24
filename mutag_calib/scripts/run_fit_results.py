@@ -63,7 +63,11 @@ def main():
     # save global summary
     if summary_rows:
         summary_df = pd.concat(summary_rows, ignore_index=True)
-        summary_df.to_csv(output_file, index=False)
+        if os.path.isfile(output_file):
+            summary_df.to_csv(output_file, index=False, mode='a', header=False)
+        else:
+            summary_df.to_csv(output_file, index=False, mode='a')
+
         print(f"\n[OK] Global summary saved in {output_file}")
     else:
         print("\n[WARN] None result collected")

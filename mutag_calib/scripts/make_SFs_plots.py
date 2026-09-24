@@ -8,6 +8,8 @@ import re
 import correctionlib.schemav2 as cs
 import gzip
 import rich
+import yaml
+from pathlib import Path
 
 from allowed_categories import ALLOWED_CATEGORIES_SF_PLOT
 
@@ -17,6 +19,48 @@ TAU21_VALUES = [0.20, 0.25, 0.30, 0.35, 0.40]
 # TAU21_VALUES = [0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.0]
 # TAU21_VALUES = [0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.65, 0.70, 0.75, 0.80, 0.85, 0.90, 0.95, 1.0]
 TAU21_CENTRAL = 0.30
+
+# Fallback tagger name / WP score thresholds, used whenever --wp-config can't
+# provide them (missing file, missing year/tagger, or a purity not listed).
+# The yaml layout (mutag_calibration.wp.<year>.<tagger>) is still evolving,
+# so these keep the script working even if it changes or is unavailable.
+DEFAULT_WP_CONFIG = Path(__file__).resolve().parent.parent / "configs" / "params" / "mutag_calibration_HHbbbb_2024.yaml"
+DEFAULT_TAGGER = "globalParT3_XbbVsQCD"
+DEFAULT_WP_THRESHOLDS = {"LP": 0.3, "MP": 0.95, "HP": 0.975, "VHP": 0.99}
+
+
+def load_wp_config(config_path, year):
+    """Return (tagger, {purity_label: lower_edge_score}) parsed from a
+    mutag_calibration params yaml (mutag_calibration.wp.<year>.<tagger>).
+
+    A working-point entry can be a single score ("HHbbbb_WP_VHP": 0.99) or a
+    "lo-hi" range ("HHbbbb_LP": "0.3-0.95"), in which case the lower edge is
+    used. Falls back to DEFAULT_TAGGER / DEFAULT_WP_THRESHOLDS for the tagger,
+    the whole dict, or individual purities that can't be resolved.
+    """
+    tagger = DEFAULT_TAGGER
+    thresholds = dict(DEFAULT_WP_THRESHOLDS)
+    if not config_path:
+        return tagger, thresholds
+
+    try:
+        with open(config_path) as f:
+            cfg = yaml.safe_load(f)
+        mutag_cfg = cfg["mutag_calibration"]
+        tagger = mutag_cfg["taggers"][0]
+        wp_dict = mutag_cfg["wp"][year][tagger]
+    except (FileNotFoundError, KeyError, TypeError, IndexError) as e:
+        print(f"[WARN] Could not read working points from {config_path} (year={year}): {e}. Using defaults.")
+        return tagger, thresholds
+
+    for key, value in wp_dict.items():
+        purity = key.split("_")[-1]
+        lo = value.split("-")[0] if isinstance(value, str) and "-" in value else value
+        try:
+            thresholds[purity] = float(lo)
+        except (TypeError, ValueError):
+            print(f"[WARN] Could not parse working point '{key}': {value!r}, skipping.")
+    return tagger, thresholds
 
 
 # read the scale factor from fitResults.json
@@ -48,26 +92,68 @@ def collect_results(base_dir, ALLOWED_CATEGORIES, sf_type="b"):
                 r, eup, edown = read_r(fjson, sf_type=sf_type)
                 data[year][cat][t] = (r, eup, edown)
 
-            # tau21 = 0.30 reweight
+            # tau21 = 0.30, MC reweighted to data (always-on systematic)
             tdir_rw = "tau21_0p30_reweight"
             fjson_rw = os.path.join(base, tdir_rw, "fitResults.json")
             if os.path.exists(fjson_rw):
                 r_rw, eup_rw, edn_rw = read_r(fjson_rw, sf_type=sf_type)
                 data[year][cat]["0.30_reweight"] = (r_rw, eup_rw, edn_rw)
+
+            # tau21 = 0.30, b-proxy reweighted to the HH4b signal shape
+            tdir_rw_sig = "tau21_0p30_reweight_signal"
+            fjson_rw_sig = os.path.join(base, tdir_rw_sig, "fitResults.json")
+            if os.path.exists(fjson_rw_sig):
+                r_rs, eup_rs, edn_rs = read_r(fjson_rw_sig, sf_type=sf_type)
+                data[year][cat]["0.30_reweight_signal"] = (r_rs, eup_rs, edn_rs)
     return data
 
-# compute tau21 uncertainty
+# compute tau21 cut-variation uncertainty
 def compute_tau21_unc(results):
     r0, _, _ = results[TAU21_CENTRAL]
     diffs = [abs(results[t][0] - r0) for t in TAU21_VALUES if t != TAU21_CENTRAL]
     return max(diffs)
 
+# always-on systematic: MC reweighted to data at the nominal tau21 cut
 def compute_reweight_unc(results):
     if "0.30_reweight" not in results:
         return 0.0
     r0, _, _ = results[TAU21_CENTRAL]
     r_rw, _, _ = results["0.30_reweight"]
     return abs(r_rw - r0)
+
+# alternative to compute_tau21_unc: b-proxy reweighted to the signal shape
+def compute_reweight_signal_unc(results):
+    if "0.30_reweight_signal" not in results:
+        return 0.0
+    r0, _, _ = results[TAU21_CENTRAL]
+    r_rs, _, _ = results["0.30_reweight_signal"]
+    return abs(r_rs - r0)
+
+# selectable via --error-method: combined (in quadrature) with the always-on
+# compute_reweight_unc to form the total up/down uncertainty
+ERROR_METHOD_INFO = {
+    "tau21": {
+        "compute": compute_tau21_unc,
+        "root_label": "#tau_{21}^{cut}",
+        "column_header": r"$\tau_{21}^\mathrm{cut}$",
+        "description": (
+            r"$\tau_{21}^\mathrm{cut}$ is the systematic uncertainty related to the choice of the $\tau_{21}$ cut "
+            r"used in the event selection (max difference between nominal $\tau_{21}$ cut at "
+            f"{TAU21_CENTRAL:.2f}" r" and variations at "
+            + ", ".join(f"{t:.2f}" for t in TAU21_VALUES if t != TAU21_CENTRAL) + ")"
+        ),
+    },
+    "reweight_signal": {
+        "compute": compute_reweight_signal_unc,
+        "root_label": "reweight-to-signal",
+        "column_header": r"$\mathrm{reweight\mbox{-}to\mbox{-}signal}$",
+        "description": (
+            r"$\mathrm{reweight\mbox{-}to\mbox{-}signal}$ is the systematic uncertainty related to reweighting the "
+            r"b-proxy shape to the HH4b signal shape at the nominal $\tau_{21}$ cut of "
+            f"{TAU21_CENTRAL:.2f}" r" (difference between the SF with and without this reweighting)"
+        ),
+    },
+}
 
 # helper function to get pT label from category
 def pt_label_from_category(cat):
@@ -194,19 +280,20 @@ def plot_r_vs_tau21_ROOT(year, category, tau, r, err_up, err_dn, outname, sf_typ
     c.Close()
 
 # plot SFs for tau21 = 0.30 per each year
-def plot_r_vs_category(year, data, outdir, ALLOWED_CATEGORIES, sf_type):
+def plot_r_vs_category(year, data, outdir, ALLOWED_CATEGORIES, sf_type, error_method="tau21"):
+    compute_chosen_unc = ERROR_METHOD_INFO[error_method]["compute"]
     cats = [c for c in ALLOWED_CATEGORIES if c in data]
     x = np.arange(len(cats))
-    r, eup, edn, eup_tot, edn_tot, tau_err, rw_err = [], [], [], [], [], [], []
+    r, eup, edn, eup_tot, edn_tot, chosen_err, rw_err = [], [], [], [], [], [], []
     for cat in cats:
         res = data[cat]
         r0, eu, ed = res[TAU21_CENTRAL]
-        d_tau = compute_tau21_unc(res)
+        d_chosen = compute_chosen_unc(res)
         d_rw  = compute_reweight_unc(res)
         r.append(r0)
         eup.append(eu)
         edn.append(ed)
-        tau_err.append(d_tau)
+        chosen_err.append(d_chosen)
         rw_err.append(d_rw)
     outname = outdir
     sf = sf_type
@@ -217,23 +304,27 @@ def plot_r_vs_category(year, data, outdir, ALLOWED_CATEGORIES, sf_type):
         r       = r,
         err_fit_up  = eup,
         err_fit_dn  = edn,
-        tau21_err   = tau_err,
+        chosen_err  = chosen_err,
         rw_err      = rw_err,
         outname = outname,
-        sf_type  = sf
+        sf_type  = sf,
+        error_method = error_method
     )
 
-    return dict(zip(cats, zip(tau_err, rw_err)))
+    return {
+        cat: {"error_method": error_method, "chosen_unc": c, "reweight_unc": rw}
+        for cat, c, rw in zip(cats, chosen_err, rw_err)
+    }
 
-def plot_r_vs_category_ROOT(year, cats, r, err_fit_up, err_fit_dn, tau21_err, rw_err, outname, sf_type):
+def plot_r_vs_category_ROOT(year, cats, r, err_fit_up, err_fit_dn, chosen_err, rw_err, outname, sf_type, error_method="tau21"):
     os.makedirs(os.path.dirname(outname), exist_ok=True)
 
     ROOT.gStyle.SetOptStat(0)
     n = len(cats)
     x = list(range(1, n+1))
     ex = [0]*n
-    err_up_tot = [math.sqrt(err_fit_up[i]**2 + tau21_err[i]**2 + rw_err[i]**2) for i in range(n)]
-    err_dn_tot = [math.sqrt(err_fit_dn[i]**2 + tau21_err[i]**2 + rw_err[i]**2) for i in range(n)]
+    err_up_tot = [math.sqrt(err_fit_up[i]**2 + chosen_err[i]**2 + rw_err[i]**2) for i in range(n)]
+    err_dn_tot = [math.sqrt(err_fit_dn[i]**2 + chosen_err[i]**2 + rw_err[i]**2) for i in range(n)]
     # g_tau = ROOT.TGraphAsymmErrors(n)
     g_tot = ROOT.TGraphAsymmErrors(n)
 
@@ -268,7 +359,7 @@ def plot_r_vs_category_ROOT(year, cats, r, err_fit_up, err_fit_dn, tau21_err, rw
     # g_tau.Draw("AE2")
     g_tot.Draw("AP")
 
-    err_box = [math.sqrt(tau21_err[i]**2 + rw_err[i]**2) for i in range(n)]
+    err_box = [math.sqrt(chosen_err[i]**2 + rw_err[i]**2) for i in range(n)]
     boxes = []
     for i in range(n):
         x1 = x[i] - 0.02
@@ -327,23 +418,29 @@ def plot_r_vs_category_ROOT(year, cats, r, err_fit_up, err_fit_dn, tau21_err, rw
     leg.SetTextSize(0.035)
     # leg.AddEntry(g_tau, "#tau_{21} syst.", "f")
     leg.AddEntry(g_tot, "fit #oplus #tau_{21}", "lp")
-    leg.AddEntry(boxes[0], "#tau_{21}^{cut} #oplus #tau_{21}^{reweight}", "f")
+    chosen_label = ERROR_METHOD_INFO[error_method]["root_label"]
+    leg.AddEntry(boxes[0], f"{chosen_label} #oplus #tau_{{21}}^{{reweight}}", "f")
     leg.Draw()
 
     c.Update()
     c.SaveAs(outname)
     c.Close()
 
-def save_latex_table(data, output_dir, ALLOWED_CATEGORIES, sf_type="b", cat_coll="normal_category"):
+def save_latex_table(data, output_dir, ALLOWED_CATEGORIES, sf_type="b", cat_coll="normal_category", error_method="tau21"):
     os.makedirs(output_dir, exist_ok=True)
-    filename = os.path.join(output_dir, f"SF{sf_type}_{cat_coll}_table.tex")
+    filename = os.path.join(output_dir, f"SF{sf_type}_{cat_coll}_{error_method}_table.tex")
+    method_info = ERROR_METHOD_INFO[error_method]
 
     with open(filename, "w") as f:
         f.write("\\begin{table}[htbp]\n")
         f.write("\\centering\n")
         f.write("\\begin{tabular}{|c|c|c|c|c|c|c|c|}\n")
         f.write("\\hline\n")
-        f.write("year & $\\mathrm{m_{SD}}$ [GeV] & category $p_\\mathrm{T}$ [GeV] & $\\mathrm{SF_{nominal}}$ & $\\mathrm{err_{fit}}$ & $\\tau_{21}^\\mathrm{{cut}}$ & $\\tau_{21}^\\mathrm{reweight}$ & $\\sigma_\\mathrm{tot}$ \\\\\n")
+        f.write(
+            "year & $\\mathrm{m_{SD}}$ [GeV] & category $p_\\mathrm{T}$ [GeV] & $\\mathrm{SF_{nominal}}$ & "
+            f"$\\mathrm{{err_{{fit}}}}$ & {method_info['column_header']} & $\\tau_{{21}}^\\mathrm{{reweight}}$ & "
+            "$\\sigma_\\mathrm{tot}$ \\\\\n"
+        )
         f.write("\\hline\n")
 
         for year in data.keys():
@@ -353,9 +450,9 @@ def save_latex_table(data, output_dir, ALLOWED_CATEGORIES, sf_type="b", cat_coll
                     continue
                 res = data[year][cat]
                 r0, err_up, err_dn = res[TAU21_CENTRAL]
-                tau21_unc = compute_tau21_unc(res)
+                chosen_unc = method_info["compute"](res)
                 reweight_unc = compute_reweight_unc(res)
-                total_unc = math.sqrt(max(err_up, err_dn)**2 + tau21_unc**2 + reweight_unc**2)
+                total_unc = math.sqrt(max(err_up, err_dn)**2 + chosen_unc**2 + reweight_unc**2)
 
                 # scrittura riga tabella
                 year_label = year.replace("_", " ")
@@ -376,42 +473,55 @@ def save_latex_table(data, output_dir, ALLOWED_CATEGORIES, sf_type="b", cat_coll
                         cat_label = f"[{lo}, {hi}]"
                 else:
                     cat_label = cat
-                f.write(f"{year_label} & {msd_label} & {cat_label} & {r0:.3f} & {max(err_up, err_dn):.3f} & {tau21_unc:.3f} & {reweight_unc:.3f} & {total_unc:.3f} \\\\\n")
+                f.write(f"{year_label} & {msd_label} & {cat_label} & {r0:.3f} & {max(err_up, err_dn):.3f} & {chosen_unc:.3f} & {reweight_unc:.3f} & {total_unc:.3f} \\\\\n")
                 f.write("\\hline\n")
 
         f.write("\\end{tabular}\n")
         f.write(f"""
         \\caption{{Scale factors $\\mathrm{{SF}}_\\mathrm{{{sf_type}}}$ for ParticleNet XbbVsQCD tagger WP = 0.75.
         $\\mathrm{{err_{{fit}}}}$ is the error coming from Combine fit, so statistics and systematics (pileup, lumi, isr, fsr, JER, JES, syst on light and c jets, Madgraph/Pythia QCD),
-        $\\tau_{{21}}^\\mathrm{{cut}}$ is the systematic uncertainty related to the choice of the $\\tau_{{21}}$ cut used in the event selection (max difference between nominal
-        $\\tau_{{21}}$ cut at 0.30 and variations at 0.20, 0.25, 0.35, 0.40), $\\tau_{{21}}^\\mathrm{{reweight}}$ is the systematic uncertainty related to the SF obtained after reweight
+        {method_info['description']}, $\\tau_{{21}}^\\mathrm{{reweight}}$ is the systematic uncertainty related to the SF obtained after reweight
         of MC to data (difference between the SF at nominal $\\tau_{{21}}$ cut at 0.30 with and without the reweight).}}\n
         """)
         f.write("\\end{table}\n")
 
     print(f"[OK] LaTeX table saved to {filename}")
 
-def save_correctionlib_json(data, output_dir, ALLOWED_CATEGORIES, sf_type="b", cat_coll="normal_category"):
-    correct_dict = {key: {} for key in ["central", "up", "down", "up_rew", "down_rew", "up_tau21", "down_tau21", "up_internalised", "down_internalised"]}
-    if sf_type =="b":
-        flow = {key: 0.915 for key in ["down", "down_rew", "down_tau21", "down_internalised"]}
-        flow |= {key: 1.085 for key in ["up", "up_rew", "up_tau21", "up_internalised"]}
+def save_correctionlib_json(data, output_dir, ALLOWED_CATEGORIES, sf_type="b", cat_coll="normal_category",
+                             error_method="tau21", wp_config=DEFAULT_WP_CONFIG, config_year="2024"):
+    compute_chosen_unc = ERROR_METHOD_INFO[error_method]["compute"]
+    keys = ["central", "up", "down", "up_rew", "down_rew", "up_tau21", "down_tau21",
+            "up_reweight_signal", "down_reweight_signal", "up_internalised", "down_internalised"]
+    correct_dict = {key: {} for key in keys}
+    up_keys = [k for k in keys if k.startswith("up")]
+    down_keys = [k for k in keys if k.startswith("down")]
+    if sf_type == "b":
+        flow = {key: 0.85 for key in down_keys} | {key: 1.15 for key in up_keys}
     else:
-        flow = {key: 0.6 for key in ["down", "down_rew", "down_tau21", "down_internalised"]}
-        flow |= {key: 1.4 for key in ["up", "up_rew", "up_tau21", "up_internalised"]}
+        flow = {key: 0.6 for key in down_keys} | {key: 1.4 for key in up_keys}
     flow["central"] = 1.0
+
+    tagger, wp_thresholds = load_wp_config(wp_config, config_year)
+    purities_present = []
 
     for year in data.keys():
         for cat in ALLOWED_CATEGORIES:
+            if cat not in data[year]:
+                # e.g. no LP or no HP fit results for this category collection
+                continue
             purity = cat.split("_")[-1]
+            if purity not in purities_present:
+                purities_present.append(purity)
             m = re.search(r"Pt-(\d+)to(\d+|Inf)", cat)
             pt = m.group(1)  # I am taking lower bound, as upper bound should always be covered by next bin
             res = data[year][cat]
             r0, err_up, err_dn = res[TAU21_CENTRAL]
             tau21_unc = compute_tau21_unc(res)
             reweight_unc = compute_reweight_unc(res)
-            total_up = math.sqrt(err_up**2 + tau21_unc**2 + reweight_unc**2)
-            total_down = math.sqrt(err_dn**2 + tau21_unc**2 + reweight_unc**2)
+            reweight_signal_unc = compute_reweight_signal_unc(res)
+            chosen_unc = compute_chosen_unc(res)
+            total_up = math.sqrt(err_up**2 + chosen_unc**2 + reweight_unc**2)
+            total_down = math.sqrt(err_dn**2 + chosen_unc**2 + reweight_unc**2)
             if purity not in correct_dict["central"]:
                 for val in correct_dict.values():
                     val[purity] = {}
@@ -422,34 +532,60 @@ def save_correctionlib_json(data, output_dir, ALLOWED_CATEGORIES, sf_type="b", c
             correct_dict["down_rew"][purity][pt] = r0 - reweight_unc
             correct_dict["up_tau21"][purity][pt] = r0 + tau21_unc
             correct_dict["down_tau21"][purity][pt] = r0 - tau21_unc
-            correct_dict["up_internalised"][purity][pt] = r0 + tau21_unc
-            correct_dict["down_internalised"][purity][pt] = r0 - tau21_unc
+            correct_dict["up_reweight_signal"][purity][pt] = r0 + reweight_signal_unc
+            correct_dict["down_reweight_signal"][purity][pt] = r0 - reweight_signal_unc
+            correct_dict["up_internalised"][purity][pt] = r0 + chosen_unc
+            correct_dict["down_internalised"][purity][pt] = r0 - chosen_unc
 
-    corr_wp = cs.Correction(
-            name=f"globalParT3_XbbVsQCD_{sf_type}_wp_values",
-            description="Extract working point values (lower limits) for the bb-jet discrimination for globalParT3_XbbVsQCD in 2024. The MP, HP and VHP working points correspond to windows between 0.95, 0.975 and 0.99 score. CURRENTLY WORK IN PROGRESS",
-            inputs=[cs.Variable(name="working_point", type="string", description="Working points or purity regions used for discrimination")],
-            output=cs.Variable(name="value", type="real", description="Lower edge of the score window for the given working point."),
-            version=1,
-            data=cs.Category(
-                nodetype="category",
-                input="working_point",
-                content=[
-                    cs.CategoryItem(
-                        key=wp,
-                        value=val,
-                        )
-                    for wp, val in zip(["MP", "HP", "VHP"],[0.95,0.975,0.99])
-                    ],
-                default=0.0
+    if not purities_present:
+        raise ValueError(
+            f"None of ALLOWED_CATEGORIES for '{cat_coll}' were found in the collected results; nothing to save."
+        )
+
+    wp_items = sorted(
+        ((wp, wp_thresholds[wp]) for wp in purities_present if wp in wp_thresholds),
+        key=lambda kv: kv[1],
+    )
+    missing_wp = [wp for wp in purities_present if wp not in wp_thresholds]
+    if missing_wp:
+        print(f"[WARN] No score threshold (config or default) for working point(s) {missing_wp}; "
+              f"they will be omitted from the {tagger}_{sf_type}_wp_values correction.")
+
+    corrections = []
+    if wp_items:
+        wp_names = ", ".join(wp for wp, _ in wp_items)
+        corr_wp = cs.Correction(
+                name=f"{tagger}_{sf_type}_wp_values",
+                description=f"Extract working point values (lower limits) for the bb-jet discrimination for {tagger}. "
+                            f"Working points included: {wp_names}.",
+                inputs=[cs.Variable(name="working_point", type="string", description="Working points or purity regions used for discrimination")],
+                output=cs.Variable(name="value", type="real", description="Lower edge of the score window for the given working point."),
+                version=1,
+                data=cs.Category(
+                    nodetype="category",
+                    input="working_point",
+                    content=[
+                        cs.CategoryItem(
+                            key=wp,
+                            value=val,
+                            )
+                        for wp, val in wp_items
+                        ],
+                    default=0.0
+                    )
                 )
-            )
+        corrections.append(corr_wp)
+    else:
+        print(f"[WARN] No working point had a resolvable threshold; skipping the {tagger}_{sf_type}_wp_values correction.")
+
     corr_full = cs.Correction(
-            name=f"globalParT3_XbbVsQCD_{sf_type}_{cat_coll}",
+            name=f"{tagger}_{sf_type}_{cat_coll}",
             version=1,
             inputs=[
-                cs.Variable(name="systematic", type="string", description="'central' for nominal SF. 'up/down' for total SF variation. Other 'up/down_X' for additional uncertainty breakdown."),
-                cs.Variable(name="working_point", type="string", description="MP/HP/VHP"),
+                cs.Variable(name="systematic", type="string",
+                            description=f"'central' for nominal SF. 'up/down' for total SF variation "
+                                        f"(reweight #oplus {error_method}). Other 'up/down_X' for additional uncertainty breakdown."),
+                cs.Variable(name="working_point", type="string", description="/".join(purities_present)),
                 cs.Variable(name="pt", type="real", description="FatJet pT"),
                 ],
             output=cs.Variable(name="weight", type="real"),
@@ -482,23 +618,21 @@ def save_correctionlib_json(data, output_dir, ALLOWED_CATEGORIES, sf_type="b", c
                     ]
                 )
             )
-    rich.print(corr_wp)
-    rich.print(corr_full)
+    corrections.append(corr_full)
+    for corr in corrections:
+        rich.print(corr)
     cset = cs.CorrectionSet(
             schema_version=2,
-            description="AK8 bbtag scale factors for globalParT3_XbbVsQCD",
-            corrections=[
-                corr_wp,
-                corr_full
-                ],
+            description=f"AK8 bbtag scale factors for {tagger}",
+            corrections=corrections,
             )
     os.makedirs(output_dir, exist_ok=True)
-    filename = os.path.join(output_dir, f"bbtag_AK8_scale_factors_for_globalParT3_XbbVsQCD_{cat_coll}.json")
+    filename = os.path.join(output_dir, f"bbtag_AK8_scale_factors_for_{tagger}_{cat_coll}_{error_method}.json")
     with open(filename, "w") as fout:
         fout.write(cset.model_dump_json(exclude_unset=True, indent=4))
     with gzip.open(f"{filename}.gzip", "wt") as fout:
         fout.write(cset.model_dump_json(exclude_unset=True, indent=4))
-    return [corr_wp, corr_full]
+    return corrections
 
 
 def main():
@@ -507,11 +641,23 @@ def main():
     parser.add_argument("--output-dir", "-o", required=True, help="Output directory for SFs_plots")
     parser.add_argument("--SF-type", "-sf", default="b", help="Type of scale factor: b for SF_b, c for SF_c (default: b)")
     parser.add_argument("--tau21", "-t21", default="normal", help="tau21 collection scheme. options ['normal', 'all'] (default: 'normal')")
+    parser.add_argument("--error-method", "-em", choices=list(ERROR_METHOD_INFO.keys()), default="tau21",
+                         help="Systematic combined (in quadrature) with the always-on tau21-reweight uncertainty "
+                              "and the fit error to form the total up/down uncertainty: 'tau21' uses the tau21-cut "
+                              "variation, 'reweight_signal' uses the b-proxy reweight-to-signal variation "
+                              "(default: 'tau21')")
+    parser.add_argument("--wp-config", default=str(DEFAULT_WP_CONFIG),
+                         help="YAML file to read the tagger name and working-point score thresholds from, for the "
+                              f"correctionlib output (default: {DEFAULT_WP_CONFIG}). Missing file/year/tagger/purity "
+                              f"entries fall back to hardcoded defaults ({DEFAULT_WP_THRESHOLDS}).")
+    parser.add_argument("--config-year", default="2024",
+                         help="Year key to look up in --wp-config's mutag_calibration.wp section (default: '2024')")
     args = parser.parse_args()
 
 
     base_dir = args.base_dir
     sf_type = args.SF_type
+    error_method = args.error_method
 
     for category_collection, ALLOWED_CATEGORIES in ALLOWED_CATEGORIES_SF_PLOT.items():
         data = collect_results(base_dir, ALLOWED_CATEGORIES=ALLOWED_CATEGORIES, sf_type=sf_type)
@@ -523,17 +669,18 @@ def main():
                 plot_r_vs_tau21(year, cat, res, os.path.join(year_out, f"SF{sf_type}_vs_tau21_{cat}_{category_collection}.png"), sf_type)
                 print(f"[OK] Plotted SF vs tau21 for {year} {cat}")
 
-            tau21_errors = plot_r_vs_category(year, data[year], os.path.join(year_out, f"SF{sf_type}_{category_collection}_vs_category_tau21_0p30.pdf"), ALLOWED_CATEGORIES, sf_type)
-            tau21_errors = plot_r_vs_category(year, data[year], os.path.join(year_out, f"SF{sf_type}_{category_collection}_vs_category_tau21_0p30.png"), ALLOWED_CATEGORIES, sf_type)
+            sys_errors = plot_r_vs_category(year, data[year], os.path.join(year_out, f"SF{sf_type}_{category_collection}_{error_method}_vs_category_tau21_0p30.pdf"), ALLOWED_CATEGORIES, sf_type, error_method=error_method)
+            sys_errors = plot_r_vs_category(year, data[year], os.path.join(year_out, f"SF{sf_type}_{category_collection}_{error_method}_vs_category_tau21_0p30.png"), ALLOWED_CATEGORIES, sf_type, error_method=error_method)
             print(f"[OK] Plotted SF vs category for {year}")
 
-            # salva errore tau21
-            with open(os.path.join(year_out, f"SF{sf_type}_tau21_sys_{category_collection}.json"), "w") as f:
-                json.dump(tau21_errors, f, indent=2)
-            print(f"[OK] Saved tau21 uncertainties for {year}")
+            # salva errore sistematico scelto (tau21 o reweight_signal) + reweight sempre attivo
+            with open(os.path.join(year_out, f"SF{sf_type}_{category_collection}_{error_method}_sys.json"), "w") as f:
+                json.dump(sys_errors, f, indent=2)
+            print(f"[OK] Saved {error_method} uncertainties for {year}")
 
-        save_latex_table(data, args.output_dir, ALLOWED_CATEGORIES, sf_type=sf_type, cat_coll=category_collection)
-        save_correctionlib_json(data, args.output_dir, ALLOWED_CATEGORIES, sf_type=sf_type, cat_coll=category_collection)
+        save_latex_table(data, args.output_dir, ALLOWED_CATEGORIES, sf_type=sf_type, cat_coll=category_collection, error_method=error_method)
+        save_correctionlib_json(data, args.output_dir, ALLOWED_CATEGORIES, sf_type=sf_type, cat_coll=category_collection,
+                                 error_method=error_method, wp_config=args.wp_config, config_year=args.config_year)
 
 
 if __name__ == "__main__":
