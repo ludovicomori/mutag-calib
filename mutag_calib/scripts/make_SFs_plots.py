@@ -101,12 +101,6 @@ def collect_results(base_dir, ALLOWED_CATEGORIES, sf_type="b"):
                 r_rw, eup_rw, edn_rw = read_r(fjson_rw, sf_type=sf_type)
                 data[year][cat]["0.30_reweight"] = (r_rw, eup_rw, edn_rw)
 
-            # tau21 = 0.30, b-proxy reweighted to the HH4b signal shape
-            tdir_rw_sig = "tau21_0p30_reweight_signal"
-            fjson_rw_sig = os.path.join(base, tdir_rw_sig, "fitResults.json")
-            if os.path.exists(fjson_rw_sig):
-                r_rs, eup_rs, edn_rs = read_r(fjson_rw_sig, sf_type=sf_type)
-                data[year][cat]["0.30_reweight_signal"] = (r_rs, eup_rs, edn_rs)
     return data
 
 # compute tau21 cut-variation uncertainty
@@ -122,14 +116,6 @@ def compute_reweight_unc(results):
     r0, _, _ = results[TAU21_CENTRAL]
     r_rw, _, _ = results["0.30_reweight"]
     return abs(r_rw - r0)
-
-# alternative to compute_tau21_unc: b-proxy reweighted to the signal shape
-def compute_reweight_signal_unc(results):
-    if "0.30_reweight_signal" not in results:
-        return 0.0
-    r0, _, _ = results[TAU21_CENTRAL]
-    r_rs, _, _ = results["0.30_reweight_signal"]
-    return abs(r_rs - r0)
 
 # tau21 uncertainty is already a nuisance in the combine fit (see create_datacards.py),
 # so it is contained in the fit error and must not be added again
@@ -148,16 +134,6 @@ ERROR_METHOD_INFO = {
             r"used in the event selection (max difference between nominal $\tau_{21}$ cut at "
             f"{TAU21_CENTRAL:.2f}" r" and variations at "
             + ", ".join(f"{t:.2f}" for t in TAU21_VALUES if t != TAU21_CENTRAL) + ")"
-        ),
-    },
-    "reweight_signal": {
-        "compute": compute_reweight_signal_unc,
-        "root_label": "reweight-to-signal",
-        "column_header": r"$\mathrm{reweight\mbox{-}to\mbox{-}signal}$",
-        "description": (
-            r"$\mathrm{reweight\mbox{-}to\mbox{-}signal}$ is the systematic uncertainty related to reweighting the "
-            r"b-proxy shape to the HH4b signal shape at the nominal $\tau_{21}$ cut of "
-            f"{TAU21_CENTRAL:.2f}" r" (difference between the SF with and without this reweighting)"
         ),
     },
     "internalised": {
@@ -509,7 +485,7 @@ def save_correctionlib_json(data, output_dir, ALLOWED_CATEGORIES, sf_type="b", c
                              error_method="tau21", wp_config=DEFAULT_WP_CONFIG, config_year="2024"):
     compute_chosen_unc = ERROR_METHOD_INFO[error_method]["compute"]
     keys = ["central", "up", "down", "up_rew", "down_rew", "up_tau21", "down_tau21",
-            "up_reweight_signal", "down_reweight_signal", "up_internalised", "down_internalised"]
+            "up_internalised", "down_internalised"]
     correct_dict = {key: {} for key in keys}
     up_keys = [k for k in keys if k.startswith("up")]
     down_keys = [k for k in keys if k.startswith("down")]
@@ -536,7 +512,6 @@ def save_correctionlib_json(data, output_dir, ALLOWED_CATEGORIES, sf_type="b", c
             r0, err_up, err_dn = res[TAU21_CENTRAL]
             tau21_unc = compute_tau21_unc(res)
             reweight_unc = compute_reweight_unc(res)
-            reweight_signal_unc = compute_reweight_signal_unc(res)
             chosen_unc = compute_chosen_unc(res)
             total_up = math.sqrt(err_up**2 + chosen_unc**2 + reweight_unc**2)
             total_down = math.sqrt(err_dn**2 + chosen_unc**2 + reweight_unc**2)
@@ -550,8 +525,6 @@ def save_correctionlib_json(data, output_dir, ALLOWED_CATEGORIES, sf_type="b", c
             correct_dict["down_rew"][purity][pt] = r0 - reweight_unc
             correct_dict["up_tau21"][purity][pt] = r0 + tau21_unc
             correct_dict["down_tau21"][purity][pt] = r0 - tau21_unc
-            correct_dict["up_reweight_signal"][purity][pt] = r0 + reweight_signal_unc
-            correct_dict["down_reweight_signal"][purity][pt] = r0 - reweight_signal_unc
             correct_dict["up_internalised"][purity][pt] = r0 + chosen_unc
             correct_dict["down_internalised"][purity][pt] = r0 - chosen_unc
 
@@ -662,7 +635,7 @@ def main():
     parser.add_argument("--error-method", "-em", choices=list(ERROR_METHOD_INFO.keys()), default="internalised",
                          help="Systematic combined (in quadrature) with the always-on tau21-reweight uncertainty "
                               "and the fit error to form the total up/down uncertainty: 'tau21' uses the tau21-cut "
-                              "variation, 'reweight_signal' uses the b-proxy reweight-to-signal variation, "
+                              "variation,"
                               "'internalised' adds nothing because the tau21 uncertainty is already a nuisance "
                               "in the combine fit (default: 'tau21')")
     parser.add_argument("--wp-config", default=str(DEFAULT_WP_CONFIG),
@@ -692,7 +665,6 @@ def main():
             sys_errors = plot_r_vs_category(year, data[year], os.path.join(year_out, f"SF{sf_type}_{category_collection}_{error_method}_vs_category_tau21_0p30.png"), ALLOWED_CATEGORIES, sf_type, error_method=error_method)
             print(f"[OK] Plotted SF vs category for {year}")
 
-            # salva errore sistematico scelto (tau21 o reweight_signal) + reweight sempre attivo
             with open(os.path.join(year_out, f"SF{sf_type}_{category_collection}_{error_method}_sys.json"), "w") as f:
                 json.dump(sys_errors, f, indent=2)
             print(f"[OK] Saved {error_method} uncertainties for {year}")

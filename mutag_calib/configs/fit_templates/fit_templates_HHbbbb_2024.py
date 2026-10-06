@@ -40,7 +40,7 @@ samples = [
     "VJets",
     "TTto4Q",
     "SingleTop",
-    "GluGluHHto4B_Par-c2-0p00-kl-1p00-kt-1p00_TuneCP5_13p6TeV_powheg-pythia8",
+    # "GluGluHHto4B_Par-c2-0p00-kl-1p00-kt-1p00_TuneCP5_13p6TeV_powheg-pythia8",
 ]
 
 subsamples = {}
