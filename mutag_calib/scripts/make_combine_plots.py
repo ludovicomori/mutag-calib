@@ -120,7 +120,11 @@ def plot_one(f, group, channel, out_png, era, ratio_ylim=(0.4, 1.6)):
 
     b, edges, _ = fetch_hist(d, f"b_{era}")
     c, _, _     = fetch_hist(d, f"c_{era}")
-    l, _, _     = fetch_hist(d, f"light_{era}")
+    try:
+        l, _, _     = fetch_hist(d, f"light_{era}")
+    except:
+        print("no light values found. Most likely no light jets passing")
+        l = np.zeros_like(c, dtype=float)
     tot, _, _   = fetch_hist(d, "total")
     sigma       = get_sigma_from_cov(d, len(tot))
 

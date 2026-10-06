@@ -1,0 +1,31 @@
+mutag_calibration:
+  taggers:
+    - globalParT3_XbbVsQCD
+  pt_binning:
+    "2024":
+      - [250, 'Inf']
+  msd_binning:
+    "2024":
+      - [100, 150]
+  tau21_binning:
+    "2024":
+      - 0.1
+      - 0.2
+      - 0.3
+      - 0.4
+      - 0.5
+      - 0.6
+      - 0.7
+      - 0.8
+      - 0.9
+      - 1
+  wp:
+    "2024":
+      globalParT3_XbbVsQCD:
+        HHbbbb_WP_LP: 0.03
+        HHbbbb_WP_MP: 0.95
+        HHbbbb_WP_HP: 0.975
+        HHbbbb_WP_VHP: 0.99
+        HHbbbb_LP: "0.03-0.95"
+        HHbbbb_MP: "0.95-0.975"
+        HHbbbb_HP: "0.975-0.99"

@@ -57,3 +57,20 @@ class ptReweightProcessor(fatjetBaseProcessor):
 
         #    # Apply muon tagging to AK8 jet collection
         #    self.events[coll] = self.events.FatJetGood[mask_mutag]
+
+        # Define a new field called btag, that depends on what we will cut on later on.
+        if "2024" in self._year:
+            tagger = "globalParT3_XbbVsQCD"
+        else:
+            tagger = "particleNet_XbbVsQCD"
+        self.events["FatJetGood"] = ak.with_field(self.events["FatJetGood"], self.events["FatJetGood"][tagger], "btag")
+        self.events["FatJetGoodJet0"] = ak.pad_none(self.events.FatJetGood, 1, clip=True)[:, 0]
+        self.events["FatJetGoodJet1"] = ak.pad_none(self.events.FatJetGood, 2, clip=True)[:, 1]
+
+
+class ptReweightProcessorSkimonly(fatjetBaseProcessor):
+    def __init__(self, cfg: Configurator):
+        super().__init__(cfg)
+
+    def apply_object_preselection(self, variation):
+        super().apply_object_preselection(variation)

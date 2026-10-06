@@ -1,0 +1,34 @@
+# HH->bbtt fully boosted: identical to object_preselection.yaml except FatJet pt 250 (the
+# boosted calibration starts at 250 GeV). Loaded by the *_HHbbtt_boosted configs instead of the shared file.
+object_preselection:
+  Muon:
+    pt: 5.0
+    eta: 2.4
+    iso: 0.15  #PFIsoTight
+    id: tightId
+
+  Electron:
+    pt: 15.0
+    eta: 2.4
+    iso: 0.06
+    id: mvaIso_WP80
+
+  Jet:
+    dr_lepton: 0.4
+    pt: 25.0
+    eta: 2.5
+    jetId: 2
+    puId:
+      wp: L
+      value: 4
+      maxpt: 50.0
+
+  FatJet:
+    pt: 250.0
+    eta: 2.4
+    msd: 30.0
+    jetId: 2
+    nmu: 1
+    #nsubjet: 2
+    #nmusj: 1
+    #dimuon_pt_ratio: 0.6

@@ -22,7 +22,7 @@ object_preselection:
       maxpt: 50.0
 
   FatJet:
-    pt: 250.0  #adapted for bbtautau run3 analysis
+    pt: 300.0
     eta: 2.4
     msd: 30.0
     jetId: 2

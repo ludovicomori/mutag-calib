@@ -1,0 +1,31 @@
+# AK4 jet selections used only by the optional boosted-BDT evaluation
+# (mutag_calib.workflows.mutag_bdt_processor). Ported from
+# AnalysisConfigs_bossted_dev/configs/HH4b_common/params/object_preselection_boosted_approach.yaml
+# (JetVBF / JetNearFatJet blocks). Merged on top of the base parameters only
+# when check_gloparT_2024.py has BDT_MODEL set.
+object_preselection:
+  # VBF AK4 jet candidates (mjj pair -> VBFjjMass / VBFjjDeltaEta BDT inputs)
+  JetVBF:
+    pt: 25
+    eta: 4.7
+    jetId: 6  # tight + lepton veto (recomputed from PF fractions for NanoAODv15)
+    dr_jet: 1.2
+    clean_jet_coll: "FatJetGoodSelected"
+    dr_lep: 0.4
+    clean_ele_coll: "Electron"
+    clean_mu_coll: "Muon"
+    clean_ele_pt: 5
+    clean_mu_pt: 7
+
+  # AK4 jets close to the AK8 Higgs candidates (-> H*AK4JetAway* BDT inputs)
+  JetNearFatJet:
+    pt: 25
+    eta: 2.5
+    jetId: 6
+    dr_jet: 0.9
+    clean_jet_coll: "FatJetGoodSelected"
+    dr_lep: 0.4
+    clean_ele_coll: "Electron"
+    clean_mu_coll: "Muon"
+    clean_ele_pt: 5
+    clean_mu_pt: 7

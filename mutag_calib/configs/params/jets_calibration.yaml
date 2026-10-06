@@ -1,45 +1,44 @@
 jets_calibration:
-  # Override PocketCoffea v9 defaults with preliminary v15 PUPPI JECs for Run 2
-  # Source: /afs/cern.ch/user/i/izisopou/public/jme/json_files_ULRun2_PUPPI/
+  # Override PocketCoffea v9 defaults with the central v15 PUPPI JECs for Run 2
   jet_types:
     AK8PFPuppi:
       "2018":
-        json_path: /afs/cern.ch/user/i/izisopou/public/jme/json_files_ULRun2_PUPPI/Run2Summer20UL18/fatJet_jerc.json.gz
-        jec_mc: Summer20UL18_V1_MC
+        json_path: /cvmfs/cms-griddata.cern.ch/cat/metadata/JME/Run2-2018-UL-NanoAODv15/latest/fatJet_jerc.json.gz
+        jec_mc: Summer20UL18NanoV15_V1_MC
         jec_data:
-          A: Summer20UL18_RunA_V1_DATA
-          B: Summer20UL18_RunB_V1_DATA
-          C: Summer20UL18_RunC_V1_DATA
-          D: Summer20UL18_RunD_V1_DATA
-        jer: Summer19UL18_JRV2_MC
+          A: Summer20UL18NanoV15_RunA_V1_DATA
+          B: Summer20UL18NanoV15_RunB_V1_DATA
+          C: Summer20UL18NanoV15_RunC_V1_DATA
+          D: Summer20UL18NanoV15_RunD_V1_DATA
+        jer: Summer19UL18_JRV3_MC
         level: L1L2L3Res
       "2017":
-        json_path: /afs/cern.ch/user/i/izisopou/public/jme/json_files_ULRun2_PUPPI/Run2Summer20UL17/fatJet_jerc.json.gz
-        jec_mc: Summer20UL17_V1_MC
+        json_path: /cvmfs/cms-griddata.cern.ch/cat/metadata/JME/Run2-2017-UL-NanoAODv15/latest/fatJet_jerc.json.gz
+        jec_mc: Summer20UL17NanoV15_V1_MC
         jec_data:
-          B: Summer20UL17_RunB_V1_DATA
-          C: Summer20UL17_RunC_V1_DATA
-          D: Summer20UL17_RunD_V1_DATA
-          E: Summer20UL17_RunE_V1_DATA
-          F: Summer20UL17_RunF_V1_DATA
-        jer: Summer19UL17_JRV3_MC
+          B: Summer20UL17NanoV15_RunB_V1_DATA
+          C: Summer20UL17NanoV15_RunC_V1_DATA
+          D: Summer20UL17NanoV15_RunD_V1_DATA
+          E: Summer20UL17NanoV15_RunE_V1_DATA
+          F: Summer20UL17NanoV15_RunF_V1_DATA
+        jer: Summer19UL17_JRV4_MC
         level: L1L2L3Res
       2016_PostVFP:
-        json_path: /afs/cern.ch/user/i/izisopou/public/jme/json_files_ULRun2_PUPPI/Run2Summer20UL16/fatJet_jerc.json.gz
-        jec_mc: Summer20UL16_V1_MC
-        jec_data: Summer20UL16_RunFGH_V1_DATA
-        jer: Summer20UL16_JRV3_MC
+        json_path: /cvmfs/cms-griddata.cern.ch/cat/metadata/JME/Run2-2016postVFP-UL-NanoAODv15/latest/fatJet_jerc.json.gz
+        jec_mc: Summer20UL16NanoV15_V1_MC
+        jec_data: Summer20UL16NanoV15_RunFGH_V1_DATA
+        jer: Summer20UL16_JRV5_MC
         level: L1L2L3Res
       2016_PreVFP:
-        json_path: /afs/cern.ch/user/i/izisopou/public/jme/json_files_ULRun2_PUPPI/Run2Summer20UL16APV/fatJet_jerc.json.gz
-        jec_mc: Summer20UL16APV_V1_MC
+        json_path: /cvmfs/cms-griddata.cern.ch/cat/metadata/JME/Run2-2016preVFP-UL-NanoAODv15/latest/fatJet_jerc.json.gz
+        jec_mc: Summer20UL16APVNanoV15_V1_MC
         jec_data:
-          B: Summer20UL16APV_RunBCD_V1_DATA
-          C: Summer20UL16APV_RunBCD_V1_DATA
-          D: Summer20UL16APV_RunBCD_V1_DATA
-          E: Summer20UL16APV_RunEF_V1_DATA
-          F: Summer20UL16APV_RunEF_V1_DATA
-        jer: Summer20UL16APV_JRV3_MC
+          B: Summer20UL16APVNanoV15_RunBCD_V1_DATA
+          C: Summer20UL16APVNanoV15_RunBCD_V1_DATA
+          D: Summer20UL16APVNanoV15_RunBCD_V1_DATA
+          E: Summer20UL16APVNanoV15_RunEF_V1_DATA
+          F: Summer20UL16APVNanoV15_RunEF_V1_DATA
+        jer: Summer20UL16APV_JRV5_MC
         level: L1L2L3Res
       2022_preEE: "${default_jets_calibration.factory_config_clib.AK8PFPuppi.2022_preEE}"
       2022_postEE: "${default_jets_calibration.factory_config_clib.AK8PFPuppi.2022_postEE}"

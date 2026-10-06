@@ -11,7 +11,6 @@ defined in the fit templates configuration.
 import os
 import argparse
 import yaml
-import gc
 from pathlib import Path
 from collections import defaultdict
 import uproot
@@ -95,21 +94,21 @@ def categorize_samples(cutflow):
                 c_samples.add(sample_name)
             elif sample_name.endswith(("_b", "_bb")):
                 b_samples.add(sample_name)
-    
+
     return {
         "light": sorted(list(light_samples)),
         "c": sorted(list(c_samples)),
         "b": sorted(list(b_samples)),
-        "data_obs": sorted(list(data_samples))
+        "data_obs": sorted(list(data_samples)),
     }
 
 
-def define_systematics(years, mc_process_names):
+def define_systematics(years, mc_process_names, tau21_var_region=None):
     """Define systematic uncertainties."""
     year = years[0]
     lumi_value = lumi_sys_values[year]
 
-    systematics = Systematics([
+    syst_list = [
         # Add basic systematic uncertainties
         SystematicUncertainty(
             name="lumi", 
@@ -121,7 +120,7 @@ def define_systematics(years, mc_process_names):
         SystematicUncertainty(
             name="pileup",
             typ="shape",
-            processes={name : 1.0 for name in mc_process_names},
+            processes={name: 1.0 for name in mc_process_names},
             years=years,
         ),
         SystematicUncertainty(
@@ -169,8 +168,19 @@ def define_systematics(years, mc_process_names):
             value=1.20,  # 20% normalization uncertainty for c jets
             years=years,
         ),
-    ])
-    
+    ]
+    if tau21_var_region is not None:
+        # Separate (uncorrelated) tau21 nuisance per region: tau21_var_pass / tau21_var_fail
+        syst_list.append(
+                SystematicUncertainty(
+                    name=f"tau21_var_{tau21_var_region}",
+                    typ="shape",
+                    processes={name: 1.0 for name in mc_process_names},
+                    years=years,
+                    )
+                )
+    systematics = Systematics(syst_list)
+
     return systematics
 
 def get_passfail_ratio(datacards):
@@ -200,31 +210,102 @@ def get_passfail_ratio(datacards):
         for tau21 in datacards[f"{parent_cat}-pass"].keys():
             sumw_pass = sumw_percat[f"{parent_cat}-pass"][tau21]
             sumw_fail = sumw_percat[f"{parent_cat}-fail"][tau21]
-            for flavor in sumw_pass.keys():
+            # Region-specific systematics (e.g. tau21_var_pass / tau21_var_fail) only
+            # exist in one region, so restrict to the keys shared by pass and fail (& operation removes all entries not shared by both lists)
+            for flavor in sumw_pass.keys() & sumw_fail.keys():
                 passfail_ratio[parent_cat][tau21][flavor] = float(sumw_pass[flavor] / sumw_fail[flavor])
 
     return dict(passfail_ratio)
 
+TAU21_NOMINAL = 0.30
+TAU21_VAR_DOWN = 0.15
+TAU21_VAR_UP = 1.0
 
-def get_passfail_ratio_for_pair(pass_datacard, fail_datacard):
-    """Compute pass/fail ratio for a single pass/fail datacard pair."""
-    pass_hists = pass_datacard.create_shape_histogram_dict(is_data=False)
-    fail_hists = fail_datacard.create_shape_histogram_dict(is_data=False)
 
-    sumw_pass = {
-        process_name.split("_nominal")[0]: hist.values().sum()
-        for process_name, hist in pass_hists.items()
-    }
-    sumw_fail = {
-        process_name.split("_nominal")[0]: hist.values().sum()
-        for process_name, hist in fail_hists.items()
-    }
+def add_tau21_variation_1d(histo_nom, histo_down, histo_up, cat, mc_processes, years,
+                           syst_name="tau21_var", shape_only=True, integral_eps=1e-6):
+    """Add a tau21 working-point shape systematic to the 1D histograms.
 
-    ratio = {}
-    for flavor in sumw_pass.keys():
-        denom = sumw_fail.get(flavor, 0.0)
-        ratio[flavor] = float(sumw_pass[flavor] / denom) if denom != 0 else 1.0
-    return ratio
+    histo_nom:  1D histos at the nominal cut (tau21 < 0.30)
+    histo_down: 1D histos at tau21 < 0.20 -> used as <syst_name>Down
+    histo_up:   1D histos at tau21 < 0.40 -> used as <syst_name>Up
+
+    If shape_only is True, the Up/Down templates are rescaled so that, for each
+    process (summed over its samples and the datasets of `years`) in category `cat`,
+    they have the same integral as the nominal.
+
+    ``years`` may be a single string or a list of strings: a dataset is
+    included if any of the given year tags appears in its name (--combined-years).
+    """
+    if isinstance(years, str):
+        years = [years]
+    up_name, down_name = f"{syst_name}Up", f"{syst_name}Down"
+
+    def _nom_view(h):
+        return h.view(flow=True)[:, h.axes["variation"].index("nominal"), :]
+
+    for process_name, process in mc_processes.items():
+        sample_names = [s for s in process.samples if s in histo_nom]
+        if not sample_names:
+            continue
+
+        # Per-process integrals in this category (only datasets of these years)
+        sums = {"nominal": 0.0, "up": 0.0, "down": 0.0}
+        for s in sample_names:
+            for ds, h in histo_nom[s].items():
+                if not any(y in ds for y in years):
+                    continue
+                ci = h.axes["cat"].index(cat)
+                sums["nominal"] += np.nansum(_nom_view(h)[ci]["value"])
+                sums["up"] += np.nansum(_nom_view(histo_up[s][ds])[ci]["value"])
+                sums["down"] += np.nansum(_nom_view(histo_down[s][ds])[ci]["value"])
+
+        def _factor(key):
+            if not shape_only:
+                return 1.0
+            if sums["nominal"] > integral_eps and sums[key] > integral_eps:
+                return sums["nominal"] / sums[key]
+            return None  # not enough stats -> variation = nominal
+
+        f_up, f_down = _factor("up"), _factor("down")
+        print(f"[{syst_name}] {process_name} in {cat}: nominal={sums['nominal']:.3f}, "
+              f"up={sums['up']:.3f} (x{f_up}), down={sums['down']:.3f} (x{f_down})")
+
+        for s in sample_names:
+            for ds, h in histo_nom[s].items():
+                current_vars = list(h.axes["variation"])
+                if up_name in current_vars:
+                    continue  # already added
+                new_axis = StrCategory(current_vars + [up_name, down_name], name="variation")
+                other_axes = [ax for ax in h.axes if ax.name not in ("cat", "variation")]
+                new_hist = Hist(h.axes["cat"], new_axis, *other_axes, storage=h.storage_type())
+
+                old_view = h.view(flow=True)
+                new_view = new_hist.view(flow=True)
+                for v in current_vars:
+                    new_view[:, new_axis.index(v), :] = old_view[:, h.axes["variation"].index(v), :]
+
+                up_idx = new_axis.index(up_name)
+                down_idx = new_axis.index(down_name)
+                nom = old_view[:, h.axes["variation"].index("nominal"), :]
+
+                # Default: variations = nominal everywhere (other cats, other years)
+                for idx in (up_idx, down_idx):
+                    new_view[:, idx, :]["value"] = nom["value"]
+                    new_view[:, idx, :]["variance"] = nom["variance"]
+
+                # Fill the real variation only for this category and year
+                if any(y in ds for y in years):
+                    ci = h.axes["cat"].index(cat)
+                    for idx, src, f in ((up_idx, histo_up, f_up), (down_idx, histo_down, f_down)):
+                        if f is None:
+                            continue
+                        src_nom = _nom_view(src[s][ds])[ci]
+                        new_view[ci, idx, :]["value"] = np.nan_to_num(src_nom["value"] * f)
+                        new_view[ci, idx, :]["variance"] = np.nan_to_num(src_nom["variance"] * f**2)
+
+                histo_nom[s][ds] = new_hist
+
 
 def add_Madgraph_systematic(histogram_logsumSVmass_tau21):
     """Function to add the Madgraph systematic uncertainty to the histogram."""
@@ -324,7 +405,18 @@ def add_Madgraph_systematic(histogram_logsumSVmass_tau21):
         down_int = down_vals.sum()
         print(f"nom_int: {nom_int}\nup_int: {up_int}\ndown_int: {down_int}")
 
-def add_Madgraph_systematic_1d(histo_1d, cat):
+def add_Madgraph_systematic_1d(histo_1d, cat, integral_eps=1e-6, ratio_source=None):
+    """Function to add the Madgraph systematic uncertainty to the histogram.
+
+    integral_eps: below this integral (summed events in a given cat/dataset),
+    a variation is treated as "no data" and the systematic is set to have
+    no effect (up == down == nominal) instead of being renormalized, which
+    is what produces `nan`/`inf` when the process is (almost) empty in a
+    given category.
+    """
+    if ratio_source is None:
+        ratio_source = histo_1d
+
     qcd_samples = [s for s in histo_1d.keys() if s.startswith("QCD_")]
     print(f"QCD samples: {qcd_samples}\n")
     flavors = {s.split("__")[1].split("_")[-1] for s in qcd_samples if "__" in s and len(s.split("__")[1].split("_")) >= 2}
@@ -337,29 +429,38 @@ def add_Madgraph_systematic_1d(histo_1d, cat):
             print(f"Skipping {flav}: {mu_name} or {mg_name} not found in histo_1d")
             continue
         mu_datasets = histo_1d[mu_name]
-        mg_datasets = histo_1d[mg_name]
+        mu_ratio_src = ratio_source[mu_name]
+        mg_ratio_src = ratio_source[mg_name]
         mu_total = None
         mg_total = None
-        for h in mu_datasets.values():
+        for h in mu_ratio_src.values():
             h_nom = h[cat, "nominal", :]
             mu_total = h_nom if mu_total is None else mu_total + h_nom
-        for h in mg_datasets.values():
+        for h in mg_ratio_src.values():
             h_nom = h[cat, "nominal", :]
             mg_total = h_nom if mg_total is None else mg_total + h_nom
         mu_vals = mu_total.values(flow=True)
         mg_vals = mg_total.values(flow=True)
-        scale = mu_vals.sum() / mg_vals.sum()
-        mg_vals_scaled = mg_vals * scale
-        mask = mu_vals > 1e-9
-        ratio = np.ones_like(mu_vals)
-        ratio[mask] = mg_vals_scaled[mask] / mu_vals[mask]
-        ratio = np.clip(ratio, 0, 2)
+
+        mu_sum = mu_vals.sum()
+        mg_sum = mg_vals.sum()
+        if mu_sum <= integral_eps or mg_sum <= integral_eps:
+            print(f"Skipping flavor {flav} in cat {cat}: MuEnriched or Madgraph "
+                  f"total is ~0 (mu_sum={mu_sum}, mg_sum={mg_sum})")
+            ratio = None  # signal "no meaningful ratio" below
+        else:
+            scale = mu_sum / mg_sum
+            mg_vals_scaled = mg_vals * scale
+            mask = mu_vals > 1e-9
+            ratio = np.ones_like(mu_vals)
+            ratio[mask] = mg_vals_scaled[mask] / mu_vals[mask]
+            ratio = np.clip(ratio, 0, 2)
+            ratio = np.nan_to_num(ratio, nan=1.0, posinf=2.0, neginf=0.0)
+
         for dataset, h_mu in mu_datasets.items():
             print(f"\ndataset: {dataset}")
             current_vars = list(h_mu.axes["variation"])
-            # print(f"current_vars: {current_vars}")
-            new_vars = current_vars + [f"QCD_MuEnriched_ratioUp", f"QCD_MuEnriched_ratioDown"]
-            # print(f"new_vars: {new_vars}")
+            new_vars = current_vars + ["QCD_MuEnriched_ratioUp", "QCD_MuEnriched_ratioDown"]
             new_vars_axis = StrCategory(new_vars, name="variation")
             new_hist = Hist(
                 h_mu.axes["cat"],
@@ -372,6 +473,7 @@ def add_Madgraph_systematic_1d(histo_1d, cat):
                 idx_new = new_hist.axes["variation"].index(v)
                 cat_idx = h_mu.axes["cat"].index(cat)
                 new_hist.view(flow=True)[cat_idx, idx_new, :] = h_mu.view(flow=True)[cat_idx, idx_old, :]
+
             cat_idx = h_mu.axes["cat"].index(cat)
             nom_idx = h_mu.axes["variation"].index("nominal")
             up_idx = new_hist.axes["variation"].index("QCD_MuEnriched_ratioUp")
@@ -379,24 +481,57 @@ def add_Madgraph_systematic_1d(histo_1d, cat):
             nom_view = h_mu.view(flow=True)[cat_idx, nom_idx, :]
             up_view = new_hist.view(flow=True)[cat_idx, up_idx, :]
             down_view = new_hist.view(flow=True)[cat_idx, down_idx, :]
+
+            nom_integral = np.nansum(nom_view["value"])
+
+            if ratio is None or nom_integral <= integral_eps:
+                # Nothing meaningful to reweight for this dataset/category:
+                # make the systematic a no-op (up == down == nominal) instead
+                # of dividing by ~0.
+                up_view["value"] = nom_view["value"]
+                up_view["variance"] = nom_view["variance"]
+                down_view["value"] = nom_view["value"]
+                down_view["variance"] = nom_view["variance"]
+                histo_1d[mu_name][dataset] = new_hist
+                continue
+
             up_view["value"] = nom_view["value"] * ratio
             up_view["variance"] = nom_view["variance"] * ratio**2
             down_view["value"] = nom_view["value"] * (2 - ratio)
             down_view["variance"] = nom_view["variance"] * (2 - ratio)**2
-            nominal_integral = new_hist.view(flow=True)[cat_idx, nom_idx, :].sum().value
-            up_integral = new_hist.view(flow=True)[cat_idx, up_idx, :].sum().value
-            down_integral = new_hist.view(flow=True)[cat_idx, down_idx, :].sum().value
+
+            nominal_integral = np.nansum(new_hist.view(flow=True)[cat_idx, nom_idx, :]["value"])
+            up_integral = np.nansum(up_view["value"])
+            down_integral = np.nansum(down_view["value"])
             print(f"nominal_integral = {nominal_integral}\nup_integral = {up_integral}\ndown_integral = {down_integral}")
-            if up_integral > 0:
+
+            if up_integral > integral_eps:
                 up_factor = nominal_integral / up_integral
-                new_hist.view(flow=True)[cat_idx, up_idx, :] *= up_factor
+                new_hist.view(flow=True)[cat_idx, up_idx, :]["value"] *= up_factor
+                new_hist.view(flow=True)[cat_idx, up_idx, :]["variance"] *= up_factor**2
             else:
-                print(f"Warning: up_integral = 0, skipping renormalization")
-            if down_integral > 0:
+                print("Warning: up_integral ~ 0, skipping renormalization, forcing up = nominal")
+                up_view["value"] = nom_view["value"]
+                up_view["variance"] = nom_view["variance"]
+
+            if down_integral > integral_eps:
                 down_factor = nominal_integral / down_integral
-                new_hist.view(flow=True)[cat_idx, down_idx, :] *= down_factor
+                new_hist.view(flow=True)[cat_idx, down_idx, :]["value"] *= down_factor
+                new_hist.view(flow=True)[cat_idx, down_idx, :]["variance"] *= down_factor**2
             else:
-                print(f"Warning: down_integral = 0, skipping renormalization")
+                print("Warning: down_integral ~ 0, skipping renormalization, forcing down = nominal")
+                down_view["value"] = nom_view["value"]
+                down_view["variance"] = nom_view["variance"]
+
+            # Final belt-and-braces: kill any nan/inf that could still have
+            # crept in (e.g. from earlier variations copied via `current_vars`).
+            new_hist.view(flow=True)[cat_idx, :, :]["value"] = np.nan_to_num(
+                new_hist.view(flow=True)[cat_idx, :, :]["value"], nan=0.0, posinf=0.0, neginf=0.0
+            )
+            new_hist.view(flow=True)[cat_idx, :, :]["variance"] = np.nan_to_num(
+                new_hist.view(flow=True)[cat_idx, :, :]["variance"], nan=0.0, posinf=0.0, neginf=0.0
+            )
+
             histo_1d[mu_name][dataset] = new_hist
 
 def plot_tau21_mu_vs_mg(histogram_tau21, cat="pt300msd80to170"):
@@ -437,7 +572,10 @@ def plot_tau21_mu_vs_mg(histogram_tau21, cat="pt300msd80to170"):
 
 def plot_mu_vs_mg(mu_total, mg_total, flavour, tau21_cut=0.3):
     ax_tau21 = mu_total.axes["FatJetGood.tau21"]
-    bin_stop = next(i for i, edge in enumerate(ax_tau21.edges[1:]) if edge > tau21_cut)
+    if tau21_cut >= ax_tau21.edges[-1]:
+        bin_stop = len(ax_tau21.edges) - 2
+    else:
+        bin_stop = next(i for i, edge in enumerate(ax_tau21.edges[1:]) if edge > tau21_cut)
     mu_1d = mu_total.integrate(ax_tau21.name, 0, bin_stop)
     mg_1d = mg_total.integrate(ax_tau21.name, 0, bin_stop)
     mu_1d = mu_1d.project("FatJetGood.logsumcorrSVmass")
@@ -462,7 +600,10 @@ def plot_mu_vs_mg(mu_total, mg_total, flavour, tau21_cut=0.3):
 
 def plot_nom_vs_up_vs_down(nom_total, up_total, down_total, flavour, tau21_cut=0.3):
     ax_tau21 = nom_total.axes["FatJetGood.tau21"]
-    bin_stop = next(i for i, edge in enumerate(ax_tau21.edges[1:]) if edge > tau21_cut)
+    if tau21_cut >= ax_tau21.edges[-1]:
+        bin_stop = len(ax_tau21.edges) - 2
+    else:
+        bin_stop = next(i for i, edge in enumerate(ax_tau21.edges[1:]) if edge > tau21_cut)
     nom_1d = nom_total.integrate(ax_tau21.name, 0, bin_stop)
     up_1d = up_total.integrate(ax_tau21.name, 0, bin_stop)
     down_1d = down_total.integrate(ax_tau21.name, 0, bin_stop)
@@ -509,14 +650,36 @@ def get_1d_histogram(h2d_dict, tau21_cut):
         for ds, histo2d in ds_dict.items():
             # print(f"histo2d.axes = {histo2d.axes}\n")
             ax_tau21 = histo2d.axes["FatJetGood.tau21"]
-            bin_stop = next(i for i, edge in enumerate(ax_tau21.edges[1:]) if edge > tau21_cut)
+            if tau21_cut >= ax_tau21.edges[-1]:
+                bin_stop = len(ax_tau21.edges) - 2
+            else:
+                bin_stop = next(i for i, edge in enumerate(ax_tau21.edges[1:]) if edge > tau21_cut)
             histo_cut = histo2d.integrate(ax_tau21.name, 0, bin_stop)
+            # .copy(): never write back into the input histograms, which are reused
+            # for every category and tau21 cut
+            histo_cut = histo_cut.copy()
+            clip_negative_bins(histo_cut)
             h1d_dict[proc][ds] = histo_cut
     # print(f"{h1d_dict.keys()}\n")
     return h1d_dict
 
 
-def get_1d_histogram_reweighed(h2d_dict, tau21_cut, samples, years, parent_category):
+def clip_negative_bins(h):
+    """Zero out negative bin contents in place (variances kept).
+
+    NLO samples (VJets) carry negative weights, so nearly empty templates in tight
+    categories can have negative bins. Datacard rates and shapes then disagree and
+    text2workspace aborts ("Mismatch in normalizations" / "Bogus norm"). An expected
+    yield cannot be negative; truncating at zero is the standard treatment.
+    """
+    view = h.view(flow=True)
+    if view.dtype.names is not None and "value" in view.dtype.names:
+        view["value"][view["value"] < 0] = 0.0
+    else:
+        view[view < 0] = 0.0
+
+
+def get_1d_histogram_reweighed(h2d_dict, tau21_cut, samples, years, parent_category, fixed_weights=None, return_weights=False):
     """Return 1D histograms with MC (b+c+light) reweighted to data.
 
     The input 2D histograms are first integrated over the tau21 axis as in
@@ -535,6 +698,9 @@ def get_1d_histogram_reweighed(h2d_dict, tau21_cut, samples, years, parent_categ
     if isinstance(years, str):
         years = [years]
 
+    def _ret(histo, weight):
+        return (histo, weight) if return_weights else histo
+    
     # Start from the standard 1D histograms
     h1d_dict = get_1d_histogram(h2d_dict, tau21_cut)
 
@@ -550,11 +716,10 @@ def get_1d_histogram_reweighed(h2d_dict, tau21_cut, samples, years, parent_categ
             break
 
     if example_hist is None:
-        return h1d_dict
+        return _ret(h1d_dict, None)
 
     # Axes: ["cat", "variation", fit_variable]
     cat_axis = example_hist.axes["cat"]
-    var_axis = example_hist.axes["variation"]
     fit_axes = [ax for ax in example_hist.axes if ax.name not in ("cat", "variation")]
     if len(fit_axes) != 1:
         raise RuntimeError("Expected exactly one fit variable axis after tau21 integration")
@@ -573,54 +738,60 @@ def get_1d_histogram_reweighed(h2d_dict, tau21_cut, samples, years, parent_categ
 
     if not cat_indices:
         # Nothing to reweight for this parent category
-        return h1d_dict
+        return _ret(h1d_dict, None)
 
     n_fit_bins = len(fit_axis.edges) - 1
-    nom_index = var_axis.index("nominal")
 
     # Define MC and data sample sets
     mc_sample_names = set(samples["light"] + samples["c"] + samples["b"])
     data_sample_names = set(samples["data_obs"])
 
-    mc_sum = np.zeros(n_fit_bins, dtype=float)
-    data_sum = np.zeros(n_fit_bins, dtype=float)
+    if fixed_weights is not None:
+        weights = np.asarray(fixed_weights, dtype=float)
+        if weights.shape != (n_fit_bins,):
+            raise RuntimeError(f"fixed_weights has shape {weights.shape}, expected ({n_fit_bins},)")
 
-    # Build inclusive (pass+fail) distributions for the requested year(s) and parent category
-    for proc_name, ds_dict in h1d_dict.items():
-        for ds, h in ds_dict.items():
-            # Restrict to the datasets whose name matches any of the requested years
-            if not any(y in ds for y in years):
-                continue
+    else:
+        mc_sum = np.zeros(n_fit_bins, dtype=float)
+        data_sum = np.zeros(n_fit_bins, dtype=float)
+        # Build inclusive (pass+fail) distributions for the requested year(s) and parent category
+        for proc_name, ds_dict in h1d_dict.items():
+            for ds, h in ds_dict.items():
+                # Restrict to the datasets whose name matches any of the requested years
+                if not any(y in ds for y in years):
+                    continue
 
-            # For weight-storage histograms, ``h.view`` returns a structured
-            # array with (value, variance). We only want the values here.
-            view = h.view(flow=False)
-            values_view = view["value"]
+                # For weight-storage histograms, ``h.view`` returns a structured
+                # array with (value, variance). We only want the values here.
+                view = h.view(flow=False)
+                values_view = view["value"]
 
-            # Handle both cases:
-            #  - 3D: (n_cat, n_var, n_fit)
-            #  - 2D: (n_cat, n_fit)  (no explicit variation axis)
-            if values_view.ndim == 3:
-                # Sum over the pass and fail categories of this parent,
-                # keeping only the nominal variation
-                proj = values_view[cat_indices, nom_index, :].sum(axis=0)
-            elif values_view.ndim == 2:
-                # No variation axis: treat the existing values as nominal
-                proj = values_view[cat_indices, :].sum(axis=0)
-            else:
-                raise RuntimeError(
-                    f"Unsupported histogram dimensionality {values_view.ndim} in reweighting (expected 2 or 3)"
-                )
+                # Handle both cases:
+                #  - 3D: (n_cat, n_var, n_fit)
+                #  - 2D: (n_cat, n_fit)  (no explicit variation axis)
+                if values_view.ndim == 3:
+                    # Sum over the pass and fail categories of this parent,
+                    # keeping only the nominal variation
+                    var_axis = h.axes["variation"]
+                    nom_index = var_axis.index("nominal")
+                    proj = values_view[cat_indices, nom_index, :].sum(axis=0)
+                elif values_view.ndim == 2:
+                    # No variation axis: treat the existing values as nominal
+                    proj = values_view[cat_indices, :].sum(axis=0)
+                else:
+                    raise RuntimeError(
+                        f"Unsupported histogram dimensionality {values_view.ndim} in reweighting (expected 2 or 3)"
+                    )
 
-            if proc_name in mc_sample_names:
-                mc_sum += proj
-            elif proc_name in data_sample_names:
-                data_sum += proj
+                if proc_name in mc_sample_names:
+                    mc_sum += proj
+                elif proc_name in data_sample_names:
+                    data_sum += proj
 
-    # Compute bin-by-bin weights; default to 1 when MC is zero
-    with np.errstate(divide="ignore", invalid="ignore"):
-        weights = np.where(mc_sum > 0.0, data_sum / mc_sum, 1.0)
-        weights = np.nan_to_num(weights, nan=1.0, posinf=1.0, neginf=1.0)
+        # Compute bin-by-bin weights; default to 1 when MC is zero
+        with np.errstate(divide="ignore", invalid="ignore"):
+            weights = np.where(mc_sum > 0.0, data_sum / mc_sum, 1.0)
+            weights = np.nan_to_num(weights, nan=1.0, posinf=1.0, neginf=1.0)
 
     # Apply weights to all MC templates (all variations) in the pass+fail
     # categories of this parent
@@ -651,20 +822,88 @@ def get_1d_histogram_reweighed(h2d_dict, tau21_cut, samples, years, parent_categ
                     f"Unsupported histogram dimensionality {values_view.ndim} in reweighting (expected 2 or 3)"
                 )
 
-    return h1d_dict
+    return _ret(h1d_dict, weights)
+
+
+def _merge_low_stat_bin_groups(arr_a, arr_b, min_yield):
+    """Group contiguous bin indices [0, len(arr_a)) so that, within every
+    group, both ``arr_a`` and ``arr_b`` sum to at least ``min_yield``.
+
+    Bins are accumulated left to right; a group is closed as soon as both
+    running sums reach the threshold. Any leftover low-statistics tail (not
+    enough to form its own group) is merged into the last group instead of
+    being left under-threshold.
+
+    Returns a list of (start, stop) tuples (stop exclusive) covering the
+    full range.
+    """
+    n_bins = len(arr_a)
+    groups = []
+    start = 0
+    running_a = 0.0
+    running_b = 0.0
+    for i in range(n_bins):
+        running_a += arr_a[i]
+        running_b += arr_b[i]
+        if running_a >= min_yield and running_b >= min_yield:
+            groups.append((start, i + 1))
+            start = i + 1
+            running_a = 0.0
+            running_b = 0.0
+    if start < n_bins:
+        if groups:
+            groups[-1] = (groups[-1][0], n_bins)
+        else:
+            groups.append((start, n_bins))
+    return groups
+
+
+def sanitize_shape_variations(histo_1d, mc_sample_names, epsilon=1e-9):
+    """Enforce nominal/variation consistency and remove nan/inf.
+
+    Rule: wherever the nominal value in a bin is ~0, force every variation
+    in that bin to 0 as well. This prevents Combine's kappa/extra-norm
+    computation (integral(up)/integral(nominal)) from ever seeing a
+    variation with content in a bin where the nominal has none, which is
+    the most common source of `Bogus norm nan`.
+    """
+    for proc_name, ds_dict in histo_1d.items():
+        if proc_name not in mc_sample_names:
+            continue
+        for ds, h in ds_dict.items():
+            if "variation" not in [ax.name for ax in h.axes]:
+                continue
+            var_axis = h.axes["variation"]
+            if "nominal" not in list(var_axis):
+                continue
+            nom_idx = var_axis.index("nominal")
+            view = h.view(flow=True)
+
+            # nan/inf cleanup everywhere first
+            view["value"] = np.nan_to_num(view["value"], nan=0.0, posinf=0.0, neginf=0.0)
+            view["variance"] = np.nan_to_num(view["variance"], nan=0.0, posinf=0.0, neginf=0.0)
+
+            nom_values = view["value"][:, nom_idx, :]
+            zero_mask = nom_values <= epsilon  # shape: (n_cat, n_fit)
+
+            for v_idx in range(view.shape[1]):
+                if v_idx == nom_idx:
+                    continue
+                view["value"][:, v_idx, :] = np.where(zero_mask, 0.0, view["value"][:, v_idx, :])
+                view["variance"][:, v_idx, :] = np.where(zero_mask, 0.0, view["variance"][:, v_idx, :])
 
 def print_report(successful_categories, failed_categories):
     for d_cat in successful_categories:
-        print(f"✅ Year: {d_cat['year']}, Category: {d_cat['category']}, Folder: {d_cat['folder']}")
+        print(f"Success: Year: {d_cat['year']}, Category: {d_cat['category']}, Folder: {d_cat['folder']}")
     for d_cat in failed_categories:
-        print(f"❌ Year: {d_cat['year']}, Category: {d_cat['category']}, Error: {d_cat['error']}")
+        print(f"Error: Year: {d_cat['year']}, Category: {d_cat['category']}, Error: {d_cat['error']}")
 
     # Summary printout counting successes and failures rate
     ncat = len(successful_categories) + len(failed_categories)
     print("\nSummary Report:")
     print(f"Total categories processed: {ncat}")
-    print(f"✅  Successful: {len(successful_categories)} / {ncat}")
-    print(f"❌  Failed: {len(failed_categories)} / {ncat}")
+    print(f"Successful: {len(successful_categories)} / {ncat}")
+    print(f"Failed: {len(failed_categories)} / {ncat}")
 
 # Helper function to extract the tau21 string for directory naming
 get_tau21_str = lambda x: f"tau21_{x:.2f}".replace('.', 'p')
@@ -679,6 +918,9 @@ def main():
                        help="Years to include in the analysis")
     parser.add_argument("--combined-years", action="store_true", default=False,
                        help="Treat all years as a single combined measurement (e.g. 2025 data + 2024 MC)")
+    parser.add_argument("-f","--filter-category", default="", help="Substring that must be contained in category to produce datacard.")
+    parser.add_argument("--no-tau21-var", dest="tau21_var", action="store_false", default=True,
+                        help="Disable the tau21_var_pass/tau21_var_fail shape nuisances")
     parser.add_argument("--verbose", "-v", action="store_true", default=False, help="Enable verbose output")
     args = parser.parse_args()
     
@@ -692,7 +934,11 @@ def main():
     # plot_tau21_mu_vs_mg(hist_tau21, cat="pt300msd80to170")
     cutflow = output["cutflow"]
     datasets_metadata = output["datasets_metadata"]
-    categories = [cat for cat in cutflow.keys() if cat.startswith('msd')]
+    if not args.filter_category:
+        categories = [cat for cat in cutflow.keys() if cat.startswith('msd')]
+    else:
+        categories = [cat for cat in cutflow.keys() if cat.startswith('msd') and args.filter_category in cat]
+
     
     # Categorize samples
     samples = categorize_samples(cutflow)
@@ -712,6 +958,7 @@ def main():
         year = years_group[0]  # primary year label for output naming
         # Define processes and systematics
         mc_processes, data_processes = define_processes(samples, years_group)
+        print(f"years: {years_group}")
         print(f"MC processes: {mc_processes.items()}")
         print(f"DATA processes: {data_processes.items()}\n")
         
@@ -724,34 +971,56 @@ def main():
 
         # Add the variation QCD_Madgraph/QCD_MuEnriched to the Hist
         # add_Madgraph_systematic(histograms[args.variable])
-        
-        systematics = define_systematics(years_group, [p_name for p_name, p in mc_processes.items()])
+
+        mc_names = [p_name for p_name, p in mc_processes.items()]
+        systematics = define_systematics(years_group, mc_names)
+        systematics_tau21_by_region = {
+            region: define_systematics(years_group, mc_names, tau21_var_region=region)
+            for region in ["pass", "fail"]
+        }
         print(f"systematics: {systematics}\n")
-        
+        print(f"systematics_tau21: {systematics_tau21_by_region}\n")
+
         # Create output directory
         if args.output_dir is None:
             args.output_dir = str(Path(args.input_file).parent / "datacards")
         output_dir = Path(args.output_dir)
         output_dir.mkdir(exist_ok=True)
         
-        parent_categories = set('-'.join(cat.split("-")[:-1]) for cat in categories)
+        # Dictionary to store all datacards for combination
+        all_datacards = defaultdict(dict)
+        # Additional datacards using MC reweighted to data for tau21 < 0.30
+        all_datacards_reweight = defaultdict(dict)
+        
+        # Create datacards for each combination
+        for cat in categories:
+            print(f"\ncategory: {cat}")
+            region = cat.split("-")[-1]
+            tau21_syst_name = f"tau21_var_{region}"
+            systematics_tau21 = systematics_tau21_by_region[region] if args.tau21_var else systematics
 
-        # Process one tau21 slice at a time to keep memory bounded.
-        for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
-            print(f"\n\n=== Processing tau21 < {tau21} for year {year} ===")
-
-            # Dictionary to store datacards only for this tau21
-            all_datacards_tau = defaultdict(dict)
-            all_datacards_reweight_tau = defaultdict(dict)
-
-            for cat in categories:
-                print(f"\ncategory: {cat}")
+            # for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
+            # for tau21 in [0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0]:
+            for tau21 in [0.15, 0.3, 1.0]:
+            # for tau21 in [0.60]:
+            # for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
                 print(f"\n\nCreating datacard: Year: {year}\tCategory: {cat}\ttau21 < {tau21}")
-
+                
+                is_tau21_nominal = abs(tau21 - TAU21_NOMINAL) < 1e-6
+                mc_sample_names = set(samples["light"] + samples["c"] + samples["b"])
                 # Get the 1D histogram by integrating over tau21 axis with a specific cut: tau21 < tau21_cut
                 histo_1d = get_1d_histogram(histograms[args.variable], tau21)
                 # Add the variation QCD_Madgraph/QCD_MuEnriched to the Hist
                 add_Madgraph_systematic_1d(histo_1d, cat)
+                if is_tau21_nominal and args.tau21_var:
+                    add_tau21_variation_1d(
+                        histo_1d,
+                        histo_down=get_1d_histogram(histograms[args.variable], TAU21_VAR_DOWN),
+                        histo_up=get_1d_histogram(histograms[args.variable], TAU21_VAR_UP),
+                        cat=cat, mc_processes=mc_processes, years=years_group,
+                        syst_name=tau21_syst_name,
+                    )
+                sanitize_shape_variations(histo_1d, mc_sample_names)
                 print("\n")
                 # Create datacard
                 datacard = DatacardMutag(
@@ -761,21 +1030,45 @@ def main():
                     years=years_group,
                     mc_processes=mc_processes,
                     data_processes=data_processes,
-                    systematics=systematics,
+                    systematics=systematics_tau21 if is_tau21_nominal else systematics,
                     category=cat,  # Category string matching the multicuts structure
                     bin_suffix=year,
                     verbose=args.verbose
                 )
-                all_datacards_tau[cat][tau21] = datacard
+                
+                # Store for combination between pass and fail regions
+                all_datacards[cat][tau21] = datacard
 
+                # For tau21 < 0.30, also create a datacard where MC
+                # templates are reweighted to data in the inclusive
+                # (pass+fail) region for the corresponding parent
+                # category, to define an external systematic.
                 if abs(tau21 - 0.3) < 1e-6:
                     print(f"\n\nCreating datacard: Year: {year}\tCategory: {cat}\ttau21 < {tau21} reweighed")
                     parent_category = "-".join(cat.split("-")[:-1])
-                    histo_1d_rew = get_1d_histogram_reweighed(
-                        histograms[args.variable], tau21, samples, years_group, parent_category
+                    histo_1d_raw = get_1d_histogram(histograms[args.variable], tau21)
+                    histo_1d_rew, rew_weights = get_1d_histogram_reweighed(
+                        histograms[args.variable], tau21, samples, years_group, parent_category, return_weights=True,
                     )
                     # Add the variation QCD_Madgraph/QCD_MuEnriched to the Hist
-                    add_Madgraph_systematic_1d(histo_1d_rew, cat)
+                    add_Madgraph_systematic_1d(histo_1d_rew, cat, ratio_source=histo_1d_raw)
+                    if args.tau21_var:
+                        if rew_weights is not None:
+                            histo_down_rew = get_1d_histogram_reweighed(histograms[args.variable], TAU21_VAR_DOWN, samples, years_group, parent_category, fixed_weights=rew_weights)
+                            histo_up_rew = get_1d_histogram_reweighed(histograms[args.variable], TAU21_VAR_UP, samples, years_group, parent_category, fixed_weights=rew_weights)
+                        else:
+                            histo_down_rew = get_1d_histogram(histograms[args.variable], TAU21_VAR_DOWN)
+                            histo_up_rew = get_1d_histogram(histograms[args.variable], TAU21_VAR_UP)
+
+                        add_tau21_variation_1d(
+                            histo_1d_rew,
+                            histo_down=histo_down_rew,
+                            histo_up=histo_up_rew,
+                            cat=cat, mc_processes=mc_processes, years=years_group,
+                            syst_name=tau21_syst_name,
+                        )
+                    sanitize_shape_variations(histo_1d_rew, mc_sample_names)
+
                     print("\n")
                     datacard_rew = DatacardMutag(
                         histograms=histo_1d_rew,
@@ -784,34 +1077,39 @@ def main():
                         years=years_group,
                         mc_processes=mc_processes,
                         data_processes=data_processes,
-                        systematics=systematics,
+                        systematics=systematics_tau21,
                         category=cat,
                         bin_suffix=year,
                         verbose=args.verbose,
                     )
-                    all_datacards_reweight_tau[cat][tau21] = datacard_rew
-                    del histo_1d_rew
+                    all_datacards_reweight[cat][tau21] = datacard_rew
 
-                del histo_1d, datacard
-                if abs(tau21 - 0.3) < 1e-6 and "datacard_rew" in locals():
-                    del datacard_rew
-                gc.collect()
+        passfail_ratio = get_passfail_ratio(all_datacards)
 
-            passfail_ratio_tau = get_passfail_ratio(all_datacards_tau)
-
-            for cat in categories:
+        # Loop over categories again to dump datacards modified with pass/fail ratios
+        parent_categories = set()
+        for cat in categories:
+            # for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
+            # for tau21 in [0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0]:
+            for tau21 in [0.15, 0.3, 1.0]:
+            # for tau21 in [0.60]:
+            # for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
+                # Extract parent category (without pass/fail)
                 parent_category = '-'.join(cat.split("-")[:-1])
+                parent_categories.add(parent_category)
                 region = cat.split("-")[-1]
+                # Create directory for this category
                 tau21_str = get_tau21_str(tau21)
                 category_dir = output_dir / year / parent_category / tau21_str / region
                 category_dir.mkdir(parents=True, exist_ok=True)
-                datacard = all_datacards_tau[cat][tau21]
+                datacard = all_datacards[cat][tau21]
 
+                # Modify action of rateParam for fail regions by passing the passfail_ratio argument
                 if cat.endswith("-pass"):
-                    kwargs = {"directory": str(category_dir)}
+                    kwargs = {"directory" : str(category_dir)}
                 elif cat.endswith("-fail"):
-                    kwargs = {"directory": str(category_dir), "passfail_ratio": passfail_ratio_tau[parent_category][tau21]}
-
+                    parent_cat = '-'.join(cat.split("-")[:-1])
+                    kwargs = {"directory" : str(category_dir), "passfail_ratio" : passfail_ratio[parent_cat][tau21]}
                 try:
                     datacard.dump(**kwargs)
                     successful_categories.append({"year": year, "category": cat, "folder": str(category_dir)})
@@ -820,16 +1118,18 @@ def main():
                     print(str(e))
                     failed_categories.append({"year": year, "category": cat, "error": str(e)})
 
-                if abs(tau21 - 0.3) < 1e-6 and cat in all_datacards_reweight_tau and tau21 in all_datacards_reweight_tau[cat]:
+                # For tau21 < 0.30, also dump the reweighted datacards
+                if abs(tau21 - 0.3) < 1e-6 and cat in all_datacards_reweight and tau21 in all_datacards_reweight[cat]:
                     reweight_tau21_str = f"{tau21_str}_reweight"
                     reweight_category_dir = output_dir / year / parent_category / reweight_tau21_str / region
                     reweight_category_dir.mkdir(parents=True, exist_ok=True)
-                    datacard_rew = all_datacards_reweight_tau[cat][tau21]
+                    datacard_rew = all_datacards_reweight[cat][tau21]
 
                     if cat.endswith("-pass"):
                         kwargs_rew = {"directory": str(reweight_category_dir)}
                     elif cat.endswith("-fail"):
-                        kwargs_rew = {"directory": str(reweight_category_dir), "passfail_ratio": passfail_ratio_tau[parent_category][tau21]}
+                        parent_cat = '-'.join(cat.split("-")[:-1])
+                        kwargs_rew = {"directory": str(reweight_category_dir), "passfail_ratio": passfail_ratio[parent_cat][tau21]}
                     else:
                         kwargs_rew = {"directory": str(reweight_category_dir)}
 
@@ -843,36 +1143,40 @@ def main():
 
         # Create combined datacard for pass+fail regions, for each parent category
         for parent_cat in parent_categories:
-            for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
+            # for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
+            # for tau21 in [0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0]:
+            for tau21 in [0.15, 0.3, 1.0]:
+            # for tau21 in [0.60]:
+            # for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
                 print(f"\nCreating combined datacard for category: {parent_cat} with tau21 < {tau21} (pass + fail)")
+                tau21_str = get_tau21_str(tau21)
                 directory = output_dir / year / parent_cat / tau21_str
                 combine_datacards(
-                    datacards={f"{region}/datacard.txt": all_datacards_tau[f"{parent_cat}-{region}"][tau21] for region in ["pass", "fail"]},
+                    datacards={f"{region}/datacard.txt": all_datacards[f"{parent_cat}-{region}"][tau21] for region in ["pass", "fail"]},
                     directory=directory
                 )
+                # Save pass/fail ratio to a YAML file
                 filename = directory / "passfail_ratio.yaml"
                 print(f"Saving pass/fail ratio to {filename}")
                 with open(filename, "w") as f:
-                    yaml.dump({"passfail_ratio": passfail_ratio_tau[parent_cat][tau21]}, f, indent=4)
+                    yaml.dump({"passfail_ratio" : passfail_ratio[parent_cat][tau21]}, f, indent=4)
+
                 print(f"Combined datacard saved in {directory}")
 
+                # For tau21 < 0.30, also create the combined reweighted datacard
                 if abs(tau21 - 0.3) < 1e-6:
                     reweight_tau21_str = f"{tau21_str}_reweight"
                     directory_rew = output_dir / year / parent_cat / reweight_tau21_str
                     print(f"\nCreating combined reweighted datacard for category: {parent_cat} with tau21 < {tau21} (pass + fail)")
                     combine_datacards(
-                        datacards={f"{region}/datacard.txt": all_datacards_reweight_tau[f"{parent_cat}-{region}"][tau21] for region in ["pass", "fail"]},
+                        datacards={f"{region}/datacard.txt": all_datacards_reweight[f"{parent_cat}-{region}"][tau21] for region in ["pass", "fail"]},
                         directory=directory_rew,
                     )
                     filename_rew = directory_rew / "passfail_ratio.yaml"
                     print(f"Saving pass/fail ratio to {filename_rew}")
                     with open(filename_rew, "w") as f:
-                        yaml.dump({"passfail_ratio": passfail_ratio_tau[parent_cat][tau21]}, f, indent=4)
+                        yaml.dump({"passfail_ratio": passfail_ratio[parent_cat][tau21]}, f, indent=4)
                     print(f"Combined reweighted datacard saved in {directory_rew}")
-
-            all_datacards_tau.clear()
-            all_datacards_reweight_tau.clear()
-            gc.collect()
 
     # Print summary report
     print_report(successful_categories, failed_categories)

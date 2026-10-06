@@ -4,11 +4,7 @@ import subprocess
 import argparse
 import re
 
-ALLOWED_CATEGORIES = {
-    "msd-80to170_Pt-250toInf_globalParT_XbbVsQCDTop-HHbbtt_0p70",
-    # "msd-80to170_Pt-250toInf_globalParT_XbbVsQCDTop-HHbbtt_0p75",
-    # "msd-80to170_Pt-250toInf_globalParT_XbbVsQCDTop-HHbbtt_0p80",
-}
+from allowed_categories import ALLOWED_CATEGORIES
 
 FIT_RE = re.compile(r"fitDiagnostics\.(.+)\.root")
 
@@ -62,8 +58,6 @@ def main():
 
                 outdir_base = args.output_dir
                 outdir = os.path.join(outdir_base, year, category, tau21)
-
-                print(f"\n Saving plots in {outdir}")
 
                 cmd = [
                     "python3", MAKE_PLOTS,

@@ -8,8 +8,8 @@ from mutag_calib.lib.calibrators import FixedJetsSoftdropMassCalibrator as JetsS
 from pocket_coffea.lib.weights.common.common import common_weights
 from pocket_coffea.parameters.histograms import *
 import mutag_calib
-from mutag_calib.configs.fatjet_base.custom.cuts import get_ptmsd, get_ptmsd_window, get_nObj_minmsd, get_flavor
-from mutag_calib.configs.fatjet_base.custom.functions import get_inclusive_wp
+from mutag_calib.configs.fatjet_base.custom.cuts import get_ptmsd, get_ptmsd_window, get_two_jet_ptmsd, get_mregbin, get_nObj_minmsd, get_flavor
+from mutag_calib.configs.fatjet_base.custom.functions import get_inclusive_wp, get_tagger_pass
 from mutag_calib.configs.fatjet_base.custom.weights import SF_trigger_prescale
 import mutag_calib.workflows.pt_reweighting as workflow
 from mutag_calib.workflows.pt_reweighting import ptReweightProcessor
@@ -71,14 +71,14 @@ for coll in collections:
     variables[f"{coll}_pt_eta"] = HistConf(
         [ Axis(name=f"{coll}_pos", coll=coll, field="pos", type="int", label=r"FatJet position", bins=2, start=0, stop=2),
           Axis(name=f"{coll}_pt", coll=coll, field="pt", type="variable", label=r"FatJet $p_{T}$ [GeV]",
-               bins=[250., 275, 300., 320., 340., 360., 380., 400., 450., 500., 550., 600., 700., 800., 900., 2500.]),
+               bins=[250., 275., 300., 320., 340., 360., 380., 400., 450., 500., 550., 600., 700., 800., 900., 2500.]),
           Axis(name=f"{coll}_eta", coll=coll, field="eta", type="variable", label=r"FatJet $\eta$",
                bins=[-5, -2, -1.75, -1.5, -1.25, -1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 5]) ]
     )
     variables[f"{coll}_pt_eta_tau21"] = HistConf(
         [ Axis(name=f"{coll}_pos", coll=coll, field="pos", type="int", label=r"FatJet position", bins=2, start=0, stop=2),
           Axis(name=f"{coll}_pt", coll=coll, field="pt", type="variable", label=r"FatJet $p_{T}$ [GeV]",
-               bins=[250., 275, 300., 320., 340., 360., 380., 400., 450., 500., 550., 600., 700., 800., 900., 2500.]),
+               bins=[250., 275., 300., 320., 340., 360., 380., 400., 450., 500., 550., 600., 700., 800., 900., 2500.]),
           Axis(name=f"{coll}_eta", coll=coll, field="eta", type="variable", label=r"FatJet $\eta$",
                bins=[-5, -2, -1.75, -1.5, -1.25, -1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 5]),
           Axis(name=f"{coll}_tau21", coll=coll, field="tau21", type="variable", label=r"FatJet $\tau_{21}$",
@@ -87,7 +87,7 @@ for coll in collections:
     variables[f"{coll}_pt_eta_tau21_bintau05"] = HistConf(
         [ Axis(name=f"{coll}_pos", coll=coll, field="pos", type="int", label=r"FatJet position", bins=2, start=0, stop=2),
           Axis(name=f"{coll}_pt", coll=coll, field="pt", type="variable", label=r"FatJet $p_{T}$ [GeV]",
-               bins=[250., 275, 300., 320., 340., 360., 380., 400., 450., 500., 550., 600., 700., 800., 900., 2500.]),
+               bins=[250., 275., 300., 320., 340., 360., 380., 400., 450., 500., 550., 600., 700., 800., 900., 2500.]),
           Axis(name=f"{coll}_eta", coll=coll, field="eta", type="variable", label=r"FatJet $\eta$",
                bins=[-5, -2, -1.75, -1.5, -1.25, -1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 5]),
           Axis(name=f"{coll}_tau21", coll=coll, field="tau21", type="variable", label=r"FatJet $\tau_{21}$",
@@ -97,20 +97,22 @@ for coll in collections:
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-         "jsons": ["datasets/MC_VJets_run3.json",
-                   "datasets/MC_TTto4Q_run3.json",
-                   "datasets/MC_singletop_run3.json",
-                   "datasets/DATA_BTagMu_run3.json",
-                   "datasets/MC_QCD_MuEnriched_run3.json"
+         "jsons": [# "datasets/MC_VJets_run3.json",
+                   # "datasets/MC_TTto4Q_run3.json",
+                   # "datasets/MC_singletop_run3.json",
+                   # "datasets/DATA_BTagMu_run3.json",
+                   # "datasets/MC_QCD_MuEnriched_run3.json"
+                   "datasets/skimmed_dataset_definition.json",
+                   "datasets/skimmed_dataset_definition_2024.json"
                    ],
         "filter" : {
             "samples": samples,
             "samples_exclude" : [],
             "year": [
-                # '2022_preEE',
-                # '2022_postEE',
-                # '2023_preBPix',
-                # '2023_postBPix',
+                '2022_preEE',
+                '2022_postEE',
+                '2023_preBPix',
+                '2023_postBPix',
                 '2024'
             ]
         },
@@ -130,11 +132,13 @@ cfg = Configurator(
 
     preselections = [get_nObj_min(1, parameters.object_preselection["FatJet"]["pt"], "FatJetGood")],
     categories = {
-        "inclusive" : [passthrough],
-        "pt300msd30" : [get_ptmsd(300., 30.)],
-        "pt300msd80" : [get_ptmsd(300., 80.)],
-        "pt300msd30to210" : [get_ptmsd_window(300., 30., 210.)],
-        "pt300msd80to170" : [get_ptmsd_window(300., 80., 170.)],
+        # "pt300msd30" : [get_ptmsd(300., 30.)],
+        # "pt300msd80" : [get_ptmsd(300., 80.)],
+        # "pt300msd30to210" : [get_ptmsd_window(300., 30., 210.)],
+        # "pt300msd80to170" : [get_ptmsd_window(300., 80., 170.)],
+        "pt250msd50mreg50to200bbtag05": [get_ptmsd(250., 50.), get_mregbin(50., 200.), get_tagger_pass(["btag"], 0.05)],
+        "pt250msd50mreg50to200bbtag65": [get_ptmsd(250., 50.), get_mregbin(50., 200.), get_tagger_pass(["btag"], 0.65)],
+        "pt250msd50mreg50to200": [get_ptmsd(250., 50.), get_mregbin(50., 200.)],
     },
 
     weights_classes = common_weights + [SF_trigger_prescale],

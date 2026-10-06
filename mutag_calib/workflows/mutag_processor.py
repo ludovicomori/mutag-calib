@@ -38,6 +38,13 @@ class mutagAnalysisProcessor(fatjetBaseProcessor):
     def apply_object_preselection(self, variation):
         super().apply_object_preselection(variation)
 
+        # Define a new field called btag, that depends on what we will cut on later on.
+        if "2024" in self._year:
+            tagger = "globalParT3_Xbb"
+        else:
+            tagger = "particleNet_XbbVsQCD"
+        self.events["FatJetGood"] = ak.with_field(self.events["FatJetGood"], self.events["FatJetGood"][tagger], "btag")
+
         # Restrict analysis to leading and subleading jets only
         self.events["FatJetGood"] = self.events.FatJetGood[ak.local_index(self.events.FatJetGood, axis=1) < 2]
 

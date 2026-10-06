@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import argparse
 import os
 import ROOT
 import pandas as pd
@@ -8,19 +9,38 @@ import glob
 
 ROOT.gROOT.SetBatch(True)
 
-POIS = ["r", "SF_c", "SF_light"]
+parser = argparse.ArgumentParser()
+parser.add_argument("--split-c", action="store_true",
+                    help="extract SF_c_fail/SF_c_pass instead of SF_c")
+parser.add_argument("--c-freeze", action="store_true",
+                    help="Do not float c for fit. No real functionality for this script")
+args = parser.parse_args()
 
-# find fitDiagnostics file
-fit_files = glob.glob("fitDiagnostics.*.root")
-if len(fit_files) != 1:
-    raise RuntimeError(f"Found {len(fit_files)} fitDiagnostics files: {fit_files}")
-
-fit_file = fit_files[0]
+if args.split_c:
+    POIS = ["SF_b", "SF_c_fail", "SF_c_pass", "SF_light"]
+else:
+    POIS = ["SF_b", "SF_c", "SF_light"]
 
 # infer metadata
 cut = os.path.basename(os.getcwd())
 category = os.path.basename(os.path.dirname(os.getcwd()))
 year = os.path.basename(os.path.dirname(os.path.dirname(os.getcwd())))
+
+expected = f"fitDiagnostics.{category}.root"
+if os.path.isfile(expected):
+    fit_file = expected
+else:
+    fit_files = glob.glob("fitDiagnostics.*.root")
+    if len(fit_files) == 1:
+        fit_file = fit_files[0]
+        print(f"[WARN] {expected} not found, falling back to {fit_file}")
+    elif not fit_files:
+        raise RuntimeError(f"No fitDiagnostics file found in {os.getcwd()}")
+    else:
+        raise RuntimeError(
+            f"{expected} not found and {len(fit_files)} other fitDiagnostics "
+            f"files present, cannot choose: {fit_files}"
+        )
 
 # open ROOT file
 f = ROOT.TFile.Open(fit_file)

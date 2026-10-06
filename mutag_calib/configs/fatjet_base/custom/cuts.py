@@ -1,6 +1,6 @@
 # Per-event cuts applied to each event
 from pocket_coffea.lib.cut_definition import Cut
-from mutag_calib.configs.fatjet_base.custom.functions import twojets_ptmsd, mutag_fatjet, mutag_subjet, ptbin, ptbin_mutag, msoftdrop, msoftdropbin, ptmsd, ptmsd_window, ptmsdtau, min_nObj_minmsd, flavor_mask
+from mutag_calib.configs.fatjet_base.custom.functions import two_jet_ptmsd, mutag_fatjet, mutag_fatjet_matched, mutag_subjet, ptbin, ptbin_mutag, msoftdrop, msoftdropbin, mregbin, ptmsd, ptmsd_window, ptmsdtau, min_nObj_minmsd, flavor_mask, tau21_mask
 
 def twojets_presel(pt, msd, name=None):
     if name == None:
@@ -13,6 +13,19 @@ def twojets_presel(pt, msd, name=None):
     },
     function=twojets_ptmsd
 )
+
+def mutag_fatjet_sel_matched(nmu, unique, name=None):
+    if name == None:
+        name = f"mutag_fatjet_nmu-{nmu}"
+    return Cut(
+        name=name,
+        params={
+            "nmu" : nmu,
+            "unique": unique,
+        },
+        collection="FatJetGood",
+        function=mutag_fatjet_matched
+    )
 
 def mutag_fatjet_sel(nmu, name=None):
     if name == None:
@@ -87,6 +100,18 @@ def get_msdbin(msd_min, msd_max, name=None):
         collection="FatJetGood"
     )
 
+
+def get_mregbin(mreg_min, mreg_max, name=None):
+    if name == None:
+        name = f"mreg{mreg_min}to{mreg_max}"
+    return Cut(
+        name=name,
+        params= {"mreg_min" : mreg_min, "mreg_max": mreg_max},
+        function=mregbin,
+        collection="FatJetGood"
+    )
+
+
 def get_ptmsd(pt, msd, name=None):
     if name == None:
         name = f"pt{pt}msd{msd}"
@@ -94,6 +119,17 @@ def get_ptmsd(pt, msd, name=None):
         name=name,
         params= {"pt" : pt, "msd" : msd},
         function=ptmsd,
+        collection="FatJetGood"
+    )
+
+
+def get_two_jet_ptmsd(pt_lead, msd_lead, pt_sublead, msd_sublead, name=None):
+    if name == None:
+        name = f"leadpt{pt_lead}msd{msd_lead}subpt{pt_sublead}msd{msd_sublead}"
+    return Cut(
+        name=name,
+        params={"pt_lead": pt_lead, "msd_lead": msd_lead, "pt_sublead": pt_sublead, "msd_sublead": msd_sublead},
+        function=two_jet_ptmsd,
         collection="FatJetGood"
     )
 
@@ -146,6 +182,14 @@ def get_flavor(flavor):
         name=flavor,
         params={"flavor": flavor},
         function=flavor_mask,
+        collection="FatJetGood"
+    )
+
+def get_tau21(cut):
+    return Cut(
+        name=str(cut),
+        params={"tau21": cut},
+        function=tau21_mask,
         collection="FatJetGood"
     )
     

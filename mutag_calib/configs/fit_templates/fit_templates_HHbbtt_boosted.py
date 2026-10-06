@@ -39,7 +39,7 @@ default_parameters = defaults.get_default_parameters()
 defaults.register_configuration_dir("config_dir", localdir+"/params")
 
 parameters = defaults.merge_parameters_from_files(default_parameters,
-                                                f"{localdir}/params/object_preselection.yaml",
+                                                f"{localdir}/params/object_preselection_HHbbtt_boosted.yaml",
                                                 f"{localdir}/params/jets_calibration.yaml",
                                                 f"{localdir}/params/triggers_run3.yaml",
                                                 f"{localdir}/params/triggers_prescales_run3.yaml",
@@ -92,7 +92,7 @@ for coll in collections:
     )
     variables[f"{coll}_logsumcorrSVmass_tau21"] = HistConf(
         [ Axis(coll="FatJetGood", field="logsumcorrSVmass", label=r"log($\sum({m^{corr}_{SV}})$)", bins=42, start=-2.4, stop=6),
-          Axis(coll="FatJetGood", field="tau21", label=r"$\tau_{21}$", type="variable", bins=[0, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 1]) ]
+          Axis(coll="FatJetGood", field="tau21", label=r"$\tau_{21}$", type="variable", bins=[0, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]) ]
     )
 
 # Build dictionary of workflow options

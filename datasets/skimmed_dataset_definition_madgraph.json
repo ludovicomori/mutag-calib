@@ -1,0 +1,1174 @@
+{
+  "QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-1000to1200_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2022_postEE",
+      "isMC": "True",
+      "xsec": "883.7",
+      "part": "1000to1200",
+      "nevents": "7274220",
+      "size": "17946004690",
+      "skim_efficiency": "0.10266402403479259",
+      "skim_rescale_genweights": "9.740576",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_9.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_10.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_11.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_12.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_13.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_14.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_15.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_16.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_17.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_18.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_postEE_19.root"
+    ]
+  },
+  "QCD-4Jets_HT-1000to1200_1000to1200_2022_preEE": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-1000to1200_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22NanoAODv12-130X_mcRun3_2022_realistic_v5-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2022_preEE",
+      "isMC": "True",
+      "xsec": "883.7",
+      "part": "1000to1200",
+      "nevents": "2124368",
+      "size": "5285420575",
+      "skim_efficiency": "0.10291399125741098",
+      "skim_rescale_genweights": "9.716952",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_preEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_preEE_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_preEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_preEE_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_preEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_preEE_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_preEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_preEE_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_preEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_preEE_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2022_preEE/QCD-4Jets_HT-1000to1200_1000to1200_2022_preEE_6.root"
+    ]
+  },
+  "QCD-4Jets_HT-1000to1200_1000to1200_2023_postBPix": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-1000to1200_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer23BPixNanoAODv12-130X_mcRun3_2023_realistic_postBPix_v2-v4/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2023_postBPix",
+      "isMC": "True",
+      "xsec": "883.7",
+      "part": "1000to1200",
+      "nevents": "1914489",
+      "size": "4844060346",
+      "skim_efficiency": "0.1047870697541072",
+      "skim_rescale_genweights": "9.543171",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2023_postBPix/QCD-4Jets_HT-1000to1200_1000to1200_2023_postBPix_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2023_postBPix/QCD-4Jets_HT-1000to1200_1000to1200_2023_postBPix_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2023_postBPix/QCD-4Jets_HT-1000to1200_1000to1200_2023_postBPix_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2023_postBPix/QCD-4Jets_HT-1000to1200_1000to1200_2023_postBPix_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2023_postBPix/QCD-4Jets_HT-1000to1200_1000to1200_2023_postBPix_5.root"
+    ]
+  },
+  "QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-1000to1200_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer23NanoAODv12-130X_mcRun3_2023_realistic_v14-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2023_preBPix",
+      "isMC": "True",
+      "xsec": "883.7",
+      "part": "1000to1200",
+      "nevents": "3384474",
+      "size": "8545644591",
+      "skim_efficiency": "0.10512753921299761",
+      "skim_rescale_genweights": "9.512244",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix/QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix/QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix/QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix/QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix/QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix/QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix/QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix/QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix/QCD-4Jets_HT-1000to1200_1000to1200_2023_preBPix_9.root"
+    ]
+  },
+  "QCD-4Jets_HT-1000to1200_1000to1200_2024": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_Bin-HT-1000to1200_TuneCP5_13p6TeV_madgraphMLM-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2024",
+      "isMC": "True",
+      "xsec": "883.7",
+      "part": "1000to1200",
+      "nevents": "11145720",
+      "size": "44438769724",
+      "skim_efficiency": "0.09739637040240619",
+      "skim_rescale_genweights": "10.267312",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_9.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_10.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_11.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_12.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_13.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_14.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_15.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_16.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_17.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_18.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_19.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_20.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_21.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_22.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_23.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_24.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_25.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_26.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_27.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_28.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1000to1200_1000to1200_2024/QCD-4Jets_HT-1000to1200_1000to1200_2024_29.root"
+    ]
+  },
+  "QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-1200to1500_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2022_postEE",
+      "isMC": "True",
+      "xsec": "383.5",
+      "part": "1200to1500",
+      "nevents": "8931636",
+      "size": "22802606461",
+      "skim_efficiency": "0.12614503493626866",
+      "skim_rescale_genweights": "7.927431",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_9.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_10.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_11.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_12.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_13.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_14.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_15.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_16.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_17.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_18.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_19.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_20.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_21.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_22.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_postEE_23.root"
+    ]
+  },
+  "QCD-4Jets_HT-1200to1500_1200to1500_2022_preEE": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-1200to1500_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22NanoAODv12-130X_mcRun3_2022_realistic_v5-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2022_preEE",
+      "isMC": "True",
+      "xsec": "383.5",
+      "part": "1200to1500",
+      "nevents": "2666655",
+      "size": "6892073625",
+      "skim_efficiency": "0.12630528797400095",
+      "skim_rescale_genweights": "7.917362",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_preEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_preEE_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_preEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_preEE_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_preEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_preEE_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_preEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_preEE_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_preEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_preEE_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_preEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_preEE_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2022_preEE/QCD-4Jets_HT-1200to1500_1200to1500_2022_preEE_7.root"
+    ]
+  },
+  "QCD-4Jets_HT-1200to1500_1200to1500_2023_postBPix": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-1200to1500_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer23BPixNanoAODv12-130X_mcRun3_2023_realistic_postBPix_v2-v4/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2023_postBPix",
+      "isMC": "True",
+      "xsec": "383.5",
+      "part": "1200to1500",
+      "nevents": "2427009",
+      "size": "6337539597",
+      "skim_efficiency": "0.1285586295097056",
+      "skim_rescale_genweights": "7.7785616",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_postBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_postBPix_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_postBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_postBPix_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_postBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_postBPix_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_postBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_postBPix_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_postBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_postBPix_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_postBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_postBPix_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_postBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_postBPix_7.root"
+    ]
+  },
+  "QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-1200to1500_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer23NanoAODv12-130X_mcRun3_2023_realistic_v14-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2023_preBPix",
+      "isMC": "True",
+      "xsec": "383.5",
+      "part": "1200to1500",
+      "nevents": "5209598",
+      "size": "13604765595",
+      "skim_efficiency": "0.1291136688715415",
+      "skim_rescale_genweights": "7.7451143",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix_9.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix_10.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix_11.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix_12.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix_13.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix/QCD-4Jets_HT-1200to1500_1200to1500_2023_preBPix_14.root"
+    ]
+  },
+  "QCD-4Jets_HT-1200to1500_1200to1500_2024": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_Bin-HT-1200to1500_TuneCP5_13p6TeV_madgraphMLM-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2024",
+      "isMC": "True",
+      "xsec": "383.5",
+      "part": "1200to1500",
+      "nevents": "12677393",
+      "size": "52721794950",
+      "skim_efficiency": "0.11756198232531673",
+      "skim_rescale_genweights": "8.50614",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_9.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_10.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_11.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_12.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_13.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_14.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_15.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_16.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_17.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_18.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_19.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_20.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_21.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_22.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_23.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_24.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_25.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_26.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_27.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_28.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_29.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_30.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_31.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1200to1500_1200to1500_2024/QCD-4Jets_HT-1200to1500_1200to1500_2024_32.root"
+    ]
+  },
+  "QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-1500to2000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2022_postEE",
+      "isMC": "True",
+      "xsec": "125.2",
+      "part": "1500to2000",
+      "nevents": "10011326",
+      "size": "26564971541",
+      "skim_efficiency": "0.15813739517064976",
+      "skim_rescale_genweights": "6.3236256",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_9.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_10.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_11.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_12.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_13.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_14.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_15.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_16.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_17.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_18.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_19.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_20.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_21.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_22.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_23.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_24.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_25.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_postEE_26.root"
+    ]
+  },
+  "QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-1500to2000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22NanoAODv12-130X_mcRun3_2022_realistic_v5-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2022_preEE",
+      "isMC": "True",
+      "xsec": "125.2",
+      "part": "1500to2000",
+      "nevents": "3357364",
+      "size": "8998202793",
+      "skim_efficiency": "0.15842877588934876",
+      "skim_rescale_genweights": "6.312031",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE/QCD-4Jets_HT-1500to2000_1500to2000_2022_preEE_9.root"
+    ]
+  },
+  "QCD-4Jets_HT-1500to2000_1500to2000_2023_postBPix": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-1500to2000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer23BPixNanoAODv12-130X_mcRun3_2023_realistic_postBPix_v2-v3/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2023_postBPix",
+      "isMC": "True",
+      "xsec": "125.2",
+      "part": "1500to2000",
+      "nevents": "2755634",
+      "size": "7476774963",
+      "skim_efficiency": "0.16097998658360882",
+      "skim_rescale_genweights": "6.2119493",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_postBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_postBPix_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_postBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_postBPix_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_postBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_postBPix_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_postBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_postBPix_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_postBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_postBPix_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_postBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_postBPix_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_postBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_postBPix_7.root"
+    ]
+  },
+  "QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-1500to2000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer23NanoAODv12-130X_mcRun3_2023_realistic_v14-v3/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2023_preBPix",
+      "isMC": "True",
+      "xsec": "125.2",
+      "part": "1500to2000",
+      "nevents": "6382663",
+      "size": "17240469385",
+      "skim_efficiency": "0.16162614872867345",
+      "skim_rescale_genweights": "6.187128",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix_9.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix_10.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix_11.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix_12.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix_13.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix_14.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix_15.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix_16.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix/QCD-4Jets_HT-1500to2000_1500to2000_2023_preBPix_17.root"
+    ]
+  },
+  "QCD-4Jets_HT-1500to2000_1500to2000_2024": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_Bin-HT-1500to2000_TuneCP5_13p6TeV_madgraphMLM-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2024",
+      "isMC": "True",
+      "xsec": "125.2",
+      "part": "1500to2000",
+      "nevents": "16306860",
+      "size": "70952021652",
+      "skim_efficiency": "0.1440430560907787",
+      "skim_rescale_genweights": "6.9423723",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_9.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_10.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_11.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_12.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_13.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_14.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_15.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_16.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_17.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_18.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_19.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_20.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_21.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_22.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_23.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_24.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_25.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_26.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_27.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_28.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_29.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_30.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_31.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_32.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_33.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_34.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_35.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_36.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_37.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_38.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_39.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_40.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_41.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-1500to2000_1500to2000_2024/QCD-4Jets_HT-1500to2000_1500to2000_2024_42.root"
+    ]
+  },
+  "QCD-4Jets_HT-2000_2000_2022_postEE": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-2000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2022_postEE",
+      "isMC": "True",
+      "xsec": "26.49",
+      "part": "2000",
+      "nevents": "13853924",
+      "size": "38726870390",
+      "skim_efficiency": "0.21280028867514397",
+      "skim_rescale_genweights": "4.6992607",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_9.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_10.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_11.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_12.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_13.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_14.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_15.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_16.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_17.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_18.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_19.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_20.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_21.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_22.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_23.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_24.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_25.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_26.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_27.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_28.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_29.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_30.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_31.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_32.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_33.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_34.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_35.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_postEE/QCD-4Jets_HT-2000_2000_2022_postEE_36.root"
+    ]
+  },
+  "QCD-4Jets_HT-2000_2000_2022_preEE": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-2000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22NanoAODv12-130X_mcRun3_2022_realistic_v5-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2022_preEE",
+      "isMC": "True",
+      "xsec": "26.49",
+      "part": "2000",
+      "nevents": "3857089",
+      "size": "10908730544",
+      "skim_efficiency": "0.21271432045023142",
+      "skim_rescale_genweights": "4.7011585",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_preEE/QCD-4Jets_HT-2000_2000_2022_preEE_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_preEE/QCD-4Jets_HT-2000_2000_2022_preEE_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_preEE/QCD-4Jets_HT-2000_2000_2022_preEE_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_preEE/QCD-4Jets_HT-2000_2000_2022_preEE_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_preEE/QCD-4Jets_HT-2000_2000_2022_preEE_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_preEE/QCD-4Jets_HT-2000_2000_2022_preEE_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_preEE/QCD-4Jets_HT-2000_2000_2022_preEE_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_preEE/QCD-4Jets_HT-2000_2000_2022_preEE_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_preEE/QCD-4Jets_HT-2000_2000_2022_preEE_9.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2022_preEE/QCD-4Jets_HT-2000_2000_2022_preEE_10.root"
+    ]
+  },
+  "QCD-4Jets_HT-2000_2000_2023_postBPix": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-2000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer23BPixNanoAODv12-130X_mcRun3_2023_realistic_postBPix_v2-v4/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2023_postBPix",
+      "isMC": "True",
+      "xsec": "26.49",
+      "part": "2000",
+      "nevents": "4431433",
+      "size": "12601538017",
+      "skim_efficiency": "0.21701127736243106",
+      "skim_rescale_genweights": "4.6080494",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_postBPix/QCD-4Jets_HT-2000_2000_2023_postBPix_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_postBPix/QCD-4Jets_HT-2000_2000_2023_postBPix_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_postBPix/QCD-4Jets_HT-2000_2000_2023_postBPix_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_postBPix/QCD-4Jets_HT-2000_2000_2023_postBPix_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_postBPix/QCD-4Jets_HT-2000_2000_2023_postBPix_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_postBPix/QCD-4Jets_HT-2000_2000_2023_postBPix_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_postBPix/QCD-4Jets_HT-2000_2000_2023_postBPix_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_postBPix/QCD-4Jets_HT-2000_2000_2023_postBPix_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_postBPix/QCD-4Jets_HT-2000_2000_2023_postBPix_9.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_postBPix/QCD-4Jets_HT-2000_2000_2023_postBPix_10.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_postBPix/QCD-4Jets_HT-2000_2000_2023_postBPix_11.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_postBPix/QCD-4Jets_HT-2000_2000_2023_postBPix_12.root"
+    ]
+  },
+  "QCD-4Jets_HT-2000_2000_2023_preBPix": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-2000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer23NanoAODv12-130X_mcRun3_2023_realistic_v14-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2023_preBPix",
+      "isMC": "True",
+      "xsec": "26.49",
+      "part": "2000",
+      "nevents": "9221787",
+      "size": "26164428386",
+      "skim_efficiency": "0.21773211955851915",
+      "skim_rescale_genweights": "4.592802",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_9.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_10.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_11.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_12.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_13.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_14.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_15.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_16.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_17.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_18.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_19.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_20.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_21.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_22.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_23.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2023_preBPix/QCD-4Jets_HT-2000_2000_2023_preBPix_24.root"
+    ]
+  },
+  "QCD-4Jets_HT-2000_2000_2024": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_Bin-HT-2000_TuneCP5_13p6TeV_madgraphMLM-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2024",
+      "isMC": "True",
+      "xsec": "26.49",
+      "part": "2000",
+      "nevents": "17087701",
+      "size": "78730964194",
+      "skim_efficiency": "0.18582957287758617",
+      "skim_rescale_genweights": "5.38128",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_9.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_10.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_11.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_12.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_13.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_14.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_15.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_16.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_17.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_18.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_19.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_20.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_21.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_22.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_23.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_24.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_25.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_26.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_27.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_28.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_29.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_30.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_31.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_32.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_33.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_34.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_35.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_36.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_37.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_38.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_39.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_40.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_41.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_42.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_43.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-2000_2000_2024/QCD-4Jets_HT-2000_2000_2024_44.root"
+    ]
+  },
+  "QCD-4Jets_HT-200to400_200to400_2022_postEE": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-200to400_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2022_postEE",
+      "isMC": "True",
+      "xsec": "1961000.0",
+      "part": "200to400",
+      "nevents": "3388",
+      "size": "4738170",
+      "skim_efficiency": "4.8210199886632034e-05",
+      "skim_rescale_genweights": "20742.76",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-200to400_200to400_2022_postEE/QCD-4Jets_HT-200to400_200to400_2022_postEE_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-200to400_200to400_2022_postEE/QCD-4Jets_HT-200to400_200to400_2022_postEE_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-200to400_200to400_2022_postEE/QCD-4Jets_HT-200to400_200to400_2022_postEE_3.root"
+    ]
+  },
+  "QCD-4Jets_HT-200to400_200to400_2022_preEE": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-200to400_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22NanoAODv12-130X_mcRun3_2022_realistic_v5-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2022_preEE",
+      "isMC": "True",
+      "xsec": "1961000.0",
+      "part": "200to400",
+      "nevents": "1080",
+      "size": "1541382",
+      "skim_efficiency": "5.231869935713398e-05",
+      "skim_rescale_genweights": "19113.588",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-200to400_200to400_2022_preEE/QCD-4Jets_HT-200to400_200to400_2022_preEE_1.root"
+    ]
+  },
+  "QCD-4Jets_HT-200to400_200to400_2023_postBPix": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-200to400_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer23BPixNanoAODv12-130X_mcRun3_2023_realistic_postBPix_v2-v3/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2023_postBPix",
+      "isMC": "True",
+      "xsec": "1961000.0",
+      "part": "200to400",
+      "nevents": "752",
+      "size": "1101796",
+      "skim_efficiency": "4.3904612325484274e-05",
+      "skim_rescale_genweights": "22775.484",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-200to400_200to400_2023_postBPix/QCD-4Jets_HT-200to400_200to400_2023_postBPix_1.root"
+    ]
+  },
+  "QCD-4Jets_HT-200to400_200to400_2023_preBPix": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-200to400_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer23NanoAODv12-130X_mcRun3_2023_realistic_v14-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2023_preBPix",
+      "isMC": "True",
+      "xsec": "1961000.0",
+      "part": "200to400",
+      "nevents": "1609",
+      "size": "2349439",
+      "skim_efficiency": "4.343772705087557e-05",
+      "skim_rescale_genweights": "23021.936",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-200to400_200to400_2023_preBPix/QCD-4Jets_HT-200to400_200to400_2023_preBPix_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-200to400_200to400_2023_preBPix/QCD-4Jets_HT-200to400_200to400_2023_preBPix_2.root"
+    ]
+  },
+  "QCD-4Jets_HT-200to400_200to400_2024": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_Bin-HT-200to400_TuneCP5_13p6TeV_madgraphMLM-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2024",
+      "isMC": "True",
+      "xsec": "1961000.0",
+      "part": "200to400",
+      "nevents": "5556",
+      "size": "10640830",
+      "skim_efficiency": "4.820604701304279e-05",
+      "skim_rescale_genweights": "20744.45",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-200to400_200to400_2024/QCD-4Jets_HT-200to400_200to400_2024_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-200to400_200to400_2024/QCD-4Jets_HT-200to400_200to400_2024_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-200to400_200to400_2024/QCD-4Jets_HT-200to400_200to400_2024_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-200to400_200to400_2024/QCD-4Jets_HT-200to400_200to400_2024_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-200to400_200to400_2024/QCD-4Jets_HT-200to400_200to400_2024_5.root"
+    ]
+  },
+  "QCD-4Jets_HT-400to600_400to600_2022_postEE": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-400to600_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2022_postEE",
+      "isMC": "True",
+      "xsec": "95620.0",
+      "part": "400to600",
+      "nevents": "858583",
+      "size": "1672094430",
+      "skim_efficiency": "0.012496278950413461",
+      "skim_rescale_genweights": "80.02391",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-400to600_400to600_2022_postEE/QCD-4Jets_HT-400to600_400to600_2022_postEE_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-400to600_400to600_2022_postEE/QCD-4Jets_HT-400to600_400to600_2022_postEE_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-400to600_400to600_2022_postEE/QCD-4Jets_HT-400to600_400to600_2022_postEE_3.root"
+    ]
+  },
+  "QCD-4Jets_HT-400to600_400to600_2022_preEE": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-400to600_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22NanoAODv12-130X_mcRun3_2022_realistic_v5-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2022_preEE",
+      "isMC": "True",
+      "xsec": "95620.0",
+      "part": "400to600",
+      "nevents": "253035",
+      "size": "499947003",
+      "skim_efficiency": "0.012908093770400447",
+      "skim_rescale_genweights": "77.46996",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-400to600_400to600_2022_preEE/QCD-4Jets_HT-400to600_400to600_2022_preEE_1.root"
+    ]
+  },
+  "QCD-4Jets_HT-400to600_400to600_2023_postBPix": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-400to600_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer23BPixNanoAODv12-130X_mcRun3_2023_realistic_postBPix_v2-v4/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2023_postBPix",
+      "isMC": "True",
+      "xsec": "95620.0",
+      "part": "400to600",
+      "nevents": "247481",
+      "size": "503662139",
+      "skim_efficiency": "0.012099260074666232",
+      "skim_rescale_genweights": "82.64894",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-400to600_400to600_2023_postBPix/QCD-4Jets_HT-400to600_400to600_2023_postBPix_1.root"
+    ]
+  },
+  "QCD-4Jets_HT-400to600_400to600_2023_preBPix": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-400to600_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer23NanoAODv12-130X_mcRun3_2023_realistic_v14-v3/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2023_preBPix",
+      "isMC": "True",
+      "xsec": "95620.0",
+      "part": "400to600",
+      "nevents": "443032",
+      "size": "901540892",
+      "skim_efficiency": "0.012143495266612835",
+      "skim_rescale_genweights": "82.349014",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-400to600_400to600_2023_preBPix/QCD-4Jets_HT-400to600_400to600_2023_preBPix_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-400to600_400to600_2023_preBPix/QCD-4Jets_HT-400to600_400to600_2023_preBPix_2.root"
+    ]
+  },
+  "QCD-4Jets_HT-400to600_400to600_2024": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_Bin-HT-400to600_TuneCP5_13p6TeV_madgraphMLM-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2024",
+      "isMC": "True",
+      "xsec": "95620.0",
+      "part": "400to600",
+      "nevents": "1276650",
+      "size": "3716677483",
+      "skim_efficiency": "0.01196196973449721",
+      "skim_rescale_genweights": "83.59798",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-400to600_400to600_2024/QCD-4Jets_HT-400to600_400to600_2024_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-400to600_400to600_2024/QCD-4Jets_HT-400to600_400to600_2024_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-400to600_400to600_2024/QCD-4Jets_HT-400to600_400to600_2024_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-400to600_400to600_2024/QCD-4Jets_HT-400to600_400to600_2024_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-400to600_400to600_2024/QCD-4Jets_HT-400to600_400to600_2024_5.root"
+    ]
+  },
+  "QCD-4Jets_HT-600to800_600to800_2022_postEE": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-600to800_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2022_postEE",
+      "isMC": "True",
+      "xsec": "13540.0",
+      "part": "600to800",
+      "nevents": "3087354",
+      "size": "6839597833",
+      "skim_efficiency": "0.04877490291794983",
+      "skim_rescale_genweights": "20.502352",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2022_postEE/QCD-4Jets_HT-600to800_600to800_2022_postEE_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2022_postEE/QCD-4Jets_HT-600to800_600to800_2022_postEE_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2022_postEE/QCD-4Jets_HT-600to800_600to800_2022_postEE_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2022_postEE/QCD-4Jets_HT-600to800_600to800_2022_postEE_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2022_postEE/QCD-4Jets_HT-600to800_600to800_2022_postEE_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2022_postEE/QCD-4Jets_HT-600to800_600to800_2022_postEE_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2022_postEE/QCD-4Jets_HT-600to800_600to800_2022_postEE_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2022_postEE/QCD-4Jets_HT-600to800_600to800_2022_postEE_8.root"
+    ]
+  },
+  "QCD-4Jets_HT-600to800_600to800_2022_preEE": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-600to800_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22NanoAODv12-130X_mcRun3_2022_realistic_v5-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2022_preEE",
+      "isMC": "True",
+      "xsec": "13540.0",
+      "part": "600to800",
+      "nevents": "939209",
+      "size": "2110516944",
+      "skim_efficiency": "0.04935812455218389",
+      "skim_rescale_genweights": "20.2603",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2022_preEE/QCD-4Jets_HT-600to800_600to800_2022_preEE_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2022_preEE/QCD-4Jets_HT-600to800_600to800_2022_preEE_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2022_preEE/QCD-4Jets_HT-600to800_600to800_2022_preEE_3.root"
+    ]
+  },
+  "QCD-4Jets_HT-600to800_600to800_2023_postBPix": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-600to800_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer23BPixNanoAODv12-130X_mcRun3_2023_realistic_postBPix_v2-v3/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2023_postBPix",
+      "isMC": "True",
+      "xsec": "13540.0",
+      "part": "600to800",
+      "nevents": "967154",
+      "size": "2213521969",
+      "skim_efficiency": "0.0491781263879994",
+      "skim_rescale_genweights": "20.334238",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2023_postBPix/QCD-4Jets_HT-600to800_600to800_2023_postBPix_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2023_postBPix/QCD-4Jets_HT-600to800_600to800_2023_postBPix_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2023_postBPix/QCD-4Jets_HT-600to800_600to800_2023_postBPix_3.root"
+    ]
+  },
+  "QCD-4Jets_HT-600to800_600to800_2023_preBPix": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-600to800_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer23NanoAODv12-130X_mcRun3_2023_realistic_v14-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2023_preBPix",
+      "isMC": "True",
+      "xsec": "13540.0",
+      "part": "600to800",
+      "nevents": "1700664",
+      "size": "3879623260",
+      "skim_efficiency": "0.049275562619491856",
+      "skim_rescale_genweights": "20.29403",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2023_preBPix/QCD-4Jets_HT-600to800_600to800_2023_preBPix_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2023_preBPix/QCD-4Jets_HT-600to800_600to800_2023_preBPix_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2023_preBPix/QCD-4Jets_HT-600to800_600to800_2023_preBPix_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2023_preBPix/QCD-4Jets_HT-600to800_600to800_2023_preBPix_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2023_preBPix/QCD-4Jets_HT-600to800_600to800_2023_preBPix_5.root"
+    ]
+  },
+  "QCD-4Jets_HT-600to800_600to800_2024": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_Bin-HT-600to800_TuneCP5_13p6TeV_madgraphMLM-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2024",
+      "isMC": "True",
+      "xsec": "13540.0",
+      "part": "600to800",
+      "nevents": "6033772",
+      "size": "20913837225",
+      "skim_efficiency": "0.04705221951109368",
+      "skim_rescale_genweights": "21.252987",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2024/QCD-4Jets_HT-600to800_600to800_2024_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2024/QCD-4Jets_HT-600to800_600to800_2024_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2024/QCD-4Jets_HT-600to800_600to800_2024_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2024/QCD-4Jets_HT-600to800_600to800_2024_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2024/QCD-4Jets_HT-600to800_600to800_2024_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2024/QCD-4Jets_HT-600to800_600to800_2024_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2024/QCD-4Jets_HT-600to800_600to800_2024_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2024/QCD-4Jets_HT-600to800_600to800_2024_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2024/QCD-4Jets_HT-600to800_600to800_2024_9.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2024/QCD-4Jets_HT-600to800_600to800_2024_10.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2024/QCD-4Jets_HT-600to800_600to800_2024_11.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2024/QCD-4Jets_HT-600to800_600to800_2024_12.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2024/QCD-4Jets_HT-600to800_600to800_2024_13.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2024/QCD-4Jets_HT-600to800_600to800_2024_14.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2024/QCD-4Jets_HT-600to800_600to800_2024_15.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-600to800_600to800_2024/QCD-4Jets_HT-600to800_600to800_2024_16.root"
+    ]
+  },
+  "QCD-4Jets_HT-800to1000_800to1000_2022_postEE": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-800to1000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22EENanoAODv12-130X_mcRun3_2022_realistic_postEE_v6-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2022_postEE",
+      "isMC": "True",
+      "xsec": "3033.0",
+      "part": "800to1000",
+      "nevents": "5269353",
+      "size": "12461748031",
+      "skim_efficiency": "0.079101035894453",
+      "skim_rescale_genweights": "12.6420765",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_postEE/QCD-4Jets_HT-800to1000_800to1000_2022_postEE_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_postEE/QCD-4Jets_HT-800to1000_800to1000_2022_postEE_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_postEE/QCD-4Jets_HT-800to1000_800to1000_2022_postEE_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_postEE/QCD-4Jets_HT-800to1000_800to1000_2022_postEE_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_postEE/QCD-4Jets_HT-800to1000_800to1000_2022_postEE_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_postEE/QCD-4Jets_HT-800to1000_800to1000_2022_postEE_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_postEE/QCD-4Jets_HT-800to1000_800to1000_2022_postEE_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_postEE/QCD-4Jets_HT-800to1000_800to1000_2022_postEE_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_postEE/QCD-4Jets_HT-800to1000_800to1000_2022_postEE_9.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_postEE/QCD-4Jets_HT-800to1000_800to1000_2022_postEE_10.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_postEE/QCD-4Jets_HT-800to1000_800to1000_2022_postEE_11.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_postEE/QCD-4Jets_HT-800to1000_800to1000_2022_postEE_12.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_postEE/QCD-4Jets_HT-800to1000_800to1000_2022_postEE_13.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_postEE/QCD-4Jets_HT-800to1000_800to1000_2022_postEE_14.root"
+    ]
+  },
+  "QCD-4Jets_HT-800to1000_800to1000_2022_preEE": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-800to1000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer22NanoAODv12-130X_mcRun3_2022_realistic_v5-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2022_preEE",
+      "isMC": "True",
+      "xsec": "3033.0",
+      "part": "800to1000",
+      "nevents": "1716173",
+      "size": "4104425169",
+      "skim_efficiency": "0.0794448475951469",
+      "skim_rescale_genweights": "12.587487",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_preEE/QCD-4Jets_HT-800to1000_800to1000_2022_preEE_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_preEE/QCD-4Jets_HT-800to1000_800to1000_2022_preEE_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_preEE/QCD-4Jets_HT-800to1000_800to1000_2022_preEE_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_preEE/QCD-4Jets_HT-800to1000_800to1000_2022_preEE_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2022_preEE/QCD-4Jets_HT-800to1000_800to1000_2022_preEE_5.root"
+    ]
+  },
+  "QCD-4Jets_HT-800to1000_800to1000_2023_postBPix": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-800to1000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer23BPixNanoAODv12-130X_mcRun3_2023_realistic_postBPix_v2-v4/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2023_postBPix",
+      "isMC": "True",
+      "xsec": "3033.0",
+      "part": "800to1000",
+      "nevents": "1428560",
+      "size": "3480023481",
+      "skim_efficiency": "0.08078350545312413",
+      "skim_rescale_genweights": "12.378786",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2023_postBPix/QCD-4Jets_HT-800to1000_800to1000_2023_postBPix_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2023_postBPix/QCD-4Jets_HT-800to1000_800to1000_2023_postBPix_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2023_postBPix/QCD-4Jets_HT-800to1000_800to1000_2023_postBPix_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2023_postBPix/QCD-4Jets_HT-800to1000_800to1000_2023_postBPix_4.root"
+    ]
+  },
+  "QCD-4Jets_HT-800to1000_800to1000_2023_preBPix": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_HT-800to1000_TuneCP5_13p6TeV_madgraphMLM-pythia8/Run3Summer23NanoAODv12-130X_mcRun3_2023_realistic_v14-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2023_preBPix",
+      "isMC": "True",
+      "xsec": "3033.0",
+      "part": "800to1000",
+      "nevents": "3062818",
+      "size": "7418248672",
+      "skim_efficiency": "0.08103866467226856",
+      "skim_rescale_genweights": "12.339786",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2023_preBPix/QCD-4Jets_HT-800to1000_800to1000_2023_preBPix_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2023_preBPix/QCD-4Jets_HT-800to1000_800to1000_2023_preBPix_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2023_preBPix/QCD-4Jets_HT-800to1000_800to1000_2023_preBPix_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2023_preBPix/QCD-4Jets_HT-800to1000_800to1000_2023_preBPix_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2023_preBPix/QCD-4Jets_HT-800to1000_800to1000_2023_preBPix_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2023_preBPix/QCD-4Jets_HT-800to1000_800to1000_2023_preBPix_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2023_preBPix/QCD-4Jets_HT-800to1000_800to1000_2023_preBPix_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2023_preBPix/QCD-4Jets_HT-800to1000_800to1000_2023_preBPix_8.root"
+    ]
+  },
+  "QCD-4Jets_HT-800to1000_800to1000_2024": {
+    "metadata": {
+      "das_names": "['/QCD-4Jets_Bin-HT-800to1000_TuneCP5_13p6TeV_madgraphMLM-pythia8/RunIII2024Summer24NanoAODv15-150X_mcRun3_2024_realistic_v2-v2/NANOAODSIM']",
+      "sample": "QCD_Madgraph",
+      "year": "2024",
+      "isMC": "True",
+      "xsec": "3033.0",
+      "part": "800to1000",
+      "nevents": "9500501",
+      "size": "35904252676",
+      "skim_efficiency": "0.07603040332306087",
+      "skim_rescale_genweights": "13.152665",
+      "isSkim": "True"
+    },
+    "files": [
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_1.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_2.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_3.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_4.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_5.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_6.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_7.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_8.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_9.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_10.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_11.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_12.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_13.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_14.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_15.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_16.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_17.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_18.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_19.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_20.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_21.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_22.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_23.root",
+      "root://t3dcachedb03.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/tharte/mutag_samples//QCD-4Jets_HT-800to1000_800to1000_2024/QCD-4Jets_HT-800to1000_800to1000_2024_24.root"
+    ]
+  }
+}

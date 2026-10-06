@@ -1,0 +1,61 @@
+mutag_calibration:
+  taggers:
+    - particleNet_XbbVsQCD
+  pt_binning:
+    2022_preEE:
+      - [250, 'Inf']
+      - [250, 300]
+      - [300, 350]
+      - [350, 425]
+      - [425, 'Inf']
+    2022_postEE:
+      - [250, 'Inf']
+      - [250, 300]
+      - [300, 350]
+      - [350, 425]
+      - [425, 'Inf']
+    2023_preBPix:
+      - [250, 'Inf']
+      - [250, 300]
+      - [300, 350]
+      - [350, 425]
+      - [425, 'Inf']
+    2023_postBPix:
+      - [250, 'Inf']
+      - [250, 300]
+      - [300, 350]
+      - [350, 425]
+      - [425, 'Inf']
+  msd_binning:
+    2022_preEE:
+      - [50, 'Inf']
+      - [50, 200]
+      - [100, 150]
+    2022_postEE:
+      - [50, 'Inf']
+      - [50, 200]
+      - [100, 150]
+    2023_preBPix:
+      - [50, 'Inf']
+      - [50, 200]
+      - [100, 150]
+    2023_postBPix:
+      - [50, 'Inf']
+      - [50, 200]
+      - [100, 150]
+  wp:
+    2022_preEE:
+      particleNet_XbbVsQCD:
+        HHbbbb: 0.95
+    2022_postEE:
+      particleNet_XbbVsQCD:
+        HHbbbb: 0.95
+    2023_preBPix:
+      particleNet_XbbVsQCD:
+        HHbbbb: 0.95
+    2023_postBPix:
+      particleNet_XbbVsQCD:
+        HHbbbb: 0.95
+    2024:
+      globalParT3_Xbb:
+        HHbbbb: 0.95
