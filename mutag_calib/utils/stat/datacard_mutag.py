@@ -131,6 +131,10 @@ class DatacardMutag(Datacard):
 
         os.makedirs(directory, exist_ok=True)
 
+        # Before the card and the shapes are written, so the rate and the
+        # template integral both pick up the floor.
+        self._floor_empty_processes()
+
         with open(card_file, "w") as card:
             card.write(self.content(shapes_filename=shapes_name, passfail_ratio=passfail_ratio))
 
@@ -144,6 +148,25 @@ class DatacardMutag(Datacard):
                     root_file[shape] = histogram
             for shape, histogram in shape_histograms.items():
                 root_file[shape] = histogram
+
+    def _floor_empty_processes(self, floor: float = 1e-9) -> None:
+        """Give a process with zero total yield a tiny flat template.
+
+        Combine drops processes with rate exactly 0. If that removes every
+        background from a channel (e.g. c and light both empty in a pass region),
+        FitDiagnostics --saveShapes segfaults. All variations are set equal to
+        the nominal, so shape systematics are no-ops for the floored process.
+        Must run after get_passfail_ratio, so the pass/fail ratio stays exactly 0.
+        """
+        view = self.histogram.view()
+        nom_idx = self.histogram.axes["variation"].index("nominal")
+        for i, process in enumerate(self.histogram.axes["process"]):
+            if np.clip(view["value"][i, nom_idx, :], 0, None).sum() > 0:
+                continue
+            print(f"[WARN] {self.bin}: {process} has zero yield, "
+                  f"flooring every bin to {floor:g} so combine keeps the process")
+            view["value"][i] = floor
+            view["variance"][i] = 0.0
 
     @staticmethod
     def _neutralise_empty_variations(shapes: dict) -> None:

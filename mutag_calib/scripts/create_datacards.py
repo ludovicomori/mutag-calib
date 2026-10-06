@@ -218,8 +218,8 @@ def get_passfail_ratio(datacards):
     return dict(passfail_ratio)
 
 TAU21_NOMINAL = 0.30
-TAU21_VAR_DOWN = 0.20
-TAU21_VAR_UP = 0.40
+TAU21_VAR_DOWN = 0.15
+TAU21_VAR_UP = 1.0
 
 
 def add_tau21_variation_1d(histo_nom, histo_down, histo_up, cat, mc_processes, year,
@@ -863,16 +863,16 @@ def sanitize_shape_variations(histo_1d, mc_sample_names, epsilon=1e-9):
 
 def print_report(successful_categories, failed_categories):
     for d_cat in successful_categories:
-        print(f"✅ Year: {d_cat['year']}, Category: {d_cat['category']}, Folder: {d_cat['folder']}")
+        print(f"Success: Year: {d_cat['year']}, Category: {d_cat['category']}, Folder: {d_cat['folder']}")
     for d_cat in failed_categories:
-        print(f"❌ Year: {d_cat['year']}, Category: {d_cat['category']}, Error: {d_cat['error']}")
+        print(f"Error: Year: {d_cat['year']}, Category: {d_cat['category']}, Error: {d_cat['error']}")
 
     # Summary printout counting successes and failures rate
     ncat = len(successful_categories) + len(failed_categories)
     print("\nSummary Report:")
     print(f"Total categories processed: {ncat}")
-    print(f"✅  Successful: {len(successful_categories)} / {ncat}")
-    print(f"❌  Failed: {len(failed_categories)} / {ncat}")
+    print(f"Successful: {len(successful_categories)} / {ncat}")
+    print(f"Failed: {len(failed_categories)} / {ncat}")
 
 # Helper function to extract the tau21 string for directory naming
 get_tau21_str = lambda x: f"tau21_{x:.2f}".replace('.', 'p')
@@ -960,7 +960,8 @@ def main():
             systematics_tau21 = systematics_tau21_by_region[region] if args.tau21_var else systematics
 
             # for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
-            for tau21 in [0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
+            # for tau21 in [0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0]:
+            for tau21 in [0.15, 0.3, 1.0]:
             # for tau21 in [0.60]:
             # for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
                 print(f"\n\nCreating datacard: Year: {year}\tCategory: {cat}\ttau21 < {tau21}")
@@ -1047,7 +1048,8 @@ def main():
         parent_categories = set()
         for cat in categories:
             # for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
-            for tau21 in [0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
+            # for tau21 in [0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0]:
+            for tau21 in [0.15, 0.3, 1.0]:
             # for tau21 in [0.60]:
             # for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
                 # Extract parent category (without pass/fail)
@@ -1100,7 +1102,8 @@ def main():
         # Create combined datacard for pass+fail regions, for each parent category
         for parent_cat in parent_categories:
             # for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
-            for tau21 in [0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
+            # for tau21 in [0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0]:
+            for tau21 in [0.15, 0.3, 1.0]:
             # for tau21 in [0.60]:
             # for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
                 print(f"\nCreating combined datacard for category: {parent_cat} with tau21 < {tau21} (pass + fail)")
