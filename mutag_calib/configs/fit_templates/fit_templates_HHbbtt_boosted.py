@@ -4,7 +4,12 @@ from pocket_coffea.lib.cut_functions import get_nObj_eq, get_nObj_min, get_HLTse
 from pocket_coffea.parameters.cuts import passthrough
 from pocket_coffea.lib.categorization import CartesianSelection, MultiCut
 
-from pocket_coffea.lib.calibrators.common.common import JetsCalibrator, JetsSoftdropMassCalibrator
+from pocket_coffea.lib.calibrators.common.common import JetsCalibrator
+# The stock PocketCoffea JetsSoftdropMassCalibrator returns the whole FatJet collection as
+# captured BEFORE JEC, silently undoing JetsCalibrator (pt = NanoAOD pt, no JER in MC).
+# The Fixed subclass only replaces FatJet.msoftdrop. The pt-reweighting config MUST use the
+# same class, or the reweighting map is evaluated on a different pt than it was built on.
+from mutag_calib.lib.calibrators import FixedJetsSoftdropMassCalibrator as JetsSoftdropMassCalibrator
 from pocket_coffea.lib.weights.common.common import common_weights
 from pocket_coffea.parameters.histograms import *
 import mutag_calib
@@ -14,8 +19,19 @@ from mutag_calib.configs.fatjet_base.custom.weights import SF_trigger_prescale
 import mutag_calib.workflows.mutag_oneMuAK8_processor as workflow
 from mutag_calib.workflows.mutag_oneMuAK8_processor import mutagAnalysisOneMuonInAK8Processor
 import os
+from omegaconf import OmegaConf
 
 localdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Eras of this run. Categories are shared across them, so they must have identical binning
+# and WPs (asserted below), and one NanoAOD production (see DATASET_DIR).
+# LPC: the four 2022/23 eras. lxplus: change locally to years = ['2024'].
+years = [
+    '2022_preEE',
+    '2022_postEE',
+    '2023_preBPix',
+    '2023_postBPix',
+]
 
 # Loading default parameters
 from pocket_coffea.parameters import defaults
@@ -27,8 +43,8 @@ parameters = defaults.merge_parameters_from_files(default_parameters,
                                                 f"{localdir}/params/jets_calibration.yaml",
                                                 f"{localdir}/params/triggers_run3.yaml",
                                                 f"{localdir}/params/triggers_prescales_run3.yaml",
-                                                f"{localdir}/params/ptetatau21_reweighting_HHbbtt.yaml",
-                                                f"{localdir}/params/mutag_calibration_HHbbtt.yaml",
+                                                f"{localdir}/params/ptetatau21_reweighting_HHbbtt_boosted.yaml",
+                                                f"{localdir}/params/mutag_calibration_HHbbtt_boosted.yaml",
                                                 f"{localdir}/params/plotting_style.yaml",
                                                 update=True)
 
@@ -92,11 +108,33 @@ workflow_options = {
 
 taggers = parameters["mutag_calibration"]["taggers"]
 
-# Note: Here we assume that the pt binning and WPs are the same for all the eras!
-# To be changed in the future if the WP is a function of the data taking year
-pt_binning = parameters["mutag_calibration"]["pt_binning"]["2024"]
-msd_binning = parameters["mutag_calibration"]["msd_binning"]["2024"]
-wp_dict = parameters["mutag_calibration"]["wp"]["2024"]
+
+_PRIVATE_V12_PART = "datasetsNanoV12_GloParTv2_22-23"   # NanoAOD_v12_ParT (globalParT_*), 2022/23
+_OFFICIAL = "datasets"                              # official NanoAODv15 (globalParT3_*), 2024
+DATASET_DIR = {
+    "2022_preEE": _PRIVATE_V12_PART,
+    "2022_postEE": _PRIVATE_V12_PART,
+    "2023_preBPix": _PRIVATE_V12_PART,
+    "2023_postBPix": _PRIVATE_V12_PART,
+    "2024": _OFFICIAL,
+}
+DATASET_SUFFIX = {_PRIVATE_V12_PART: "", _OFFICIAL: "_redirector"}
+_dirs = {DATASET_DIR[y] for y in years}
+assert len(_dirs) == 1, f"years={years} mixes NanoAOD productions {_dirs}; run them separately."
+_ddir = _dirs.pop()
+
+def dataset_jsons(names):
+    return [f"{_ddir}/{n}{DATASET_SUFFIX[_ddir]}.json" for n in names]
+for _key in ("pt_binning", "msd_binning", "wp"):
+    _vals = [OmegaConf.to_container(parameters["mutag_calibration"][_key][y], resolve=True)
+             for y in years]
+    assert all(v == _vals[0] for v in _vals), (
+        f"mutag_calibration.{_key} differs across {years}; categories are shared so they "
+        "must match, or the config has to be split per era."
+    )
+pt_binning = parameters["mutag_calibration"]["pt_binning"][years[0]]
+msd_binning = parameters["mutag_calibration"]["msd_binning"][years[0]]
+wp_dict = parameters["mutag_calibration"]["wp"][years[0]]
 
 common_cats = {
     "inclusive" : [passthrough],
@@ -146,22 +184,14 @@ multicuts = [
 cfg = Configurator(
     parameters = parameters,
     datasets = {
-        "jsons": ["datasets/MC_QCD_MuEnriched_run3.json",
-                  "datasets/MC_QCD_Madgraph_run3.json",
-                  "datasets/MC_VJets_run3.json",
-                  "datasets/MC_TTto4Q_run3.json",
-                  "datasets/MC_singletop_run3.json",
-                  "datasets/DATA_BTagMu_run3.json"],
+        # 2022/23 has to be the private NanoAODv12_ParT production: the official v12 NanoAOD
+        # carries no globalParT_* branches, so the tagger would not exist. See DATASET_DIR.
+        "jsons": dataset_jsons(["MC_QCD_MuEnriched_run3", "MC_QCD_Madgraph_run3", "MC_VJets_run3",
+                                "MC_TTto4Q_run3", "MC_singletop_run3", "DATA_BTagMu_run3"]),
         "filter" : {
             "samples": samples,
             "samples_exclude" : [],
-            "year": [
-                # '2022_preEE',
-                # '2022_postEE',
-                # '2023_preBPix',
-                # '2023_postBPix',
-                '2024'
-            ]
+            "year": years   # single source: the `years` list at the top
         },
         "subsamples": subsamples
     },
