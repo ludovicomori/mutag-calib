@@ -11,6 +11,10 @@ import copy
 from pocket_coffea.lib.calibrators.common.common import JetsSoftdropMassCalibrator
 from pocket_coffea.lib.jets import msoftdrop_correction
 from pocket_coffea.utils.utils import get_nano_version
+try:
+    from pocket_coffea.lib.jets import JET_SORTIDX_FIELD
+except ImportError:  # older PocketCoffea: JetsCalibrator does not record the sort permutation
+    JET_SORTIDX_FIELD = "pocket_sortidx"
 
 
 class FixedJetsSoftdropMassCalibrator(JetsSoftdropMassCalibrator):
@@ -70,7 +74,14 @@ class FixedJetsSoftdropMassCalibrator(JetsSoftdropMassCalibrator):
         for jet_coll_name, jets in self.jets_calibrated.items():
             # Only return the msoftdrop field, not the entire collection.
             # This prevents overwriting JEC-corrected pt from JetsCalibrator.
-            out[f"{jet_coll_name}.msoftdrop"] = jets.msoftdrop
+            msoftdrop = jets.msoftdrop
+            # msoftdrop was computed in the original NanoAOD jet order (at initialize), but
+            # JetsCalibrator re-sorts the collection by corrected pt and records the applied
+            # permutation as a field (PocketCoffea >= 864f6b89). Apply the same permutation,
+            # otherwise msoftdrop lands on the wrong jet in every re-ordered event.
+            if JET_SORTIDX_FIELD in events[jet_coll_name].fields:
+                msoftdrop = msoftdrop[events[jet_coll_name][JET_SORTIDX_FIELD]]
+            out[f"{jet_coll_name}.msoftdrop"] = msoftdrop
 
         if variation == "nominal" or variation not in self._variations:
             return out
