@@ -145,8 +145,10 @@ class fatjetBaseProcessor(BaseProcessorABC):
             #"nMuonGoodMatchedToSubJet" : ak.count(self.events["MuonGoodMatchedToSubJet"].pt, axis=2),
             #"nMuonGoodMatchedUniquelyToSubJet" : ak.count(self.events["MuonGoodMatchedUniquelyToSubJet"].pt, axis=2)
         }
-        # Compute GloParT XbbVsQCD discriminator (only available in NanoAODv15, i.e. 2024)
+        # Compute GloParT XbbVsQCD discriminators. The head layout depends on the production:
+        Xbb = None
         if "globalParT3_Xbb" in self.events.FatJetGood.fields:
+            # Official NanoAODv15 (2024)
             Xbb = self.events.FatJetGood.globalParT3_Xbb
             QCD = self.events.FatJetGood.globalParT3_QCD
             Top = (
@@ -156,6 +158,17 @@ class fatjetBaseProcessor(BaseProcessorABC):
                 self.events.FatJetGood.globalParT3_TopbWqq + 
                 self.events.FatJetGood.globalParT3_TopbWtauhv
             )
+        elif "globalParT_Xbb" in self.events.FatJetGood.fields:
+            # Private NanoAOD_v12_ParT (2022-2023): no aggregate QCD head, and Top must be
+            # TopW + TopbW (the TopbW* decay-mode heads do NOT sum to TopbW here)
+            Xbb = self.events.FatJetGood.globalParT_Xbb
+            QCD = (
+                self.events.FatJetGood.globalParT_QCD0HF +
+                self.events.FatJetGood.globalParT_QCD1HF +
+                self.events.FatJetGood.globalParT_QCD2HF
+            )
+            Top = self.events.FatJetGood.globalParT_TopW + self.events.FatJetGood.globalParT_TopbW
+        if Xbb is not None:
             fatjet_fields["globalParT_XbbVsQCD"] = ak.where(
                 (Xbb + QCD) > 0,
                 Xbb / (Xbb + QCD),
