@@ -119,14 +119,31 @@ def pt_reweighting(accumulator, histname, output, test=False, overwrite=False, d
                     h_qcd[slicing_mc],
                     h_vjets_top[slicing_mc]
                 )
-                mod_ratio  = np.nan_to_num(ratio, nan=1.0)
-                mod_unc = np.nan_to_num(unc, nan=0.0)
-                mod_unc_no_diff = np.nan_to_num(unc_no_diff, nan=0.0)
+                # Guard the pathological bins before they become event weights:
+                #  - den == 0 gives inf. np.nan_to_num(nan=1.0) alone leaves posinf at
+                #    ~1.8e308, i.e. a catastrophic weight instead of an error.
+                #  - num = data - (top+VJets) can go negative in sparse bins, which
+                #    would hand negative weights to the fit.
+                # Both mean "no information here", so fall back to no reweighting (1.0).
+                n_bad = int(np.count_nonzero(~np.isfinite(ratio))
+                            + np.count_nonzero(np.isfinite(ratio) & (ratio < 0)))
+                if n_bad:
+                    print(f"    {cat}/{var_shape}: {n_bad}/{ratio.size} bins empty or "
+                          f"negative -> ratio set to 1.0")
+                mod_ratio = np.nan_to_num(ratio, nan=1.0, posinf=1.0, neginf=1.0)
+                mod_ratio = np.where(mod_ratio < 0, 1.0, mod_ratio)
+                mod_unc = np.nan_to_num(unc, nan=0.0, posinf=0.0, neginf=0.0)
+                mod_unc_no_diff = np.nan_to_num(unc_no_diff, nan=0.0, posinf=0.0, neginf=0.0)
+                # statDown must not go negative either
+                n_clip = int(np.count_nonzero(mod_unc > mod_ratio))
+                if n_clip:
+                    print(f"    {cat}/{var_shape}: {n_clip} bins with unc > ratio -> "
+                          f"statDown floored at 0")
 
                 ratio_dict[cat][var_shape] = {}
                 ratio_dict[cat][var_shape].update({ "nominal" : mod_ratio })
                 ratio_dict[cat][var_shape].update({ "statUp" : mod_ratio + mod_unc })
-                ratio_dict[cat][var_shape].update({ "statDown" : mod_ratio - mod_unc })
+                ratio_dict[cat][var_shape].update({ "statDown" : np.maximum(mod_ratio - mod_unc, 0.0) })
 
         categories = list(ratio_dict.keys())
         shape_variations = list(ratio_dict[categories[0]].keys())
