@@ -6,17 +6,20 @@ mutag_calibration:
       - [250, 'Inf']
       - [250, 300]
       - [300, 350]
-      - [350, 'Inf']
+      - [350, 425]
+      - [425, 'Inf']
     2022_postEE:
       - [250, 'Inf']
       - [250, 300]
       - [300, 350]
-      - [350, 'Inf']
+      - [350, 425]
+      - [425, 'Inf']
     2023_preBPix:
       - [250, 'Inf']
       - [250, 300]
       - [300, 350]
-      - [350, 'Inf']
+      - [350, 425]
+      - [425, 'Inf']
     2023_postBPix:
       - [250, 'Inf']
       - [250, 300]
@@ -48,30 +51,57 @@ mutag_calibration:
   wp:
     2022_preEE:
       globalParT_XbbVsQCDTop:
-        HHbbtt: 
-         - 0.70
-         - 0.75
-         - 0.80
+        wp0p50: 0.50
+        wp0p60: 0.60
+        wp0p65: 0.65
+        wp0p70: 0.70
+        wp0p75: 0.75
+        wp0p80: 0.80
+        wp0p85: 0.85
+        wp0p90: 0.90
+        wp0p95: 0.95
     2022_postEE:
       globalParT_XbbVsQCDTop:
-        HHbbtt: 
-         - 0.70
-         - 0.75
-         - 0.80
+        wp0p50: 0.50
+        wp0p60: 0.60
+        wp0p65: 0.65
+        wp0p70: 0.70
+        wp0p75: 0.75
+        wp0p80: 0.80
+        wp0p85: 0.85
+        wp0p90: 0.90
+        wp0p95: 0.95
     2023_preBPix:
       globalParT_XbbVsQCDTop:
-        HHbbtt: 
-         - 0.70
-         - 0.75
-         - 0.80
+        wp0p50: 0.50
+        wp0p60: 0.60
+        wp0p65: 0.65
+        wp0p70: 0.70
+        wp0p75: 0.75
+        wp0p80: 0.80
+        wp0p85: 0.85
+        wp0p90: 0.90
+        wp0p95: 0.95
     2023_postBPix:
-      particleNet_XbbVsQCD:
-        HHbbtt: 0.75
+      globalParT_XbbVsQCDTop:
+        wp0p50: 0.50
+        wp0p60: 0.60
+        wp0p65: 0.65
+        wp0p70: 0.70
+        wp0p75: 0.75
+        wp0p80: 0.80
+        wp0p85: 0.85
+        wp0p90: 0.90
+        wp0p95: 0.95
     "2024":
       globalParT_XbbVsQCDTop:
-        HHbbtt_0p65: 0.65
-        HHbbtt_0p70: 0.70
-        HHbbtt_0p75: 0.75
-        HHbbtt_0p80: 0.80
-        HHbbtt_0p85: 0.85
-        HHbbtt_0p90: 0.90
+        wp0p50: 0.50
+        wp0p60: 0.60
+        wp0p65: 0.65
+        wp0p70: 0.70
+        wp0p75: 0.75
+        wp0p80: 0.80
+        wp0p85: 0.85
+        wp0p90: 0.90
+        wp0p95: 0.95
+

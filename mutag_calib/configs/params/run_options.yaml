@@ -1,4 +1,4 @@
-scaleout: 200
+scaleout: 900
 chunksize: 400000
 mem-per-worker: "8GB"
 disk-per-worker: "8GB"
@@ -7,6 +7,7 @@ adaptive: false
 queue: "tomorrow"
 walltime: "24:00:00"
 performance-report: false
+max-events-per-job: 2000000
 custom-setup-commands: null
 conda-env: false
 local-virtualenv: false
@@ -17,3 +18,14 @@ group-samples:
   #   - "VJets"
   # SingleTop:
   #   - "SingleTop"
+
+# condor@lpc configuration: LPC workers do not see /uscms_data, so the reweighting maps are shipped
+# into each job's scratch dir; mutag_processor.resolve_input_file() picks them up there.
+# Must list the map of every era in the run.
+# worker-image: /cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/cms-analysis/general/pocketcoffea:lxplus-el9-864f6b89
+# host-path-prefix: /uscms_data/d3/lmori/mutag-calib
+# extra-input-files:
+#   - mutag_calib/configs/params/ptetatau21_reweighting/HHbbtt_boosted/FatJetGood_pt_eta_tau21_2022_preEE_reweighting.json
+#   - mutag_calib/configs/params/ptetatau21_reweighting/HHbbtt_boosted/FatJetGood_pt_eta_tau21_2022_postEE_reweighting.json
+#   - mutag_calib/configs/params/ptetatau21_reweighting/HHbbtt_boosted/FatJetGood_pt_eta_tau21_2023_preBPix_reweighting.json
+#   - mutag_calib/configs/params/ptetatau21_reweighting/HHbbtt_boosted/FatJetGood_pt_eta_tau21_2023_postBPix_reweighting.json
