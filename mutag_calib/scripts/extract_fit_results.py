@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import argparse
 import os
 import ROOT
 import pandas as pd
@@ -8,7 +9,17 @@ import glob
 
 ROOT.gROOT.SetBatch(True)
 
-POIS = ["SF_b", "SF_c", "SF_light"]
+parser = argparse.ArgumentParser()
+parser.add_argument("--split-c", action="store_true",
+                    help="extract SF_c_fail/SF_c_pass instead of SF_c")
+parser.add_argument("--c-freeze", action="store_true",
+                    help="Do not float c for fit. No real functionality for this script")
+args = parser.parse_args()
+
+if args.split_c:
+    POIS = ["SF_b", "SF_c_fail", "SF_c_pass", "SF_light"]
+else:
+    POIS = ["SF_b", "SF_c", "SF_light"]
 
 # infer metadata
 cut = os.path.basename(os.getcwd())

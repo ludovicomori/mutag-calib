@@ -12,6 +12,10 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("base_dir", help="Base directory containing datacards")
     parser.add_argument("--csv-all-results", help="Output summary CSV file", default="ALL_FIT_RESULTS.csv")
+    parser.add_argument("--split-c", action="store_true",
+                        help="datacards have SF_c split into SF_c_pass (frozen) and SF_c_fail")
+    parser.add_argument("--c-freeze", action="store_true",
+                        help="if true, feeze all SFc factors")
     args = parser.parse_args()
 
     BASE_DIR = args.base_dir
@@ -19,6 +23,10 @@ def main():
     RUN_FIT = os.path.join(SCRIPT_DIR, "fit_diagnostics.py")
     EXTRACT = os.path.join(SCRIPT_DIR, "extract_fit_results.py")
     output_file = args.csv_all_results
+
+    extra_args = ["--split-c"] if args.split_c else []
+    if args.c_freeze:
+        extra_args.append("--c-freeze")
 
     summary_rows = []
 
@@ -42,14 +50,14 @@ def main():
 
                 # 1) Run FitDiagnostics
                 subprocess.run(
-                    ["python3", RUN_FIT],
+                    ["python3", RUN_FIT] + extra_args,
                     cwd=cut_path,
                     check=True
                 )
 
                 # 2) Extract results
                 subprocess.run(
-                    ["python3", EXTRACT],
+                    ["python3", EXTRACT] + extra_args,
                     cwd=cut_path,
                     check=True
                 )

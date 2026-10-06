@@ -71,6 +71,8 @@ def read_r(path, sf_type="b"):
         return d["SF_b"], d["SF_b_errUp"], d["SF_b_errDown"]
     elif sf_type == "c":
         return d["SF_c"], d["SF_c_errUp"], d["SF_c_errDown"]
+    elif sf_type == "c_fail":
+        return d["SF_c_fail"], d["SF_c_fail_errUp"], d["SF_c_fail_errDown"]
 
 # extract r from fit results
 def collect_results(base_dir, ALLOWED_CATEGORIES, sf_type="b"):
@@ -129,6 +131,11 @@ def compute_reweight_signal_unc(results):
     r_rs, _, _ = results["0.30_reweight_signal"]
     return abs(r_rs - r0)
 
+# tau21 uncertainty is already a nuisance in the combine fit (see create_datacards.py),
+# so it is contained in the fit error and must not be added again
+def compute_internalised_unc(results):
+    return 0.0
+
 # selectable via --error-method: combined (in quadrature) with the always-on
 # compute_reweight_unc to form the total up/down uncertainty
 ERROR_METHOD_INFO = {
@@ -151,6 +158,16 @@ ERROR_METHOD_INFO = {
             r"$\mathrm{reweight\mbox{-}to\mbox{-}signal}$ is the systematic uncertainty related to reweighting the "
             r"b-proxy shape to the HH4b signal shape at the nominal $\tau_{21}$ cut of "
             f"{TAU21_CENTRAL:.2f}" r" (difference between the SF with and without this reweighting)"
+        ),
+    },
+    "internalised": {
+        "compute": compute_internalised_unc,
+        "root_label": None,
+        "column_header": r"$\tau_{21}^\mathrm{cut}$ (in fit)",
+        "description": (
+            r"$\tau_{21}^\mathrm{cut}$ is the systematic uncertainty related to the choice of the $\tau_{21}$ cut, "
+            r"which is included as a nuisance parameter in the Combine fit and therefore already contained in "
+            r"$\mathrm{err_{fit}}$ (not added again)"
         ),
     },
 }
@@ -417,9 +434,10 @@ def plot_r_vs_category_ROOT(year, cats, r, err_fit_up, err_fit_dn, chosen_err, r
     leg.SetFillStyle(0)
     leg.SetTextSize(0.035)
     # leg.AddEntry(g_tau, "#tau_{21} syst.", "f")
-    leg.AddEntry(g_tot, "fit #oplus #tau_{21}", "lp")
     chosen_label = ERROR_METHOD_INFO[error_method]["root_label"]
-    leg.AddEntry(boxes[0], f"{chosen_label} #oplus #tau_{{21}}^{{reweight}}", "f")
+    box_label = "#tau_{21}^{reweight}" if chosen_label is None else f"{chosen_label} #oplus #tau_{{21}}^{{reweight}}"
+    leg.AddEntry(g_tot, f"fit #oplus {box_label}", "lp")
+    leg.AddEntry(boxes[0], box_label, "f")
     leg.Draw()
 
     c.Update()
@@ -641,11 +659,12 @@ def main():
     parser.add_argument("--output-dir", "-o", required=True, help="Output directory for SFs_plots")
     parser.add_argument("--SF-type", "-sf", default="b", help="Type of scale factor: b for SF_b, c for SF_c (default: b)")
     parser.add_argument("--tau21", "-t21", default="normal", help="tau21 collection scheme. options ['normal', 'all'] (default: 'normal')")
-    parser.add_argument("--error-method", "-em", choices=list(ERROR_METHOD_INFO.keys()), default="tau21",
+    parser.add_argument("--error-method", "-em", choices=list(ERROR_METHOD_INFO.keys()), default="internalised",
                          help="Systematic combined (in quadrature) with the always-on tau21-reweight uncertainty "
                               "and the fit error to form the total up/down uncertainty: 'tau21' uses the tau21-cut "
-                              "variation, 'reweight_signal' uses the b-proxy reweight-to-signal variation "
-                              "(default: 'tau21')")
+                              "variation, 'reweight_signal' uses the b-proxy reweight-to-signal variation, "
+                              "'internalised' adds nothing because the tau21 uncertainty is already a nuisance "
+                              "in the combine fit (default: 'tau21')")
     parser.add_argument("--wp-config", default=str(DEFAULT_WP_CONFIG),
                          help="YAML file to read the tagger name and working-point score thresholds from, for the "
                               f"correctionlib output (default: {DEFAULT_WP_CONFIG}). Missing file/year/tagger/purity "

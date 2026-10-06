@@ -107,7 +107,7 @@ def categorize_samples(cutflow):
     }
 
 
-def define_systematics(years, mc_process_names, include_tau21_var=False):
+def define_systematics(years, mc_process_names, tau21_var_region=None):
     """Define systematic uncertainties."""
     year = years[0]
     lumi_value = lumi_sys_values[year]
@@ -173,10 +173,11 @@ def define_systematics(years, mc_process_names, include_tau21_var=False):
             years=years,
         ),
     ]
-    if include_tau21_var:
+    if tau21_var_region is not None:
+        # Separate (uncorrelated) tau21 nuisance per region: tau21_var_pass / tau21_var_fail
         syst_list.append(
                 SystematicUncertainty(
-                    name="tau21_var",
+                    name=f"tau21_var_{tau21_var_region}",
                     typ="shape",
                     processes={name: 1.0 for name in mc_process_names},
                     years=years,
@@ -213,7 +214,9 @@ def get_passfail_ratio(datacards):
         for tau21 in datacards[f"{parent_cat}-pass"].keys():
             sumw_pass = sumw_percat[f"{parent_cat}-pass"][tau21]
             sumw_fail = sumw_percat[f"{parent_cat}-fail"][tau21]
-            for flavor in sumw_pass.keys():
+            # Region-specific systematics (e.g. tau21_var_pass / tau21_var_fail) only
+            # exist in one region, so restrict to the keys shared by pass and fail (& operation removes all entries not shared by both lists)
+            for flavor in sumw_pass.keys() & sumw_fail.keys():
                 passfail_ratio[parent_cat][tau21][flavor] = float(sumw_pass[flavor] / sumw_fail[flavor])
 
     return dict(passfail_ratio)
@@ -1149,6 +1152,8 @@ def main():
     parser.add_argument("--min-reweight-signal-yield", type=float, default=50.0,
                        help="Minimum summed yield (in both the b-proxy and the signal histogram) required to keep a bin "
                             "un-merged when deriving the b-proxy-to-signal reweighting.")
+    parser.add_argument("--no-tau21-var", dest="tau21_var", action="store_false", default=True,
+                        help="Disable the tau21_var_pass/tau21_var_fail shape nuisances")
     parser.add_argument("--verbose", "-v", action="store_true", default=False, help="Enable verbose output")
     args = parser.parse_args()
     
@@ -1195,9 +1200,12 @@ def main():
 
         mc_names = [p_name for p_name, p in mc_processes.items()]
         systematics = define_systematics([year], mc_names)
-        systematics_tau21 = define_systematics([year], mc_names, include_tau21_var=True)
+        systematics_tau21_by_region = {
+            region: define_systematics([year], mc_names, tau21_var_region=region)
+            for region in ["pass", "fail"]
+        }
         print(f"systematics: {systematics}\n")
-        print(f"systematics_tau21: {systematics_tau21}\n")
+        print(f"systematics_tau21: {systematics_tau21_by_region}\n")
 
         # Create output directory
         if args.output_dir is None:
@@ -1215,8 +1223,12 @@ def main():
         # Create datacards for each combination
         for cat in categories:
             print(f"\ncategory: {cat}")
+            region = cat.split("-")[-1]
+            tau21_syst_name = f"tau21_var_{region}"
+            systematics_tau21 = systematics_tau21_by_region[region] if args.tau21_var else systematics
 
-            for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
+            # for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
+            for tau21 in [0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
             # for tau21 in [0.60]:
             # for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
                 print(f"\n\nCreating datacard: Year: {year}\tCategory: {cat}\ttau21 < {tau21}")
@@ -1227,12 +1239,13 @@ def main():
                 histo_1d = get_1d_histogram(histograms[args.variable], tau21)
                 # Add the variation QCD_Madgraph/QCD_MuEnriched to the Hist
                 add_Madgraph_systematic_1d(histo_1d, cat)
-                if is_tau21_nominal:
+                if is_tau21_nominal and args.tau21_var:
                     add_tau21_variation_1d(
                         histo_1d,
                         histo_down=get_1d_histogram(histograms[args.variable], TAU21_VAR_DOWN),
                         histo_up=get_1d_histogram(histograms[args.variable], TAU21_VAR_UP),
                         cat=cat, mc_processes=mc_processes, year=year,
+                        syst_name=tau21_syst_name,
                     )
                 sanitize_shape_variations(histo_1d, mc_sample_names)
                 print("\n")
@@ -1265,19 +1278,21 @@ def main():
                     )
                     # Add the variation QCD_Madgraph/QCD_MuEnriched to the Hist
                     add_Madgraph_systematic_1d(histo_1d_rew, cat, ratio_source=histo_1d_raw)
-                    if rew_weights is not None:
-                        histo_down_rew = get_1d_histogram_reweighed(histograms[args.variable], TAU21_VAR_DOWN, samples, year, parent_category, fixed_weights=rew_weights)
-                        histo_up_rew = get_1d_histogram_reweighed(histograms[args.variable], TAU21_VAR_UP, samples, year, parent_category, fixed_weights=rew_weights)
-                    else:
-                        histo_down_rew = get_1d_histogram(histograms[args.variable], TAU21_VAR_DOWN)
-                        histo_up_rew = get_1d_histogram(histograms[args.variable], TAU21_VAR_UP)
+                    if args.tau21_var:
+                        if rew_weights is not None:
+                            histo_down_rew = get_1d_histogram_reweighed(histograms[args.variable], TAU21_VAR_DOWN, samples, year, parent_category, fixed_weights=rew_weights)
+                            histo_up_rew = get_1d_histogram_reweighed(histograms[args.variable], TAU21_VAR_UP, samples, year, parent_category, fixed_weights=rew_weights)
+                        else:
+                            histo_down_rew = get_1d_histogram(histograms[args.variable], TAU21_VAR_DOWN)
+                            histo_up_rew = get_1d_histogram(histograms[args.variable], TAU21_VAR_UP)
 
-                    add_tau21_variation_1d(
-                        histo_1d_rew,
-                        histo_down=histo_down_rew,
-                        histo_up=histo_up_rew,
-                        cat=cat, mc_processes=mc_processes, year=year,
-                    )
+                        add_tau21_variation_1d(
+                            histo_1d_rew,
+                            histo_down=histo_down_rew,
+                            histo_up=histo_up_rew,
+                            cat=cat, mc_processes=mc_processes, year=year,
+                            syst_name=tau21_syst_name,
+                        )
                     sanitize_shape_variations(histo_1d_rew, mc_sample_names)
 
                     print("\n")
@@ -1335,7 +1350,8 @@ def main():
         # Loop over categories again to dump datacards modified with pass/fail ratios
         parent_categories = set()
         for cat in categories:
-            for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
+            # for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
+            for tau21 in [0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
             # for tau21 in [0.60]:
             # for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
                 # Extract parent category (without pass/fail)
@@ -1410,7 +1426,8 @@ def main():
 
         # Create combined datacard for pass+fail regions, for each parent category
         for parent_cat in parent_categories:
-            for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
+            # for tau21 in [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
+            for tau21 in [0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.60, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1]:
             # for tau21 in [0.60]:
             # for tau21 in [0.2, 0.25, 0.3, 0.35, 0.4]:
                 print(f"\nCreating combined datacard for category: {parent_cat} with tau21 < {tau21} (pass + fail)")
