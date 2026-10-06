@@ -1,0 +1,197 @@
+{
+  "DATA_BTagMu": {
+    "sample": "DATA_BTagMu",
+    "json_output": "datasets/DATA_BTagMu_run2.json",
+    "description": "Run 2 UL NanoAODv15 BTagMu data. DAS names verified for NanoAODv15. 2016 preVFP uses HIPM naming. 2016B-ver1 may have very few events.",
+    "files": [
+      {
+        "das_names": [
+          "/BTagMu/Run2018A-UL2018_NanoAODv15-v2/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "A"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2018B-UL2018_NanoAODv15-v2/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "B"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2018C-UL2018_NanoAODv15-v2/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "C"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2018D-UL2018_NanoAODv15-v2/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "D"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2017B-UL2017_NanoAODv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "B"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2017C-UL2017_NanoAODv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "C"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2017D-UL2017_NanoAODv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "D"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2017E-UL2017_NanoAODv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "E"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2017F-UL2017_NanoAODv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "F"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2016F-UL2016_NanoAODv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "F"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2016G-UL2016_NanoAODv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "G"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2016H-UL2016_NanoAODv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "H"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2016B-HIPM_UL2016_NanoAODv15-v1/NANOAOD",
+          "/BTagMu/Run2016B-HIPM_UL2016_NanoAODv15_v2-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "B"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2016C-HIPM_UL2016_NanoAODv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "C"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2016D-HIPM_UL2016_NanoAODv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "D"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2016E-HIPM_UL2016_NanoAODv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "E"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2016F-HIPM_UL2016_NanoAODv15-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "F"
+        }
+      }
+    ]
+  }
+}

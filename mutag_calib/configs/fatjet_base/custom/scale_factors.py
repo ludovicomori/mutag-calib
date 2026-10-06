@@ -32,12 +32,59 @@ def pteta_reweighting(events, year):
     return pteta_corr.evaluate(cat, pt, eta)
 
 def sf_trigger_prescale(events, year, params):
-    '''Trigger prescale factor'''
-    # Here we assume that both BTagMu_AK4Jet300_Mu5 and BTagMu_AK8Jet170_DoubleMu5 triggers have a prescale of 1
+    '''Trigger prescale factor.
+
+    Run 3: BTagMu_AK4Jet300_Mu5 and BTagMu_AK8Jet170_DoubleMu5 assumed unprescaled.
+           BTagMu_AK8Jet300_Mu5 and BTagMu_AK8DiJet170_Mu5 are prescaled.
+    Run 2: All triggers may be prescaled (2017: AK4=1.1, AK8=1.2).
+           Events get weight = 1/prescale for the least-prescaled trigger they fire.
+           2016 also has BTagMu_Jet300_Mu5; 2018 has _noalgo variants.
+    '''
     sf = ak.Array(len(events)*[1.0])
-    pass_unprescaled_triggers = events.HLT["BTagMu_AK4Jet300_Mu5"] | events.HLT["BTagMu_AK8Jet170_DoubleMu5"]
-    sf = ak.where(events.HLT["BTagMu_AK8Jet300_Mu5"] & (~pass_unprescaled_triggers), 1. / params["HLT_triggers_prescales"][year]["BTagMu"]["BTagMu_AK8Jet300_Mu5"], sf)
-    sf = ak.where(events.HLT["BTagMu_AK8DiJet170_Mu5"] & (~events.HLT["BTagMu_AK8Jet300_Mu5"]) & (~pass_unprescaled_triggers), 1. / params["HLT_triggers_prescales"][year]["BTagMu"]["BTagMu_AK8DiJet170_Mu5"], sf)
+    prescales = params["HLT_triggers_prescales"][year]["BTagMu"]
+    triggers = params["HLT_triggers"][year]["BTagMu"]
+
+    if "BTagMu_AK8Jet170_DoubleMu5" in triggers:
+        # Run 3 logic: AK4Jet300 and AK8Jet170_DoubleMu5 are unprescaled
+        pass_unprescaled = events.HLT["BTagMu_AK4Jet300_Mu5"] | events.HLT["BTagMu_AK8Jet170_DoubleMu5"]
+        sf = ak.where(
+            events.HLT["BTagMu_AK8Jet300_Mu5"] & (~pass_unprescaled),
+            1. / prescales["BTagMu_AK8Jet300_Mu5"], sf)
+        sf = ak.where(
+            events.HLT["BTagMu_AK8DiJet170_Mu5"] & (~events.HLT["BTagMu_AK8Jet300_Mu5"]) & (~pass_unprescaled),
+            1. / prescales["BTagMu_AK8DiJet170_Mu5"], sf)
+    else:
+        # Run 2 logic: apply 1/prescale per trigger, highest-priority (least prescaled) first
+        # Priority: AK4/Jet300 > AK4_noalgo > AK8 > AK8_noalgo
+        pass_higher_priority = ak.Array(len(events)*[False])
+
+        # Tier 1: AK4Jet300 (2017, 2018) and Jet300 (2016) — least prescaled
+        if "BTagMu_AK4Jet300_Mu5" in triggers:
+            sf = ak.where(events.HLT["BTagMu_AK4Jet300_Mu5"],
+                          1. / prescales["BTagMu_AK4Jet300_Mu5"], sf)
+            pass_higher_priority = pass_higher_priority | events.HLT["BTagMu_AK4Jet300_Mu5"]
+        if "BTagMu_Jet300_Mu5" in triggers:
+            sf = ak.where(events.HLT["BTagMu_Jet300_Mu5"] & (~pass_higher_priority),
+                          1. / prescales["BTagMu_Jet300_Mu5"], sf)
+            pass_higher_priority = pass_higher_priority | events.HLT["BTagMu_Jet300_Mu5"]
+
+        # Tier 2: AK4_noalgo (2018 only)
+        if "BTagMu_AK4Jet300_Mu5_noalgo" in triggers:
+            sf = ak.where(events.HLT["BTagMu_AK4Jet300_Mu5_noalgo"] & (~pass_higher_priority),
+                          1. / prescales["BTagMu_AK4Jet300_Mu5_noalgo"], sf)
+            pass_higher_priority = pass_higher_priority | events.HLT["BTagMu_AK4Jet300_Mu5_noalgo"]
+
+        # Tier 3: AK8Jet300 (all years)
+        sf = ak.where(
+            events.HLT["BTagMu_AK8Jet300_Mu5"] & (~pass_higher_priority),
+            1. / prescales["BTagMu_AK8Jet300_Mu5"], sf)
+        pass_higher_priority = pass_higher_priority | events.HLT["BTagMu_AK8Jet300_Mu5"]
+
+        # Tier 4: AK8_noalgo (2018 only)
+        if "BTagMu_AK8Jet300_Mu5_noalgo" in triggers:
+            sf = ak.where(
+                events.HLT["BTagMu_AK8Jet300_Mu5_noalgo"] & (~pass_higher_priority),
+                1. / prescales["BTagMu_AK8Jet300_Mu5_noalgo"], sf)
 
     return sf
 

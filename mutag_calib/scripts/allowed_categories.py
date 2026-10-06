@@ -1,4 +1,19 @@
 ALLOWED_CATEGORIES = {
+    # HHbbtt / HHbbgg categories (from upstream)
+    "msd-80to170_Pt-300to350_particleNet_XbbVsQCD-HHbbtt",
+    "msd-80to170_Pt-350to425_particleNet_XbbVsQCD-HHbbtt",
+    "msd-80to170_Pt-425toInf_particleNet_XbbVsQCD-HHbbtt",
+    "msd-30toInf_Pt-300to350_particleNet_XbbVsQCD-HHbbgg",
+    "msd-30toInf_Pt-350to425_particleNet_XbbVsQCD-HHbbgg",
+    "msd-30toInf_Pt-425toInf_particleNet_XbbVsQCD-HHbbgg",
+    "msd-30toInf_Pt-300to350_globalParT3_XbbVsQCD-HHbbgg",
+    "msd-30toInf_Pt-350to425_globalParT3_XbbVsQCD-HHbbgg",
+    "msd-30toInf_Pt-425toInf_globalParT3_XbbVsQCD-HHbbgg",
+    "msd-30toInf_Pt-300to400_globalParT3_XbbVsQCD-HHbbgg",
+    "msd-30toInf_Pt-400to450_globalParT3_XbbVsQCD-HHbbgg",
+    "msd-30toInf_Pt-450toInf_globalParT3_XbbVsQCD-HHbbgg",
+
+    # HHbbbb categories
     # "msd-100to150_Pt-250toInf_globalParT3_XbbVsQCD-HHbbbb",
     # "msd-100to150_Pt-250toInf_particleNet_XbbVsQCD-HHbbbb",
     # "msd-100to150_Pt-250to300_particleNet_XbbVsQCD-HHbbbb",

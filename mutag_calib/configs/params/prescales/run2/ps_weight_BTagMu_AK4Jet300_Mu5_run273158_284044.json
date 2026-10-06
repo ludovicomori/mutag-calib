@@ -1,0 +1,1 @@
+{"schema_version":2,"description":"prescales for HLT_BTagMu_AK4Jet300_Mu5","corrections":[{"name":"prescaleWeight","version":2,"inputs":[{"name":"run","type":"int"},{"name":"path","type":"string"},{"name":"lumi","type":"real"}],"output":{"name":"weight","type":"real"},"data":{"nodetype":"category","input":"run","content":[]}}]}

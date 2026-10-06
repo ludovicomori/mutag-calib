@@ -1,0 +1,65 @@
+{
+  "DATA_BTagMu": {
+    "sample": "DATA_BTagMu",
+    "json_output": "datasets/DATA_BTagMu_2025.json",
+    "files": [
+      {
+        "das_names": [
+          "/BTagMu/Run2025C-PromptBTVNano-v2/NANOAOD",
+          "/BTagMu/Run2025C-PromptBTVNano_v2-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2025",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "C"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2025D-PromptBTVNano-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2025",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "D"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2025E-PromptBTVNano-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2025",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "E"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2025F-PromptBTVNano-v1/NANOAOD",
+          "/BTagMu/Run2025F-PromptBTVNano_v2-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2025",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "F"
+        }
+      },
+      {
+        "das_names": [
+          "/BTagMu/Run2025G-PromptBTVNano-v1/NANOAOD"
+        ],
+        "metadata": {
+          "year": "2025",
+          "isMC": false,
+          "primaryDataset": "BTagMu",
+          "era": "G"
+        }
+      }
+    ]
+  }
+}

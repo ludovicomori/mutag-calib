@@ -1,0 +1,49 @@
+{
+  "TTToHadronic": {
+    "sample": "TTto4Q",
+    "json_output": "datasets/MC_TTto4Q_run2.json",
+    "description": "Run 2 UL NanoAODv15. Cross-section: NNLO inclusive ttbar x BR(hadronic) = 377.96 pb. DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 377.96
+        }
+      },
+      {
+        "das_names": [
+          "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 377.96
+        }
+      },
+      {
+        "das_names": [
+          "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 377.96
+        }
+      },
+      {
+        "das_names": [
+          "/TTToHadronic_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 377.96
+        }
+      }
+    ]
+  }
+}

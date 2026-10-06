@@ -1,0 +1,378 @@
+{
+  "WJetsToQQ_HT-200to400": {
+    "sample": "VJets",
+    "json_output": "datasets/MC_VJets_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec = 2549.0 pb from XSDB (13 TeV LO, auto-computed). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/WJetsToQQ_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 2549.0
+        }
+      },
+      {
+        "das_names": [
+          "/WJetsToQQ_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 2549.0
+        }
+      },
+      {
+        "das_names": [
+          "/WJetsToQQ_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 2549.0
+        }
+      },
+      {
+        "das_names": [
+          "/WJetsToQQ_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 2549.0
+        }
+      }
+    ]
+  },
+  "WJetsToQQ_HT-400to600": {
+    "sample": "VJets",
+    "json_output": "datasets/MC_VJets_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec from old analysis (13 TeV). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/WJetsToQQ_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 314.8
+        }
+      },
+      {
+        "das_names": [
+          "/WJetsToQQ_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 314.8
+        }
+      },
+      {
+        "das_names": [
+          "/WJetsToQQ_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 314.8
+        }
+      },
+      {
+        "das_names": [
+          "/WJetsToQQ_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 314.8
+        }
+      }
+    ]
+  },
+  "WJetsToQQ_HT-600to800": {
+    "sample": "VJets",
+    "json_output": "datasets/MC_VJets_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec from old analysis (13 TeV). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/WJetsToQQ_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 68.64
+        }
+      },
+      {
+        "das_names": [
+          "/WJetsToQQ_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 68.64
+        }
+      },
+      {
+        "das_names": [
+          "/WJetsToQQ_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 68.64
+        }
+      },
+      {
+        "das_names": [
+          "/WJetsToQQ_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 68.64
+        }
+      }
+    ]
+  },
+  "WJetsToQQ_HT-800toInf": {
+    "sample": "VJets",
+    "json_output": "datasets/MC_VJets_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec from old analysis (13 TeV). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/WJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 34.7
+        }
+      },
+      {
+        "das_names": [
+          "/WJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 34.7
+        }
+      },
+      {
+        "das_names": [
+          "/WJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 34.7
+        }
+      },
+      {
+        "das_names": [
+          "/WJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 34.7
+        }
+      }
+    ]
+  },
+  "ZJetsToQQ_HT-200to400": {
+    "sample": "VJets",
+    "json_output": "datasets/MC_VJets_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec = 1012.0 pb from XSDB (13 TeV LO, auto-computed). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/ZJetsToQQ_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 1012.0
+        }
+      },
+      {
+        "das_names": [
+          "/ZJetsToQQ_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 1012.0
+        }
+      },
+      {
+        "das_names": [
+          "/ZJetsToQQ_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 1012.0
+        }
+      },
+      {
+        "das_names": [
+          "/ZJetsToQQ_HT-200to400_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 1012.0
+        }
+      }
+    ]
+  },
+  "ZJetsToQQ_HT-400to600": {
+    "sample": "VJets",
+    "json_output": "datasets/MC_VJets_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec from old analysis (13 TeV). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/ZJetsToQQ_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 145.0
+        }
+      },
+      {
+        "das_names": [
+          "/ZJetsToQQ_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 145.0
+        }
+      },
+      {
+        "das_names": [
+          "/ZJetsToQQ_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 145.0
+        }
+      },
+      {
+        "das_names": [
+          "/ZJetsToQQ_HT-400to600_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 145.0
+        }
+      }
+    ]
+  },
+  "ZJetsToQQ_HT-600to800": {
+    "sample": "VJets",
+    "json_output": "datasets/MC_VJets_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec from old analysis (13 TeV). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/ZJetsToQQ_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 34.12
+        }
+      },
+      {
+        "das_names": [
+          "/ZJetsToQQ_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 34.12
+        }
+      },
+      {
+        "das_names": [
+          "/ZJetsToQQ_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 34.12
+        }
+      },
+      {
+        "das_names": [
+          "/ZJetsToQQ_HT-600to800_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 34.12
+        }
+      }
+    ]
+  },
+  "ZJetsToQQ_HT-800toInf": {
+    "sample": "VJets",
+    "json_output": "datasets/MC_VJets_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec from old analysis (13 TeV). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 18.57
+        }
+      },
+      {
+        "das_names": [
+          "/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 18.57
+        }
+      },
+      {
+        "das_names": [
+          "/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 18.57
+        }
+      },
+      {
+        "das_names": [
+          "/ZJetsToQQ_HT-800toInf_TuneCP5_13TeV-madgraphMLM-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 18.57
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,237 @@
+{
+  "ST_tW_top_NoFullyHadronic": {
+    "sample": "SingleTop",
+    "json_output": "datasets/MC_singletop_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec = 19.6 pb (from old analysis). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 19.6
+        }
+      },
+      {
+        "das_names": [
+          "/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 19.6
+        }
+      },
+      {
+        "das_names": [
+          "/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 19.6
+        }
+      },
+      {
+        "das_names": [
+          "/ST_tW_top_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 19.6
+        }
+      }
+    ]
+  },
+  "ST_tW_antitop_NoFullyHadronic": {
+    "sample": "SingleTop",
+    "json_output": "datasets/MC_singletop_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec = 19.6 pb (from old analysis). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v3/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 19.6
+        }
+      },
+      {
+        "das_names": [
+          "/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 19.6
+        }
+      },
+      {
+        "das_names": [
+          "/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 19.6
+        }
+      },
+      {
+        "das_names": [
+          "/ST_tW_antitop_5f_NoFullyHadronicDecays_TuneCP5_13TeV-powheg-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v2/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 19.6
+        }
+      }
+    ]
+  },
+  "ST_t-channel_top": {
+    "sample": "SingleTop",
+    "json_output": "datasets/MC_singletop_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec = 136.02 pb (from old analysis). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL18NanoAODv15-BTVNanoV15_150X_mc2018_realistic_v1-v3/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 136.02
+        }
+      },
+      {
+        "das_names": [
+          "/ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL17NanoAODv15-BTVNanoV15_150X_mc2017_realistic_v1-v3/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 136.02
+        }
+      },
+      {
+        "das_names": [
+          "/ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL16NanoAODv15-BTVNanoV15_150X_mcRun2_asymptotic_v1-v3/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 136.02
+        }
+      },
+      {
+        "das_names": [
+          "/ST_t-channel_top_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL16NanoAODAPVv15-BTVNanoV15_150X_mcRun2_asymptotic_preVFP_v1-v3/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 136.02
+        }
+      }
+    ]
+  },
+  "ST_t-channel_antitop": {
+    "sample": "SingleTop",
+    "json_output": "datasets/MC_singletop_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec = 80.95 pb (from old analysis). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL18NanoAODv15-BTVNanoV15_150X_mc2018_realistic_v1-v3/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 80.95
+        }
+      },
+      {
+        "das_names": [
+          "/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL17NanoAODv15-BTVNanoV15_150X_mc2017_realistic_v1-v3/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 80.95
+        }
+      },
+      {
+        "das_names": [
+          "/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL16NanoAODv15-BTVNanoV15_150X_mcRun2_asymptotic_v1-v3/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 80.95
+        }
+      },
+      {
+        "das_names": [
+          "/ST_t-channel_antitop_4f_InclusiveDecays_TuneCP5_13TeV-powheg-madspin-pythia8/RunIISummer20UL16NanoAODAPVv15-BTVNanoV15_150X_mcRun2_asymptotic_preVFP_v1-v3/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 80.95
+        }
+      }
+    ]
+  },
+  "ST_s-channel_leptonDecays": {
+    "sample": "SingleTop",
+    "json_output": "datasets/MC_singletop_run2.json",
+    "description": "Run 2 UL NanoAODv15. xsec = 3.549 pb from XSDB (13 TeV, auto-computed). DAS names verified for NanoAODv15.",
+    "files": [
+      {
+        "das_names": [
+          "/ST_s-channel_4f_leptonDecays_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL18NanoAODv15-150X_mc2018_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2018",
+          "isMC": true,
+          "xsec": 3.549
+        }
+      },
+      {
+        "das_names": [
+          "/ST_s-channel_4f_leptonDecays_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL17NanoAODv15-150X_mc2017_realistic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2017",
+          "isMC": true,
+          "xsec": 3.549
+        }
+      },
+      {
+        "das_names": [
+          "/ST_s-channel_4f_leptonDecays_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODv15-150X_mcRun2_asymptotic_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PostVFP",
+          "isMC": true,
+          "xsec": 3.549
+        }
+      },
+      {
+        "das_names": [
+          "/ST_s-channel_4f_leptonDecays_TuneCP5_13TeV-amcatnlo-pythia8/RunIISummer20UL16NanoAODAPVv15-150X_mcRun2_asymptotic_preVFP_v1-v1/NANOAODSIM"
+        ],
+        "metadata": {
+          "year": "2016_PreVFP",
+          "isMC": true,
+          "xsec": 3.549
+        }
+      }
+    ]
+  }
+}

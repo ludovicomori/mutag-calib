@@ -27,6 +27,32 @@ mutag_calibration:
       - [300, 350]
       - [350, 425]
       - [425, 'Inf']
+    "2025":
+      - [300, 'Inf']
+      - [300, 350]
+      - [350, 425]
+      - [425, 'Inf']
+    # Run 2 years - 2017/2018 use wider bins to equalize stats across pT bins
+    "2018":
+      - [300, 'Inf']
+      - [300, 400]
+      - [400, 450]
+      - [450, 'Inf']
+    "2017":
+      - [300, 'Inf']
+      - [300, 400]
+      - [400, 450]
+      - [450, 'Inf']
+    "2016_PostVFP":
+      - [300, 'Inf']
+      - [300, 350]
+      - [350, 425]
+      - [425, 'Inf']
+    "2016_PreVFP":
+      - [300, 'Inf']
+      - [300, 350]
+      - [350, 425]
+      - [425, 'Inf']
   msd_binning:
     2022_preEE:
       - [30, 'Inf']
@@ -43,6 +69,22 @@ mutag_calibration:
     "2024":
       - [30, 'Inf']
       - [30, 210]
+    "2025":
+      - [30, 'Inf']
+      - [30, 210]
+    # Run 2 years - same msd binning as Run 3
+    "2018":
+      - [30, 'Inf']
+      - [30, 210]
+    "2017":
+      - [30, 'Inf']
+      - [30, 210]
+    "2016_PostVFP":
+      - [30, 'Inf']
+      - [30, 210]
+    "2016_PreVFP":
+      - [30, 'Inf']
+      - [30, 210]
   wp:
     2022_preEE:
       particleNet_XbbVsQCD:
@@ -57,5 +99,22 @@ mutag_calibration:
       particleNet_XbbVsQCD:
         HHbbgg: 0.4
     "2024":
+      globalParT3_XbbVsQCD:
+        HHbbgg: 0.6
+    "2025":
+      globalParT3_XbbVsQCD:
+        HHbbgg: 0.6
+    # Run 2 years - using GloParT with same WP as 2024
+    # TODO: WP 0.6 is same as 2024 - may need tuning for Run 2 (13 TeV vs 13.6 TeV)
+    "2018":
+      globalParT3_XbbVsQCD:
+        HHbbgg: 0.6
+    "2017":
+      globalParT3_XbbVsQCD:
+        HHbbgg: 0.6
+    "2016_PostVFP":
+      globalParT3_XbbVsQCD:
+        HHbbgg: 0.6
+    "2016_PreVFP":
       globalParT3_XbbVsQCD:
         HHbbgg: 0.6

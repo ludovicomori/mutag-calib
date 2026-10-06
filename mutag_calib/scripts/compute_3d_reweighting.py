@@ -77,7 +77,7 @@ pt_eta_tau21_3d_maps = [
     #'FatJetGoodNMuonSJUnique1_pt_eta_tau21', 'FatJetGoodNMuonSJUnique1_pt_eta_tau21_bintau05',
 ]
 
-def pt_reweighting(accumulator, histname, output, test=False, overwrite=False):
+def pt_reweighting(accumulator, histname, output, test=False, overwrite=False, data_year=None, mc_year=None):
     years = accumulator["datasets_metadata"]["by_datataking_period"].keys()
     h = accumulator['variables'][histname]
     samples = h.keys()
@@ -86,12 +86,18 @@ def pt_reweighting(accumulator, histname, output, test=False, overwrite=False):
     samples_qcd = list(filter(lambda d: 'QCD_MuEnriched' in d, samples_mc))
     samples_vjets_top = list(filter(lambda d: (('VJets' in d) | ('SingleTop' in d) | ('TTto4Q' in d)), samples_mc))
 
+    # Handle mixed-year case (e.g. 2025 data + 2024 MC)
+    if data_year and mc_year:
+        year_pairs = [(data_year, mc_year, data_year)]  # (data_year, mc_year, output_label)
+    else:
+        year_pairs = [(year, year, year) for year in years]
+
     # Compute a 3D correction for each year and save it in a separate json file
-    for year in years:
+    for dy, my, label in year_pairs:
         # Build QCD, VJets+top and Data histograms by summing over all datasets and filtering by year
-        h_qcd = sum([h[s][d] for s, datasets_dict in h.items() for d in datasets_dict if ((s in samples_qcd) & (year in d))])
-        h_vjets_top = sum([h[s][d] for s, datasets_dict in h.items() for d in datasets_dict if ((s in samples_vjets_top) & (year in d))])
-        h_data = sum([h[s][d] for s, datasets_dict in h.items() for d in datasets_dict if ((s in samples_data) & (year in d))])
+        h_qcd = sum([h[s][d] for s, datasets_dict in h.items() for d in datasets_dict if ((s in samples_qcd) & (my in d))])
+        h_vjets_top = sum([h[s][d] for s, datasets_dict in h.items() for d in datasets_dict if ((s in samples_vjets_top) & (my in d))])
+        h_data = sum([h[s][d] for s, datasets_dict in h.items() for d in datasets_dict if ((s in samples_data) & (dy in d))])
 
         axes = dense_axes(h_qcd)
         categories = get_axis_items(h_qcd, 'cat')
@@ -132,7 +138,7 @@ def pt_reweighting(accumulator, histname, output, test=False, overwrite=False):
         stack_map = np.stack([[list(ratio_dict[cat][var_shape].values()) for var_shape in shape_variations] for cat in categories])
         sfhist = hist.Hist(axis_category, axis_shape_variation, axis_variation, *axes, data=stack_map)
         sfhist.label = "out"
-        sfhist.name = f"{histname}_corr_{year}"
+        sfhist.name = f"{histname}_corr_{label}"
         description = "Reweighting SF matching the leading fatjet pT and eta MC distribution to data."
         clibcorr = correctionlib.convert.from_histogram(sfhist, flow="clamp")
         clibcorr.description = description
@@ -144,7 +150,7 @@ def pt_reweighting(accumulator, histname, output, test=False, overwrite=False):
         rich.print(cset)
 
         os.makedirs(output, exist_ok=True)
-        outfile_reweighting = os.path.join(output, f'{histname}_{year}_reweighting.json')
+        outfile_reweighting = os.path.join(output, f'{histname}_{label}_reweighting.json')
         if not overwrite:
             overwrite_check(outfile_reweighting)
         print(f"Saving pt reweighting factors in {outfile_reweighting}")
@@ -182,9 +188,13 @@ if __name__ == "__main__":
     parser.add_argument('-o', '--output', type=str, required=True, help="Output directory.")
     parser.add_argument('--test', action='store_true', help="Printout reweighting factors for testing.")
     parser.add_argument('--overwrite', action='store_true', help="Overwrite output file.")
+    parser.add_argument('--data-year', type=str, default=None, help="Data year label for mixed-year mode (e.g. '2025').")
+    parser.add_argument('--mc-year', type=str, default=None, help="MC year label for mixed-year mode (e.g. '2024').")
     args = parser.parse_args()
 
     accumulator = load(args.input)
 
     for histname in pt_eta_2d_maps + pt_eta_tau21_3d_maps:
-        pt_reweighting(accumulator=accumulator, histname=histname, output=args.output, test=args.test, overwrite=args.overwrite)
+        pt_reweighting(accumulator=accumulator, histname=histname, output=args.output,
+                       test=args.test, overwrite=args.overwrite,
+                       data_year=args.data_year, mc_year=args.mc_year)

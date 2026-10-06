@@ -222,7 +222,7 @@ TAU21_VAR_DOWN = 0.15
 TAU21_VAR_UP = 1.0
 
 
-def add_tau21_variation_1d(histo_nom, histo_down, histo_up, cat, mc_processes, year,
+def add_tau21_variation_1d(histo_nom, histo_down, histo_up, cat, mc_processes, years,
                            syst_name="tau21_var", shape_only=True, integral_eps=1e-6):
     """Add a tau21 working-point shape systematic to the 1D histograms.
 
@@ -231,9 +231,14 @@ def add_tau21_variation_1d(histo_nom, histo_down, histo_up, cat, mc_processes, y
     histo_up:   1D histos at tau21 < 0.40 -> used as <syst_name>Up
 
     If shape_only is True, the Up/Down templates are rescaled so that, for each
-    process (summed over its samples and the datasets of `year`) in category `cat`,
+    process (summed over its samples and the datasets of `years`) in category `cat`,
     they have the same integral as the nominal.
+
+    ``years`` may be a single string or a list of strings: a dataset is
+    included if any of the given year tags appears in its name (--combined-years).
     """
+    if isinstance(years, str):
+        years = [years]
     up_name, down_name = f"{syst_name}Up", f"{syst_name}Down"
 
     def _nom_view(h):
@@ -244,11 +249,11 @@ def add_tau21_variation_1d(histo_nom, histo_down, histo_up, cat, mc_processes, y
         if not sample_names:
             continue
 
-        # Per-process integrals in this category (only datasets of this year)
+        # Per-process integrals in this category (only datasets of these years)
         sums = {"nominal": 0.0, "up": 0.0, "down": 0.0}
         for s in sample_names:
             for ds, h in histo_nom[s].items():
-                if year not in ds:
+                if not any(y in ds for y in years):
                     continue
                 ci = h.axes["cat"].index(cat)
                 sums["nominal"] += np.nansum(_nom_view(h)[ci]["value"])
@@ -290,7 +295,7 @@ def add_tau21_variation_1d(histo_nom, histo_down, histo_up, cat, mc_processes, y
                     new_view[:, idx, :]["variance"] = nom["variance"]
 
                 # Fill the real variation only for this category and year
-                if year in ds:
+                if any(y in ds for y in years):
                     ci = h.axes["cat"].index(cat)
                     for idx, src, f in ((up_idx, histo_up, f_up), (down_idx, histo_down, f_down)):
                         if f is None:
@@ -655,17 +660,24 @@ def get_1d_histogram(h2d_dict, tau21_cut):
     return h1d_dict
 
 
-def get_1d_histogram_reweighed(h2d_dict, tau21_cut, samples, year, parent_category, fixed_weights=None, return_weights=False):
+def get_1d_histogram_reweighed(h2d_dict, tau21_cut, samples, years, parent_category, fixed_weights=None, return_weights=False):
     """Return 1D histograms with MC (b+c+light) reweighted to data.
 
     The input 2D histograms are first integrated over the tau21 axis as in
     get_1d_histogram, using the cut ``tau21 < tau21_cut``. Then, for the
-    specified year and a given parent category, a bin-by-bin weight is
+    specified year(s) and a given parent category, a bin-by-bin weight is
     computed such that, in the *inclusive pass+fail region* for that parent
     category, the sum of all MC histograms (b + c + light) equals the data
     histogram. Those weights are applied to the MC templates in both the
     corresponding pass and fail categories, leaving data unchanged.
+
+    ``years`` may be a single string or a list of strings: a dataset is
+    included if any of the given year tags appears in its name. This
+    supports --combined-years mode (e.g. 2025 data + 2024 MC) where the
+    MC year tag differs from the primary label year.
     """
+    if isinstance(years, str):
+        years = [years]
 
     def _ret(histo, weight):
         return (histo, weight) if return_weights else histo
@@ -723,11 +735,11 @@ def get_1d_histogram_reweighed(h2d_dict, tau21_cut, samples, year, parent_catego
     else:
         mc_sum = np.zeros(n_fit_bins, dtype=float)
         data_sum = np.zeros(n_fit_bins, dtype=float)
-        # Build inclusive (pass+fail) distributions for the requested year and parent category
+        # Build inclusive (pass+fail) distributions for the requested year(s) and parent category
         for proc_name, ds_dict in h1d_dict.items():
             for ds, h in ds_dict.items():
-                # Restrict to the datasets of the current year
-                if year not in ds:
+                # Restrict to the datasets whose name matches any of the requested years
+                if not any(y in ds for y in years):
                     continue
 
                 # For weight-storage histograms, ``h.view`` returns a structured
@@ -768,7 +780,7 @@ def get_1d_histogram_reweighed(h2d_dict, tau21_cut, samples, year, parent_catego
         if proc_name not in mc_sample_names:
             continue
         for ds, h in ds_dict.items():
-            if year not in ds:
+            if not any(y in ds for y in years):
                 continue
             view = h.view(flow=False)
 
@@ -883,8 +895,10 @@ def main():
     parser.add_argument("input_file", help="Path to the pocketcoffea output .coffea file")
     parser.add_argument("--output-dir", "-o", default=None, help="Output directory for datacards")
     parser.add_argument("--variable", default="FatJetGood_logsumcorrSVmass_tau21", help="Variable to use for the fit")
-    parser.add_argument("--years", nargs="+", default=["2022_preEE", "2022_postEE", "2023_preBPix", "2023_postBPix"], 
+    parser.add_argument("--years", nargs="+", default=["2022_preEE", "2022_postEE", "2023_preBPix", "2023_postBPix"],
                        help="Years to include in the analysis")
+    parser.add_argument("--combined-years", action="store_true", default=False,
+                       help="Treat all years as a single combined measurement (e.g. 2025 data + 2024 MC)")
     parser.add_argument("-f","--filter-category", default="", help="Substring that must be contained in category to produce datacard.")
     parser.add_argument("--no-tau21-var", dest="tau21_var", action="store_false", default=True,
                         help="Disable the tau21_var_pass/tau21_var_fail shape nuisances")
@@ -915,10 +929,17 @@ def main():
     successful_categories = []
     failed_categories = []
 
-    for year in args.years:
+    # In combined mode, treat all years as one measurement (e.g. 2025 data + 2024 MC)
+    if args.combined_years:
+        year_groups = [args.years]  # single group with all years
+    else:
+        year_groups = [[year] for year in args.years]  # one group per year
+
+    for years_group in year_groups:
+        year = years_group[0]  # primary year label for output naming
         # Define processes and systematics
-        mc_processes, data_processes = define_processes(samples, [year])
-        print(f"year: {year}")
+        mc_processes, data_processes = define_processes(samples, years_group)
+        print(f"years: {years_group}")
         print(f"MC processes: {mc_processes.items()}")
         print(f"DATA processes: {data_processes.items()}\n")
         
@@ -933,9 +954,9 @@ def main():
         # add_Madgraph_systematic(histograms[args.variable])
 
         mc_names = [p_name for p_name, p in mc_processes.items()]
-        systematics = define_systematics([year], mc_names)
+        systematics = define_systematics(years_group, mc_names)
         systematics_tau21_by_region = {
-            region: define_systematics([year], mc_names, tau21_var_region=region)
+            region: define_systematics(years_group, mc_names, tau21_var_region=region)
             for region in ["pass", "fail"]
         }
         print(f"systematics: {systematics}\n")
@@ -977,7 +998,7 @@ def main():
                         histo_1d,
                         histo_down=get_1d_histogram(histograms[args.variable], TAU21_VAR_DOWN),
                         histo_up=get_1d_histogram(histograms[args.variable], TAU21_VAR_UP),
-                        cat=cat, mc_processes=mc_processes, year=year,
+                        cat=cat, mc_processes=mc_processes, years=years_group,
                         syst_name=tau21_syst_name,
                     )
                 sanitize_shape_variations(histo_1d, mc_sample_names)
@@ -987,11 +1008,12 @@ def main():
                     histograms=histo_1d,
                     datasets_metadata=datasets_metadata,
                     cutflow=cutflow,
-                    years=[year],
+                    years=years_group,
                     mc_processes=mc_processes,
                     data_processes=data_processes,
                     systematics=systematics_tau21 if is_tau21_nominal else systematics,
                     category=cat,  # Category string matching the multicuts structure
+                    bin_suffix=year,
                     verbose=args.verbose
                 )
                 
@@ -1007,14 +1029,14 @@ def main():
                     parent_category = "-".join(cat.split("-")[:-1])
                     histo_1d_raw = get_1d_histogram(histograms[args.variable], tau21)
                     histo_1d_rew, rew_weights = get_1d_histogram_reweighed(
-                        histograms[args.variable], tau21, samples, year, parent_category, return_weights=True,
+                        histograms[args.variable], tau21, samples, years_group, parent_category, return_weights=True,
                     )
                     # Add the variation QCD_Madgraph/QCD_MuEnriched to the Hist
                     add_Madgraph_systematic_1d(histo_1d_rew, cat, ratio_source=histo_1d_raw)
                     if args.tau21_var:
                         if rew_weights is not None:
-                            histo_down_rew = get_1d_histogram_reweighed(histograms[args.variable], TAU21_VAR_DOWN, samples, year, parent_category, fixed_weights=rew_weights)
-                            histo_up_rew = get_1d_histogram_reweighed(histograms[args.variable], TAU21_VAR_UP, samples, year, parent_category, fixed_weights=rew_weights)
+                            histo_down_rew = get_1d_histogram_reweighed(histograms[args.variable], TAU21_VAR_DOWN, samples, years_group, parent_category, fixed_weights=rew_weights)
+                            histo_up_rew = get_1d_histogram_reweighed(histograms[args.variable], TAU21_VAR_UP, samples, years_group, parent_category, fixed_weights=rew_weights)
                         else:
                             histo_down_rew = get_1d_histogram(histograms[args.variable], TAU21_VAR_DOWN)
                             histo_up_rew = get_1d_histogram(histograms[args.variable], TAU21_VAR_UP)
@@ -1023,7 +1045,7 @@ def main():
                             histo_1d_rew,
                             histo_down=histo_down_rew,
                             histo_up=histo_up_rew,
-                            cat=cat, mc_processes=mc_processes, year=year,
+                            cat=cat, mc_processes=mc_processes, years=years_group,
                             syst_name=tau21_syst_name,
                         )
                     sanitize_shape_variations(histo_1d_rew, mc_sample_names)
@@ -1033,11 +1055,12 @@ def main():
                         histograms=histo_1d_rew,
                         datasets_metadata=datasets_metadata,
                         cutflow=cutflow,
-                        years=[year],
+                        years=years_group,
                         mc_processes=mc_processes,
                         data_processes=data_processes,
                         systematics=systematics_tau21,
                         category=cat,
+                        bin_suffix=year,
                         verbose=args.verbose,
                     )
                     all_datacards_reweight[cat][tau21] = datacard_rew
