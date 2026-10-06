@@ -1,3 +1,4 @@
+import os
 from collections import defaultdict
 import awkward as ak
 import correctionlib
@@ -5,6 +6,25 @@ import correctionlib
 from mutag_calib.workflows.fatjet_base import fatjetBaseProcessor
 from pocket_coffea.utils.configurator import Configurator
 from mutag_calib.lib.sv import *
+
+
+def resolve_input_file(path):
+    '''Return `path` if it exists, else the same file name in the current working directory.
+
+    The configured path is absolute and resolved at SUBMIT time. Where the worker does not
+    see the submit filesystem (condor@lpc), the file is instead shipped into the job's
+    scratch dir -- the CWD -- via the `extra-input-files` run option.'''
+    if os.path.exists(path):
+        return path
+    local = os.path.basename(path)
+    if os.path.exists(local):
+        print(f"[mutag] {path} not visible here, using shipped copy {os.path.abspath(local)}")
+        return local
+    raise FileNotFoundError(
+        f"{path} does not exist, and no {local} in the working directory {os.getcwd()}. "
+        "On condor@lpc, list the file under `extra-input-files` in the run options."
+    )
+
 
 class mutagAnalysisProcessor(fatjetBaseProcessor):
     def __init__(self, cfg: Configurator):
@@ -29,7 +49,9 @@ class mutagAnalysisProcessor(fatjetBaseProcessor):
         '''Correction of jets observable by a 3D reweighting based on (pT, eta, tau21).
         The function stores the nominal, up and down weights in self.weight_3d,
         where the up/down variations are computed considering the statistical uncertainty on data and MC.'''
-        cset = correctionlib.CorrectionSet.from_file(self.params["ptetatau21_reweighting"][self._year]["file"])
+        cset = correctionlib.CorrectionSet.from_file(
+            resolve_input_file(self.params["ptetatau21_reweighting"][self._year]["file"])
+        )
         assert len(list(cset.keys())) == 1, "The correction file should contain only one correction."
         key = list(cset.keys())[0]
         corr = cset[key]
