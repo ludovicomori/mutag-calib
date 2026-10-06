@@ -58,12 +58,20 @@ jets_calibration:
     2016_PreVFP:
       AK8PFPuppi: "FatJet"
     2022_preEE:
+      AK4PFPuppi: null
+      AK4CorrT1METJetPuppi: null
       AK8PFPuppi: "FatJet"
     2022_postEE:
+      AK4PFPuppi: null
+      AK4CorrT1METJetPuppi: null
       AK8PFPuppi: "FatJet"
     2023_preBPix:
+      AK4PFPuppi: null
+      AK4CorrT1METJetPuppi: null
       AK8PFPuppi: "FatJet"
     2023_postBPix:
+      AK4PFPuppi: null
+      AK4CorrT1METJetPuppi: null
       AK8PFPuppi: "FatJet"
     "2024":
       AK8PFPuppi: "FatJet"
